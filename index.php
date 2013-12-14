@@ -8,7 +8,7 @@ include "header.php";
 			<h4 class="texth4">
 			<ul>
 				<li>This page is a placeholder for live-medium-install setups live-medium-install is intended to serve as a firmware install of debian-live media. </li>
-				<li>Live-medium-install is currently included in the live-tools.git debian-next branch.</li>
+				<li>Live-Medium-Install is currently included in the live-tools.git debian-next branch.</li>
 			</ul>
 			</h4>
 		</div>
