@@ -1,7 +1,5 @@
 <div id="footer">
-	<ul class="footul">
-		<li class="footli"><a class="foota" href=""></a></li>
-		<li class="footli"></li>
+		<a href="COPYING">Copying</a> | <?php include VERSION ?>
 </div>
 </body>
 </html>
