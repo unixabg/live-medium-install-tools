@@ -1,0 +1,73 @@
+#!/bin/sh
+
+## partial-squashfs-updates - Generate partial squashfs updates.
+## Copyright (C) 2013 Richard Nelson <unixabg@gmail.com>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+
+set -e
+
+# Setup mount for the filesystem.squashfs image.
+if [ ! -d "filesystem_squashfs" ]; then
+	mkdir filesystem_squashfs
+fi
+mount -o loop ./filesystem.squashfs ./filesystem_squashfs
+
+# Setup mount for the updates which we will squash later.
+if [ ! -d "partial_squashfs_updates" ]; then
+	mkdir partial_squashfs_updates
+fi
+mount -t tmpfs tmpfs ./partial_squashfs_updates
+
+# Setup mount for the union where we stack ro squashfs and rw updates mount.
+if [ ! -d "partial_squashfs_union" ]; then
+	mkdir partial_squashfs_union
+fi
+mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
+
+echo "Setup the chroot to union mount."
+echo "Mounting bindings for dev, proc, sys, pts in union."
+mount --bind /dev ./partial_squashfs_union/dev
+mount --bind /proc ./partial_squashfs_union/proc
+mount --bind /sys ./partial_squashfs_union/sys
+mount --bind /dev/pts ./partial_squashfs_union/dev/pts
+
+echo "Backup the union/etc/hosts."
+mv ./partial_squashfs_union/etc/hosts ./hosts.bak
+echo "Copying /etc/hosts to union/etc/hosts."
+cp /etc/hosts ./partial_squashfs_union/etc/hosts
+
+echo "Backup the union/etc/resolv.conf."
+mv ./partial_squashfs_union/etc/resolv.conf ./resolv.conf.bak
+echo "Copying /etc/resolv.conf to the union/etc/resolv.conf."
+cp /etc/resolv.conf ./partial_squashfs_union/etc/resolv.conf
+
+echo "Starting chroot in the union directory."
+chroot ./partial_squashfs_union /bin/bash
+
+echo "Exited the chroot so time to clean up."
+umount -l ./partial_squashfs_union/dev
+umount -l ./partial_squashfs_union/proc
+umount -l ./partial_squashfs_union/sys
+
+echo "Restore original union/etc/hosts."
+mv ./hosts.bak ./partial_squashfs_union/etc/hosts
+echo "Restore union/etc/resolv.conf."
+mv ./resolv.conf.bak ./partial_squashfs_union/etc/resolv.conf
+echo "Remove union/root/.bash_history."
+rm ./partial_squashfs_union/root/.bash_history
+
+_DATE=$(date +%Y%m%d-%H%M%S)
+echo "Now making the updated squashfs ${_DATE}."
+mksquashfs ./partial_squashfs_updates partial_squashfs_updates-${_DATE}.squashfs
+
+echo "Unmounting the areas we created."
+umount ./partial_squashfs_union
+umount ./partial_squashfs_updates
+umount ./filesystem_squashfs
+
+echo "All done goodbye!"
+
