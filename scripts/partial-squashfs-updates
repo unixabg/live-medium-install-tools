@@ -9,12 +9,25 @@
 
 
 set -e
+set -x
 
-# Setup mount for the filesystem.squashfs image.
-if [ ! -d "filesystem_squashfs" ]; then
-	mkdir filesystem_squashfs
-fi
-mount -o loop ./filesystem.squashfs ./filesystem_squashfs
+_MOUNTDIR=""
+_MOUNTLIST="./partial_squashfs_union ./partial_squashfs_updates"
+_ROSTACK=""
+for squash_file in $(ls ./*.squashfs); do
+	# Setup mount for the squashfs images.
+	# Note that we stack here on the listing provided by ls command.
+	_MOUNTDIR="$(basename $squash_file .squashfs)_squashfs"
+	echo "Found $squash_file and setting up mount point of ${_MOUNTDIR}"
+	if [ ! -d "${_MOUNTDIR}" ]; then
+		mkdir "${_MOUNTDIR}"
+	fi
+	mount -o loop "./$squash_file" "./${_MOUNTDIR}"
+	_ROSTACK=":./${_MOUNTDIR}=rr+wh${_ROSTACK}"
+	_MOUNTLIST="${_MOUNTLIST} ./${_MOUNTDIR}"
+done
+echo "${_ROSTACK}"
+echo "${_MOUNTLIST}"
 
 # Setup mount for the updates which we will squash later.
 if [ ! -d "partial_squashfs_updates" ]; then
@@ -26,7 +39,8 @@ mount -t tmpfs tmpfs ./partial_squashfs_updates
 if [ ! -d "partial_squashfs_union" ]; then
 	mkdir partial_squashfs_union
 fi
-mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
+#mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
+mount -t aufs -o br=./partial_squashfs_updates=rw"${_ROSTACK}" none ./partial_squashfs_union
 
 echo "Setup the chroot to union mount."
 echo "Mounting bindings for dev, proc, sys, pts in union."
@@ -65,9 +79,9 @@ echo "Now making the updated squashfs ${_DATE}."
 mksquashfs ./partial_squashfs_updates partial_squashfs_updates-${_DATE}.squashfs
 
 echo "Unmounting the areas we created."
-umount ./partial_squashfs_union
-umount ./partial_squashfs_updates
-umount ./filesystem_squashfs
+for mount_point in "${_MOUNTLIST}"; do
+	umount $mount_point
+done
 
 echo "All done goodbye!"
 
