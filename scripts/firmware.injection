@@ -25,7 +25,7 @@ echo "Begin firmware script - ${_VERSION}." >> ${_FIRMWARE_LOG}
 MAC=$(ifconfig | grep eth0 | awk '{print tolower($5)}')
 echo "MAC Address is ${MAC}" >> ${_FIRMWARE_LOG}
 
-# FIXME - This should get pulled in somehow.
+# FIXME - This should get pulled in from http(s).
 _SCRIPT_LIST="print nogo"
 
 # For each _SCRIPT_LIST entry attemmpt to download and inject in to system.
@@ -33,8 +33,9 @@ for _SCRIPT in ${_SCRIPT_LIST}
 do
 	echo "Attempting injection of ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
 
+	# FIXME - Turn on https later
 	# Attempt to download script
-	wget http://install.live-systems.org/firmware/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG} 
+	wget http://install.live-systems.org/firmware/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG}
 
 	# Attempt to run script
 	chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
