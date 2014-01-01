@@ -1,0 +1,46 @@
+#!/bin/sh
+
+## firmware.injection - Inject settings in to firmware setups.
+## Copyright (C) 2014 Richard Nelson <unixabg@gmail.com>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+set -e
+
+# Set script version
+_VERSION='20140101-0'
+
+# Set the log file for the operations.
+_BASE_PATH='/root'
+
+# Set the log file for the operations.
+_FIRMWARE_LOG="${_BASE_PATH}/firmware.log"
+
+# Let the log file know that we have downloaded and started.
+echo "Begin firmware script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+
+# Set the primary MAC for the machine assumes eth0.
+MAC=$(ifconfig | grep eth0 | awk '{print tolower($5)}')
+echo "MAC Address is ${MAC}" >> ${_FIRMWARE_LOG}
+
+# FIXME - This should get pulled in somehow.
+_SCRIPT_LIST="print nogo"
+
+# For each _SCRIPT_LIST entry attemmpt to download and inject in to system.
+for _SCRIPT in ${_SCRIPT_LIST}
+do
+	echo "Attempting injection of ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
+
+	# Attempt to download script
+	wget http://install.live-systems.org/firmware/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG} 
+
+	# Attempt to run script
+	chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
+	"${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
+done
+
+# Let the log file know that we have finished.
+echo "End firmware script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+
