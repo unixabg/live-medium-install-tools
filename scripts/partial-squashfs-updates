@@ -15,6 +15,7 @@ Cleanup_mounts () {
 	echo "Unmounting the areas we created."
 	for mount_point in "${_MOUNTLIST}"; do
 		umount $mount_point
+		rmdir $mount_point
 	done
 }
 
@@ -48,8 +49,6 @@ mount -t tmpfs tmpfs ./partial_squashfs_updates
 if [ ! -d "partial_squashfs_union" ]; then
 	mkdir partial_squashfs_union
 fi
-#mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
-mount -t aufs -o br=./partial_squashfs_updates=rw"${_ROSTACK}" none ./partial_squashfs_union
 
 _DEFAULTRUNTYPE="C"
 echo "#############################################################"
@@ -64,6 +63,8 @@ _RUNTYPE="${_RUNTYPE:-${_DEFAULTRUNTYPE}}"
 
 if [ ${_RUNTYPE} = "C" ]
 then
+	#mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
+	mount -t aufs -o br=./partial_squashfs_updates=rw"${_ROSTACK}" none ./partial_squashfs_union
 	echo "You selected to run a chroot"
 	echo "Setup the chroot to union mount."
 	echo "Mounting bindings for dev, proc, sys, pts in union."
@@ -105,16 +106,24 @@ then
 
 elif [ ${_RUNTYPE} = "J" ]
 then
+	# Modify the _ROSTACK to not include the filesystem_squashfs mount so we just stack the updates together
+	_ROSTACK=$(echo ${_ROSTACK} | sed s@:./filesystem_squashfs=rr+wh@@g)
+	echo "${_ROSTACK}"
+	#mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
+	mount -t aufs -o br=./partial_squashfs_updates=rw"${_ROSTACK}" none ./partial_squashfs_union
 	echo "You selected to create a new filesystem.squashfs."
 	_DATE=$(date +%Y%m%d-%H%M%S)
-	if [ ! -d "${_DATE}" ]; then
-		mkdir "${_DATE}"
-	fi
-	echo "Now making the updated ${_DATE}/filesystem.squashfs."
-	mksquashfs ./partial_squashfs_union ${_DATE}/filesystem.squashfs
+	echo "Now making the updated squashfs ${_DATE} from untion not update."
+	mksquashfs ./partial_squashfs_union partial_squashfs_updates-${_DATE}.squashfs
+
+	#read _HOLD
 
 	Cleanup_mounts
-
+	# Remove old directories and move old partials out.
+	if [ ! -d "partial_squashfs_updates-OLD-${_DATE}" ]; then
+		mkdir partial_squashfs_updates-OOS-${_DATE}
+	fi
+	rsync -av --remove-source-files --exclude partial_squashfs_updates-${_DATE}.squashfs ./partial_squashfs_updates-*.squashfs ./partial_squashfs_updates-OOS-${_DATE}/
 else
 	echo "You entered an unknowon choice!"
 	echo "Aborting."
