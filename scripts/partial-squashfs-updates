@@ -11,6 +11,15 @@
 set -e
 set -x
 
+Cleanup_mounts () {
+	echo "Unmounting the areas we created."
+	for mount_point in "${_MOUNTLIST}"; do
+		umount $mount_point
+	done
+}
+
+
+
 _MOUNTDIR=""
 _MOUNTLIST="./partial_squashfs_union ./partial_squashfs_updates"
 _ROSTACK=""
@@ -42,46 +51,76 @@ fi
 #mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
 mount -t aufs -o br=./partial_squashfs_updates=rw"${_ROSTACK}" none ./partial_squashfs_union
 
-echo "Setup the chroot to union mount."
-echo "Mounting bindings for dev, proc, sys, pts in union."
-mount --bind /dev ./partial_squashfs_union/dev
-mount --bind /proc ./partial_squashfs_union/proc
-mount --bind /sys ./partial_squashfs_union/sys
-mount --bind /dev/pts ./partial_squashfs_union/dev/pts
+_DEFAULTRUNTYPE="C"
+echo "#############################################################"
+echo "  (C)hroot - partial squashfs"
+echo "  (J)oin   - combine partial squashfs to new filesystem.squashfs"
+echo "Select run type (default is ${_DEFAULTRUNTYPE}):"
 
-echo "Backup the union/etc/hosts."
-mv ./partial_squashfs_union/etc/hosts ./hosts.bak
-echo "Copying /etc/hosts to union/etc/hosts."
-cp /etc/hosts ./partial_squashfs_union/etc/hosts
+read _RUNTYPE
 
-echo "Backup the union/etc/resolv.conf."
-mv ./partial_squashfs_union/etc/resolv.conf ./resolv.conf.bak
-echo "Copying /etc/resolv.conf to the union/etc/resolv.conf."
-cp /etc/resolv.conf ./partial_squashfs_union/etc/resolv.conf
+_RUNTYPE="${_RUNTYPE:-${_DEFAULTRUNTYPE}}"
 
-echo "Starting chroot in the union directory."
-chroot ./partial_squashfs_union /bin/bash
 
-echo "Exited the chroot so time to clean up."
-umount -l ./partial_squashfs_union/dev
-umount -l ./partial_squashfs_union/proc
-umount -l ./partial_squashfs_union/sys
+if [ ${_RUNTYPE} = "C" ]
+then
+	echo "You selected to run a chroot"
+	echo "Setup the chroot to union mount."
+	echo "Mounting bindings for dev, proc, sys, pts in union."
+	mount --bind /dev ./partial_squashfs_union/dev
+	mount --bind /proc ./partial_squashfs_union/proc
+	mount --bind /sys ./partial_squashfs_union/sys
+	mount --bind /dev/pts ./partial_squashfs_union/dev/pts
 
-echo "Restore original union/etc/hosts."
-mv ./hosts.bak ./partial_squashfs_union/etc/hosts
-echo "Restore union/etc/resolv.conf."
-mv ./resolv.conf.bak ./partial_squashfs_union/etc/resolv.conf
-echo "Remove union/root/.bash_history."
-rm ./partial_squashfs_union/root/.bash_history
+	echo "Backup the union/etc/hosts."
+	mv ./partial_squashfs_union/etc/hosts ./hosts.bak
+	echo "Copying /etc/hosts to union/etc/hosts."
+	cp /etc/hosts ./partial_squashfs_union/etc/hosts
 
-_DATE=$(date +%Y%m%d-%H%M%S)
-echo "Now making the updated squashfs ${_DATE}."
-mksquashfs ./partial_squashfs_updates partial_squashfs_updates-${_DATE}.squashfs
+	echo "Backup the union/etc/resolv.conf."
+	mv ./partial_squashfs_union/etc/resolv.conf ./resolv.conf.bak
+	echo "Copying /etc/resolv.conf to the union/etc/resolv.conf."
+	cp /etc/resolv.conf ./partial_squashfs_union/etc/resolv.conf
 
-echo "Unmounting the areas we created."
-for mount_point in "${_MOUNTLIST}"; do
-	umount $mount_point
-done
+	echo "Starting chroot in the union directory."
+	chroot ./partial_squashfs_union /bin/bash
+
+	echo "Exited the chroot so time to clean up."
+	umount -l ./partial_squashfs_union/dev
+	umount -l ./partial_squashfs_union/proc
+	umount -l ./partial_squashfs_union/sys
+
+	echo "Restore original union/etc/hosts."
+	mv ./hosts.bak ./partial_squashfs_union/etc/hosts
+	echo "Restore union/etc/resolv.conf."
+	mv ./resolv.conf.bak ./partial_squashfs_union/etc/resolv.conf
+	echo "Remove union/root/.bash_history."
+	rm ./partial_squashfs_union/root/.bash_history
+
+	_DATE=$(date +%Y%m%d-%H%M%S)
+	echo "Now making the updated squashfs ${_DATE}."
+	mksquashfs ./partial_squashfs_updates partial_squashfs_updates-${_DATE}.squashfs
+
+	Cleanup_mounts
+
+elif [ ${_RUNTYPE} = "J" ]
+then
+	echo "You selected to create a new filesystem.squashfs."
+	_DATE=$(date +%Y%m%d-%H%M%S)
+	if [ ! -d "${_DATE}" ]; then
+		mkdir "${_DATE}"
+	fi
+	echo "Now making the updated ${_DATE}/filesystem.squashfs."
+	mksquashfs ./partial_squashfs_union ${_DATE}/filesystem.squashfs
+
+	Cleanup_mounts
+
+else
+	echo "You entered an unknowon choice!"
+	echo "Aborting."
+	Cleanup_mounts
+	exit 1
+fi
 
 echo "All done goodbye!"
-
+exit 0
