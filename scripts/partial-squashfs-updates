@@ -9,7 +9,7 @@
 
 
 set -e
-set -x
+#set -x
 
 Cleanup_mounts () {
 	echo "Unmounting the areas we created."
