@@ -10,6 +10,9 @@ include "header.php";
 				<li>This page is a placeholder for <b>live-medium-install</b> setups live-medium-install is intended to serve as a firmware install of debian-live media. </li>
 				<li><b>live-medium-install</b> is currently included in the live-tools.git debian-next branch.</li>
 			</ul>
+<?php
+include "README";
+?>
 			</h4>
 		</div>
 	</div>
