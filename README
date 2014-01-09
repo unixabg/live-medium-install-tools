@@ -1,0 +1,40 @@
+## Copyright (C) 2013 Richard Nelson <unixabg@gmail.com>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+############################ W A R N I N G ###################################
+live-medium-install is designed to format a target device (drive) and install
+debian live as firmware. Hence data loss on the target will occur. Use at your
+own risk!
+
+############################ W A R N I N G ###################################
+Did you see the part where data loss on the target will occur?
+Either way USE AT YOUR OWN RISK.
+
+The below is the starting point for testing live-medium-install.
+
+1.) Download a debian live image. See http://live-systems.org/cdimage/release/
+
+
+2.) Boot the downloaded image on the computer you wish to install and run debian live as firmware.
+Note: I do most of my testing with a VirtualBox image.
+
+3.) Become the root user:
+
+sudo -i
+
+4.) Next we need to download live-medium-install (see VCS for link to the latest live-medium-install):
+
+wget install.live-systems.org/scripts/live-medium-install
+
+5.) Make the script we downloaded executable:
+
+chmod +x ./live-medium-install
+
+6.) Run the script:
+
+./live-medium-install
+
+From here the script will check for some dependencies and prompt for information to perform the install.
