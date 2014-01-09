@@ -29,7 +29,7 @@ sudo -i
 
 4.) Next we need to download live-medium-install (see VCS for link to the latest live-medium-install):
 
-wget install.live-systems.org/scripts/live-medium-install
+wget 'http://live.debian.net/gitweb/?p=live-tools.git;a=blob_plain;f=bin/live-medium-install;hb=refs/heads/debian-next' -O live-medium-install
 
 5.) Make the script we downloaded executable:
 
