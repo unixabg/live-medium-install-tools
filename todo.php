@@ -9,7 +9,7 @@ include "header.php";
 			<p> Updated 20140109. </p>
 				<ul>
 					<li>Consider swapfile and persistence options</li>
-					<li>Update VCS to have a direct link to latest live-media-install script</li>
+					<li><strike>Update VCS to have a direct link to latest live-media-install script</strike></li>
 					<li>Improve firmware injection to use rsync</li>
 					<li>Improve firmware injection to use locking</li>
 					<li>Improve firmware injection to use test for updates for single instance runs</li>
