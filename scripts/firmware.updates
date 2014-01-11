@@ -1,0 +1,57 @@
+#!/bin/sh
+
+## firmware.updates - Updates the firmware with patches from the server.
+## Copyright (C) 2014 Richard Nelson <unixabg@gmail.com>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+
+set -e
+
+# Set script version.
+_VERSION='20140110-0'
+
+# FIXME
+# Set the image version to match firmware installed squashfs version.
+_IMAGE_VERSION='FIXME'
+
+# Set the update server::path or use dns overloading.
+_RSYNC_SERVER='install.live-systems.org::firmware'
+
+# Set the log file for the operations.
+_LIVE_PATH='/lib/live/mount/medium'
+
+# Set the log file for the operations.
+_FIRMWARE_LOG="${_LIVE_PATH}/firmware.log"
+
+# Checking lock file.
+if [ -f /var/lock/firmware.updates.lock ]
+then
+	echo "E: firmware.updates instance already/still running."
+	exit 1
+fi
+
+# Creating lock trap
+trap "test -f /var/lock/firmware.updates.lock && rm -f /var/lock/firmware.updates.lock; exit 0" 0 1 2 3 9 15
+
+# Creating lock file
+touch /var/lock/firmware.updates.lock
+
+# Remount the media.
+mount -o remount,rw ${_LIVE_PATH}
+
+# Let the log file know that we have downloaded and started.
+echo "$(date +%Y%m%d-%H%M%S) - Begin firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+
+# rsync from the rsync server to the live media path.
+rsync -av --append-verify ${_RSYNC_SERVER}/${_IMAGE_VERSION}/live/ ${_LIVE_PATH}/live/ >> ${_FIRMWARE_LOG} 2>&1
+
+
+# Let the log file know that we have finished.
+echo "$(date +%Y%m%d-%H%M%S) - End firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+
+# Remount the media.
+mount -o remount,ro ${_LIVE_PATH}
+
+exit 0
