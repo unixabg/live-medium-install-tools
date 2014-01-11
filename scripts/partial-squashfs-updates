@@ -100,7 +100,7 @@ then
 
 	_DATE=$(date +%Y%m%d-%H%M%S)
 	echo "Now making the updated squashfs ${_DATE}."
-	mksquashfs ./partial_squashfs_updates partial_squashfs_updates-${_DATE}.squashfs
+	mksquashfs ./partial_squashfs_updates psu-${_DATE}.squashfs
 
 	Cleanup_mounts
 
@@ -114,16 +114,16 @@ then
 	echo "You selected to create a new filesystem.squashfs."
 	_DATE=$(date +%Y%m%d-%H%M%S)
 	echo "Now making the updated squashfs ${_DATE} from untion not update."
-	mksquashfs ./partial_squashfs_union partial_squashfs_updates-${_DATE}.squashfs
+	mksquashfs ./partial_squashfs_union psu-${_DATE}.squashfs
 
 	#read _HOLD
 
 	Cleanup_mounts
 	# Remove old directories and move old partials out.
 	if [ ! -d "partial_squashfs_updates-OLD-${_DATE}" ]; then
-		mkdir partial_squashfs_updates-OOS-${_DATE}
+		mkdir psu-OOS-${_DATE}
 	fi
-	rsync -av --remove-source-files --exclude partial_squashfs_updates-${_DATE}.squashfs ./partial_squashfs_updates-*.squashfs ./partial_squashfs_updates-OOS-${_DATE}/
+	rsync -av --remove-source-files --exclude psu-${_DATE}.squashfs ./psu-*.squashfs ./psu-OOS-${_DATE}/
 else
 	echo "You entered an unknowon choice!"
 	echo "Aborting."
