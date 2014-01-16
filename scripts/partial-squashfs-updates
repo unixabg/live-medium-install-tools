@@ -98,6 +98,11 @@ then
 	echo "Now making the updated squashfs ${_DATE}."
 	mksquashfs ./partial_squashfs_updates psu-${_DATE}.squashfs
 
+	# Add entry to changelog for the psu file.
+	echo "Please provide a small changelog entry for the psu-${_DATE}.squashfs :"
+	read _NOTES
+	sed -i "1s/^/${_DATE} - ${_NOTES}.\n/" psu-changelog.txt
+
 	Cleanup_mounts
 
 elif [ ${_RUNTYPE} = "J" ]
@@ -113,6 +118,8 @@ then
 	mksquashfs ./partial_squashfs_union psu-${_DATE}.squashfs
 
 	#read _HOLD
+	# Add entry to changelog for the joining of the psu files.
+	sed -i "1s/^/******* ${_DATE} - Joined squashfs files. ********\n/" psu-changelog.txt
 
 	Cleanup_mounts
 	# Remove old directories and move old partials out.
