@@ -7,7 +7,6 @@
 ## This is free software, and you are welcome to redistribute it
 ## under certain conditions; see COPYING for details.
 
-
 set -e
 #set -x
 
@@ -18,8 +17,6 @@ Cleanup_mounts () {
 		rmdir $mount_point
 	done
 }
-
-
 
 _MOUNTDIR=""
 _MOUNTLIST="./partial_squashfs_union ./partial_squashfs_updates"
@@ -59,7 +56,6 @@ echo "Select run type (default is ${_DEFAULTRUNTYPE}):"
 read _RUNTYPE
 
 _RUNTYPE="${_RUNTYPE:-${_DEFAULTRUNTYPE}}"
-
 
 if [ ${_RUNTYPE} = "C" ]
 then
