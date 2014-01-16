@@ -98,6 +98,12 @@ then
 	echo "Now making the updated squashfs ${_DATE}."
 	mksquashfs ./partial_squashfs_updates psu-${_DATE}.squashfs
 
+	# Since we use sed to put text at the top of the file make sure the file exists.
+	if [ ! -e psu-changelog.txt ]
+	then
+		echo "Created changelog." >> psu-changelog.txt
+	fi
+
 	# Add entry to changelog for the psu file.
 	echo "Please provide a small changelog entry for the psu-${_DATE}.squashfs :"
 	read _NOTES
@@ -118,6 +124,13 @@ then
 	mksquashfs ./partial_squashfs_union psu-${_DATE}.squashfs
 
 	#read _HOLD
+
+	# Since we use sed to put text at the top of the file make sure the file exists.
+	if [ ! -e psu-changelog.txt ]
+	then
+		echo "Created changelog." >> psu-changelog.txt
+	fi
+
 	# Add entry to changelog for the joining of the psu files.
 	sed -i "1s/^/******* ${_DATE} - Joined squashfs files. ********\n/" psu-changelog.txt
 
