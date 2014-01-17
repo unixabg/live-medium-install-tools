@@ -94,20 +94,36 @@ then
 	echo "Remove union/root/.bash_history."
 	rm ./partial_squashfs_union/root/.bash_history
 
-	_DATE=$(date +%Y%m%d-%H%M%S)
-	echo "Now making the updated squashfs ${_DATE}."
-	mksquashfs ./partial_squashfs_updates psu-${_DATE}.squashfs
+	# Prompt to save changes or not.
+	_DEFAULTYESNO="N"
+	echo "#############################################################"
+	echo " (Y)es save my chroot modifications."
+	echo " (N)o do not save my chroot modifications."
+	echo "Select to save your chroot modifications (default is ${_DEFAULTYESNO}):
+	"
+	read _YESNO
 
-	# Since we use sed to put text at the top of the file make sure the file exists.
-	if [ ! -e psu-changelog.txt ]
+	_YESNO="${_YESNO:-${_DEFAULTYESNO}}"
+
+	if [ ${_YESNO} = "Y" ]
 	then
-		echo "Created changelog." >> psu-changelog.txt
-	fi
+		_DATE=$(date +%Y%m%d-%H%M%S)
+		echo "Now making the updated squashfs ${_DATE}."
+		mksquashfs ./partial_squashfs_updates psu-${_DATE}.squashfs
 
-	# Add entry to changelog for the psu file.
-	echo "Please provide a small changelog entry for the psu-${_DATE}.squashfs :"
-	read _NOTES
-	sed -i "1s/^/${_DATE} - ${_NOTES}.\n/" psu-changelog.txt
+		# Since we use sed to put text at the top of the file make sure the file exists.
+		if [ ! -e psu-changelog.txt ]
+		then
+			echo "Created changelog." >> psu-changelog.txt
+		fi
+
+		# Add entry to changelog for the psu file.
+		echo "Please provide a small changelog entry for the psu-${_DATE}.squashfs :"
+		read _NOTES
+		sed -i "1s/^/${_DATE} - ${_NOTES}.\n/" psu-changelog.txt
+	else
+		echo "No chroot modifications saved to a psu file."
+	fi
 
 	Cleanup_mounts
 
@@ -118,28 +134,50 @@ then
 	echo "${_ROSTACK}"
 	#mount -t aufs -o br=./partial_squashfs_updates=rw:./filesystem_squashfs=ro none ./partial_squashfs_union
 	mount -t aufs -o br=./partial_squashfs_updates=rw"${_ROSTACK}" none ./partial_squashfs_union
-	echo "You selected to create a new filesystem.squashfs."
-	_DATE=$(date +%Y%m%d-%H%M%S)
-	echo "Now making the updated squashfs ${_DATE} from untion not update."
-	mksquashfs ./partial_squashfs_union psu-${_DATE}.squashfs
 
-	#read _HOLD
+	# Prompt to join psu files or not.
+	_DEFAULTYESNO="N"
+	echo "#############################################################"
+	echo " (Y)es join psu files."
+	echo " (N)o do not join psu files."
+	echo "Select to join your psu files (default is ${_DEFAULTYESNO}):
+	"
+	read _YESNO
 
-	# Since we use sed to put text at the top of the file make sure the file exists.
-	if [ ! -e psu-changelog.txt ]
+	_YESNO="${_YESNO:-${_DEFAULTYESNO}}"
+
+	if [ ${_YESNO} = "Y" ]
 	then
-		echo "Created changelog." >> psu-changelog.txt
-	fi
+		_DATE=$(date +%Y%m%d-%H%M%S)
+		echo "Now making the updated squashfs ${_DATE} from untion not update."
+		mksquashfs ./partial_squashfs_union psu-${_DATE}.squashfs
 
-	# Add entry to changelog for the joining of the psu files.
-	sed -i "1s/^/******* ${_DATE} - Joined squashfs files. ********\n/" psu-changelog.txt
+		#read _HOLD
+
+		# Since we use sed to put text at the top of the file make sure the file exists.
+		if [ ! -e psu-changelog.txt ]
+		then
+			echo "Created changelog." >> psu-changelog.txt
+		fi
+
+		# Add entry to changelog for the joining of the psu files.
+		sed -i "1s/^/******* ${_DATE} - Joined squashfs files. ********\n/" psu-changelog.txt
+	else
+		echo "No psu files will be joined."
+	fi
 
 	Cleanup_mounts
+
 	# Remove old directories and move old partials out.
-	if [ ! -d "partial_squashfs_updates-OLD-${_DATE}" ]; then
-		mkdir psu-OOS-${_DATE}
+	if [ ${_YESNO} = "Y" ]
+	then
+		if [ ! -d "partial_squashfs_updates-OLD-${_DATE}" ]; then
+			mkdir psu-OOS-${_DATE}
+		fi
+		rsync -av --remove-source-files --exclude psu-${_DATE}.squashfs ./psu-*.squashfs ./psu-OOS-${_DATE}/
+	else
+		echo "No rsync of current partials to an Out Of Service folder will occur."
 	fi
-	rsync -av --remove-source-files --exclude psu-${_DATE}.squashfs ./psu-*.squashfs ./psu-OOS-${_DATE}/
 else
 	echo "You entered an unknowon choice!"
 	echo "Aborting."
