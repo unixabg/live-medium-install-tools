@@ -49,8 +49,8 @@ fi
 
 _DEFAULTRUNTYPE="C"
 echo "#############################################################"
-echo "  (C)hroot - partial squashfs"
-echo "  (J)oin   - combine partial squashfs to new filesystem.squashfs"
+echo "  (C)hroot - Chroot in to the filesystem.squashfs + psu-*.squashfs stack."
+echo "  (J)oin   - Join the partial squashfs update files to new single psu-DATE.squashfs"
 echo "Select run type (default is ${_DEFAULTRUNTYPE}):"
 
 read _RUNTYPE
