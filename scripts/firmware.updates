@@ -58,7 +58,6 @@ echo "$(date +%Y%m%d-%H%M%S) - Begin firmware.upgrade script - ${_VERSION}." >> 
 # rsync from the rsync server to the live media path.
 rsync -av --append-verify ${_RSYNC_SERVER}/${_IMAGE_VERSION}/live/ ${_LIVE_PATH}/live/ >> ${_FIRMWARE_LOG} 2>&1
 
-
 # Let the log file know that we have finished.
 echo "$(date +%Y%m%d-%H%M%S) - End firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
 
