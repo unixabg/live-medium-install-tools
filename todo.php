@@ -10,11 +10,9 @@ include "header.php";
 				<ul>
 					<li>Consider swapfile and persistence options</li>
 					<li><strike>Update VCS to have a direct link to latest live-media-install script</strike></li>
-					<li>Create firmware.updates to rsync for partial.squashfs updates.</li>
-					<li>Improve firmware session injection to use rsync</li>
-					<li>Improve firmware session injection to use locking</li>
-					<li>Improve firmware session injection to use test for updates for single instance runs</li>
-					<li>Improve partial-squashfs-updates to include changelog or notes of patch</li>
+					<li><strike>Create firmware.updates to rsync for partial.squashfs updates.</strike></li>
+					<li><strike>Improve firmware session injection to use test for updates for single instance runs</strike></li>
+					<li><strike>Improve partial-squashfs-updates to include changelog or notes of patch</strike></li>
 					<li><strike>Setup README</strike></li>
 					<li>Consider Makefile install</li>
 					<li></li>
