@@ -10,7 +10,7 @@
 set -e
 
 # Set script version
-_VERSION='20140101-0'
+_VERSION='20140329-0'
 
 # Set the log file for the operations.
 _BASE_PATH='/root'
