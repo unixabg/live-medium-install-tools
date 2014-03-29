@@ -31,15 +31,21 @@ _SCRIPT_LIST="default nogo print"
 # For each _SCRIPT_LIST entry attemmpt to download and inject in to system.
 for _SCRIPT in ${_SCRIPT_LIST}
 do
-	echo "Attempting injection of ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
+	if [ -f "${_BASE_PATH}/${_SCRIPT}" ]
+	then
+		echo "It appears that we have already attempted to inject the ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
+		echo "Skipping attempt to inject the ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
+	else
+		echo "Attempting injection of ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
 
-	# FIXME - Turn on https later
-	# Attempt to download script
-	wget http://install.live-systems.org/firmware/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG}
+		# FIXME - Turn on https later
+		# Attempt to download script
+		wget http://install.live-systems.org/firmware/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG}
 
-	# Attempt to run script
-	chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
-	"${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
+		# Attempt to run script
+		chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
+		"${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
+	fi
 done
 
 # Let the log file know that we have finished.
