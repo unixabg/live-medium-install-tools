@@ -26,7 +26,7 @@ MAC=$(ifconfig | grep eth0 | awk '{print tolower($5)}')
 echo "MAC Address is ${MAC}" >> ${_FIRMWARE_LOG}
 
 # FIXME - This should get pulled in from http(s).
-_SCRIPT_LIST="print nogo"
+_SCRIPT_LIST="default nogo print"
 
 # For each _SCRIPT_LIST entry attemmpt to download and inject in to system.
 for _SCRIPT in ${_SCRIPT_LIST}
