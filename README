@@ -4,16 +4,16 @@
 ## This is free software, and you are welcome to redistribute it
 ## under certain conditions; see COPYING for details.
 
-############################ W A R N I N G ###################################
+##############################################################################
+############################# live-medium-install ############################
 live-medium-install is designed to format a target device (drive) and install
 debian live as firmware. Hence data loss on the target will occur. Use at your
 own risk!
 
 ############################ W A R N I N G ###################################
 Did you see the part where data loss on the target will occur?
-
-############################ W A R N I N G ###################################
 !!!!!!!!!!!!!!!!!!!!!!!  USE AT YOUR OWN RISK!  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+############################ W A R N I N G ###################################
 
 The below is the starting point for testing live-medium-install.
 
