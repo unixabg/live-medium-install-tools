@@ -19,7 +19,6 @@ The below is the starting point for testing live-medium-install.
 
 1.) Download a debian live image. See http://live-systems.org/cdimage/release/
 
-
 2.) Boot the downloaded image on the computer you wish to install and run debian live as firmware.
 Note: I do most of my testing with a VirtualBox image.
 
@@ -40,3 +39,45 @@ chmod +x ./live-medium-install
 ./live-medium-install
 
 From here the script will check for some dependencies and prompt for information to perform the install.
+
+##############################################################################
+################### live-partial-squashfs-updates ############################
+
+1.) First make a working folder: mkdir -p /pathToSome/tempFolder/
+
+2.) Copy your webboot /var/www/files/pathToYourOriginalWebbootFiles/filesystem.squashfs to /pathToSome/tempFolder/
+
+3.) cd to /pathToSome/tempFolder/
+
+4.) Download the latest live-partial-squashfs-updates file to your /pathToSome/tempFolder/ :  wget  http://install.live-systems.org/scripts/live-partial-squashfs-updates
+
+5.) Make sure it is executable: chmod +x ./live-partial-squashfs-updates
+
+So now you have your filesystem.squashfs and live-partial-squashfs-updates in the same folder.
+
+6.) As root run:   ./live-partial-squashfs-updates
+
+Select the Chroot option and do some minor thing like apt-get update or something, then exit and the script will create a partial squashfs update file.
+
+Now the Join options needs multiple partial squashfs updates, so run the script and do chroot  and make a few changes each time. Each run _should_ stack the squashfs files in the correct order to have your latest combination presented to you in che chroot.
+
+Now when you are happy about all your changes with your partial update files, then you can combine the partial squashfs files to a single new file by selection the (J)oin option.
+
+Once you have psu (partial squashfs update) files you can sync them back you the original live folder which has your filesystem.squashfs file. So something like this:  rsync -av psu* /var/www/files/pathToYourOriginalWebbootFiles/
+
+##############################################################################
+############## live-medium-install firmware.updates of psu files #############
+
+Now to apply the psu updates boot your live-medium-install setup:
+
+1.) Download http://install.live-systems.org/scripts/firmware.updates
+
+2.) Adjust the script to your rsync setup.
+
+3.) chmod +x ./firmware.updates
+
+4.) As root run: ./firmware.updates
+
+5.) After updates completed halt your system.
+
+6.) Boot your newly updated live-medium-install setup.
