@@ -43,7 +43,13 @@ mount -o remount,rw ${_LIVE_PATH}
 
 # Check the log file size and keep the size under some metrics.
 _MAX_LOG_SIZE=1000000
-_LOG_SIZE=$(stat -c%s ${_FIRMWARE_LOG})
+if [ -f ${_FIRMWARE_LOG} ]
+then
+	_LOG_SIZE=$(stat -c%s ${_FIRMWARE_LOG})
+else
+	_LOG_SIZE=0
+fi
+
 if [ ${_LOG_SIZE} -ge ${_MAX_LOG_SIZE} ]
 then
 	echo "Size of ${_FIRMWARE_LOG} is over the ${_MAX_LOG_SIZE} bytes limit." >> ${_FIRMWARE_LOG}
