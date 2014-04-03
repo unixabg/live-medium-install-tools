@@ -31,7 +31,7 @@ _SCRIPT_LIST="default nogo print"
 # For each _SCRIPT_LIST entry attemmpt to download and inject in to system.
 for _SCRIPT in ${_SCRIPT_LIST}
 do
-	if [ -f "${_BASE_PATH}/${_SCRIPT}" ]
+	if [ -f "${_BASE_PATH}/${_SCRIPT}" ]  && [ $(stat -c%s ${_BASE_PATH}/${_SCRIPT}) -ne 0 ]
 	then
 		echo "It appears that we have already attempted to inject the ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
 		echo "Skipping attempt to inject the ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
