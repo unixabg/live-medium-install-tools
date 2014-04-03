@@ -10,7 +10,7 @@
 set -e
 
 # Set script version.
-_VERSION='20140329-0'
+_VERSION='20140403-0'
 
 # FIXME
 # Set the image version to match firmware installed squashfs version.
