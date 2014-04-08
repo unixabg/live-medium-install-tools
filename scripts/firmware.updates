@@ -10,7 +10,7 @@
 set -e
 
 # Set script version.
-_VERSION='20140403-0'
+_VERSION='20140408-0'
 
 # FIXME
 # Set the image version to match firmware installed squashfs version.
@@ -50,6 +50,9 @@ else
 	_LOG_SIZE=0
 fi
 
+# Let the log file know that we have downloaded and started.
+echo "$(date +%Y%m%d-%H%M%S) - Begin firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+
 if [ ${_LOG_SIZE} -ge ${_MAX_LOG_SIZE} ]
 then
 	echo "Size of ${_FIRMWARE_LOG} is over the ${_MAX_LOG_SIZE} bytes limit." >> ${_FIRMWARE_LOG}
@@ -58,14 +61,12 @@ else
 	echo "Size of ${_FIRMWARE_LOG} is under the ${_MAX_LOG_SIZE} bytes limit." >> ${_FIRMWARE_LOG}
 fi
 
-# Let the log file know that we have downloaded and started.
-echo "$(date +%Y%m%d-%H%M%S) - Begin firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
-
 # rsync from the rsync server to the live media path.
 rsync -av --append-verify ${_RSYNC_SERVER}/${_IMAGE_VERSION}/live/ ${_LIVE_PATH}/live/ >> ${_FIRMWARE_LOG} 2>&1
 
 # Let the log file know that we have finished.
 echo "$(date +%Y%m%d-%H%M%S) - End firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+echo "" >> ${_FIRMWARE_LOG}
 
 # Remount the media.
 mount -o remount,ro ${_LIVE_PATH}
