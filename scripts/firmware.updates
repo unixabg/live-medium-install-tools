@@ -12,10 +12,6 @@ set -e
 # Pull in common settings.
 . '/usr/share/live-medium-install-tools/COMMON'
 
-# FIXME
-# Set the image version to match firmware installed squashfs version.
-_IMAGE_VERSION='FIXME'
-
 # Set the log file for the operations.
 _LIVE_PATH='/lib/live/mount/medium'
 
