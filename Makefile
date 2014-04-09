@@ -42,6 +42,10 @@ install-client:
 	mkdir -p $(DESTDIR)/usr/lib/live-medium-install-tools
 	cp -a scripts/* $(DESTDIR)/usr/lib/live-medium-install-tools
 
+	# Installing shared data
+	mkdir -p $(DESTDIR)/usr/share/live-medium-install-tools
+	cp -r share/* $(DESTDIR)/usr/share/live-medium-install-tools
+
 	# Installing documentation
 	mkdir -p $(DESTDIR)/usr/share/doc/live-medium-install-tools
 	cp -r COPYING README $(DESTDIR)/usr/share/doc/live-medium-intsll-tools
