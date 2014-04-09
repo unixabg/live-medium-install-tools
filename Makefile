@@ -48,7 +48,7 @@ install-client:
 
 	# Installing documentation
 	mkdir -p $(DESTDIR)/usr/share/doc/live-medium-install-tools
-	cp -r COPYING README $(DESTDIR)/usr/share/doc/live-medium-intsll-tools
+	cp -r COPYING README $(DESTDIR)/usr/share/doc/live-medium-install-tools
 	install -D -m 0644 examples/firmware.injection.crontab $(DESTDIR)/etc/cron.d/firmware.injection
 
 uninstall-client:
