@@ -9,8 +9,8 @@
 
 set -e
 
-# Set script version
-_VERSION='20140403-0'
+# Pull in common settings.
+. '/usr/share/live-medium-install-tools/COMMON'
 
 # Set the log file for the operations.
 _BASE_PATH='/root'
