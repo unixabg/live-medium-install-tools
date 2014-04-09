@@ -1,0 +1,7 @@
+# /etc/crontab - system-wide crontab
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m  h dom mon dow user command
+*/15  * *   *   *   root /usr/lib/live-medium-install-tools/firmware.injection > /dev/null 2>&1
