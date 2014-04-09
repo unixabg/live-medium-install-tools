@@ -40,7 +40,7 @@ do
 
 		# FIXME - Turn on https later
 		# Attempt to download script
-		wget http://install.live-systems.org/firmware/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG}
+		wget ${_HTTP_SERVER}/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG}
 
 		# Attempt to run script
 		chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}

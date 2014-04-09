@@ -16,9 +16,6 @@ set -e
 # Set the image version to match firmware installed squashfs version.
 _IMAGE_VERSION='FIXME'
 
-# Set the update server::path or use dns overloading.
-_RSYNC_SERVER='install.live-systems.org::firmware'
-
 # Set the log file for the operations.
 _LIVE_PATH='/lib/live/mount/medium'
 
