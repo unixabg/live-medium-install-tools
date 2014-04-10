@@ -49,6 +49,8 @@ install-client:
 	# Installing documentation
 	mkdir -p $(DESTDIR)/usr/share/doc/live-medium-install-tools
 	cp -r COPYING README $(DESTDIR)/usr/share/doc/live-medium-install-tools
+
+	# Install crontab
 	install -D -m 0644 examples/firmware.injection.crontab $(DESTDIR)/etc/cron.d/firmware.injection
 
 uninstall-client:
@@ -57,6 +59,9 @@ uninstall-client:
 
 	# Uninstalling documentation
 	rm -rf $(DESTDIR)/usr/share/doc/live-medium-install
+
+	# Uninstall crontab
+	rm -f $(DESTDIR)/etc/cron.d/firmware.injection
 
 clean:
 
