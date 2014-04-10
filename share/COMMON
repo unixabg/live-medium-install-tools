@@ -1,6 +1,11 @@
 # Set the current verion
 _VERSION="20140409"
 
+######## Settings for firmware.injection ########
+# Set the injection server/path or use dns overloading.
+_HTTP_SERVER='http://install.live-systems.org/firmware'
+
+######## Below are for firmware.updates ########
 # FIXME
 # This variable is site specific, to see the usage examine firmware.updates.
 # Set the image version to match firmware installed squashfs version.
@@ -8,9 +13,6 @@ _IMAGE_VERSION='FIXME'
 
 # Set the live media path operations.
 _LIVE_PATH='/lib/live/mount/medium'
-
-# Set the injection server/path or use dns overloading.
-_HTTP_SERVER='http://install.live-systems.org/firmware'
 
 # Set the update server::path or use dns overloading.
 _RSYNC_SERVER='install.live-systems.org::firmware'
