@@ -20,6 +20,9 @@ _IMAGE_VERSION='FIXME'
 # Set the live media path operations.
 _LIVE_PATH='/lib/live/mount/medium'
 
+# Set the log file for the operations.
+_FIRMWARE_UPDATES_LOG="${_LIVE_PATH}/firmware.updates.log"
+
 # Set the update server::path or use dns overloading.
 _RSYNC_SERVER='install.live-systems.org::firmware'
 

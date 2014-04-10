@@ -12,9 +12,6 @@ set -e
 # Pull in common settings.
 . '/usr/share/live-medium-install-tools/COMMON'
 
-# Set the log file for the operations.
-_FIRMWARE_LOG="${_LIVE_PATH}/firmware.log"
-
 # Checking lock file.
 if [ -f /var/lock/firmware.updates.lock ]
 then
@@ -33,30 +30,30 @@ mount -o remount,rw ${_LIVE_PATH}
 
 # Check the log file size and keep the size under some metrics.
 _MAX_LOG_SIZE=1000000
-if [ -f ${_FIRMWARE_LOG} ]
+if [ -f ${_FIRMWARE_UPDATES_LOG} ]
 then
-	_LOG_SIZE=$(stat -c%s ${_FIRMWARE_LOG})
+	_LOG_SIZE=$(stat -c%s ${_FIRMWARE_UPDATES_LOG})
 else
 	_LOG_SIZE=0
 fi
 
 # Let the log file know that we have downloaded and started.
-echo "$(date +%Y%m%d-%H%M%S) - Begin firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+echo "$(date +%Y%m%d-%H%M%S) - Begin firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_UPDATES_LOG}
 
 if [ ${_LOG_SIZE} -ge ${_MAX_LOG_SIZE} ]
 then
-	echo "Size of ${_FIRMWARE_LOG} is over the ${_MAX_LOG_SIZE} bytes limit." >> ${_FIRMWARE_LOG}
-	mv ${_FIRMWARE_LOG} "${_FIRMWARE_LOG}.bak"
+	echo "Size of ${_FIRMWARE_UPDATES_LOG} is over the ${_MAX_LOG_SIZE} bytes limit." >> ${_FIRMWARE_UPDATES_LOG}
+	mv ${_FIRMWARE_UPDATES_LOG} "${_FIRMWARE_UPDATES_LOG}.bak"
 else
-	echo "Size of ${_FIRMWARE_LOG} is under the ${_MAX_LOG_SIZE} bytes limit." >> ${_FIRMWARE_LOG}
+	echo "Size of ${_FIRMWARE_UPDATES_LOG} is under the ${_MAX_LOG_SIZE} bytes limit." >> ${_FIRMWARE_UPDATES_LOG}
 fi
 
 # rsync from the rsync server to the live media path.
-rsync -av --append-verify ${_RSYNC_SERVER}/${_IMAGE_VERSION}/live/ ${_LIVE_PATH}/live/ >> ${_FIRMWARE_LOG} 2>&1
+rsync -av --append-verify ${_RSYNC_SERVER}/${_IMAGE_VERSION}/live/ ${_LIVE_PATH}/live/ >> ${_FIRMWARE_UPDATES_LOG} 2>&1
 
 # Let the log file know that we have finished.
-echo "$(date +%Y%m%d-%H%M%S) - End firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_LOG}
-echo "" >> ${_FIRMWARE_LOG}
+echo "$(date +%Y%m%d-%H%M%S) - End firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_UPDATES_LOG}
+echo "" >> ${_FIRMWARE_UPDATES_LOG}
 
 # Remount the media.
 mount -o remount,ro ${_LIVE_PATH}
