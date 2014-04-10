@@ -5,6 +5,12 @@ _VERSION="20140409"
 # Set the injection server/path or use dns overloading.
 _HTTP_SERVER='http://install.live-systems.org/firmware'
 
+# Set the base path for injection operations.
+_BASE_PATH='/root'
+
+# Set the log file for the injection operations.
+_FIRMWARE_INJECTION_LOG="${_BASE_PATH}/firmware.injection.log"
+
 ######## Below are for firmware.updates ########
 # FIXME
 # This variable is site specific, to see the usage examine firmware.updates.

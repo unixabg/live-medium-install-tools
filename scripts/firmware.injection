@@ -12,18 +12,12 @@ set -e
 # Pull in common settings.
 . '/usr/share/live-medium-install-tools/COMMON'
 
-# Set the log file for the operations.
-_BASE_PATH='/root'
-
-# Set the log file for the operations.
-_FIRMWARE_LOG="${_BASE_PATH}/firmware.log"
-
 # Let the log file know that we have downloaded and started.
-echo "Begin firmware script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+echo "Begin firmware script - ${_VERSION}." >> ${_FIRMWARE_INJECTION_LOG}
 
 # Set the primary MAC for the machine assumes eth0.
 MAC=$(ifconfig | grep eth0 | awk '{print tolower($5)}')
-echo "MAC Address is ${MAC}" >> ${_FIRMWARE_LOG}
+echo "MAC Address is ${MAC}" >> ${_FIRMWARE_INJECTION_LOG}
 
 # FIXME - This should get pulled in from http(s).
 _SCRIPT_LIST="default nogo print"
@@ -33,21 +27,21 @@ for _SCRIPT in ${_SCRIPT_LIST}
 do
 	if [ -f "${_BASE_PATH}/${_SCRIPT}" ]  && [ $(stat -c%s ${_BASE_PATH}/${_SCRIPT}) -ne 0 ]
 	then
-		echo "It appears that we have already attempted to inject the ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
-		echo "Skipping attempt to inject the ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
+		echo "It appears that we have already attempted to inject the ${_SCRIPT} script." >> ${_FIRMWARE_INJECTION_LOG}
+		echo "Skipping attempt to inject the ${_SCRIPT} script." >> ${_FIRMWARE_INJECTION_LOG}
 	else
-		echo "Attempting injection of ${_SCRIPT} script." >> ${_FIRMWARE_LOG}
+		echo "Attempting injection of ${_SCRIPT} script." >> ${_FIRMWARE_INJECTION_LOG}
 
 		# FIXME - Turn on https later
 		# Attempt to download script
-		wget ${_HTTP_SERVER}/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_LOG}
+		wget ${_HTTP_SERVER}/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_INJECTION_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_INJECTION_LOG}
 
 		# Attempt to run script
-		chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
-		"${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_LOG}
+		chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_INJECTION_LOG}
+		"${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_INJECTION_LOG}
 	fi
 done
 
 # Let the log file know that we have finished.
-echo "End firmware script - ${_VERSION}." >> ${_FIRMWARE_LOG}
+echo "End firmware script - ${_VERSION}." >> ${_FIRMWARE_INJECTION_LOG}
 
