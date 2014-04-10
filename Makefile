@@ -2,8 +2,6 @@
 
 SHELL := sh -e
 
-LANGUAGES = $(shell cd manpages/po && ls)
-
 SCRIPTS = scripts/*
 
 all: build
