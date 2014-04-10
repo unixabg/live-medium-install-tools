@@ -44,7 +44,7 @@ install-client:
 
 	# Installing shared data
 	mkdir -p $(DESTDIR)/usr/share/live-medium-install-tools
-	cp -r share/* $(DESTDIR)/usr/share/live-medium-install-tools
+	cp -r share/firmware.* $(DESTDIR)/usr/share/live-medium-install-tools
 
 	# Installing documentation
 	mkdir -p $(DESTDIR)/usr/share/doc/live-medium-install-tools
