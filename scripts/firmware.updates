@@ -13,9 +13,6 @@ set -e
 . '/usr/share/live-medium-install-tools/COMMON'
 
 # Set the log file for the operations.
-_LIVE_PATH='/lib/live/mount/medium'
-
-# Set the log file for the operations.
 _FIRMWARE_LOG="${_LIVE_PATH}/firmware.log"
 
 # Checking lock file.
