@@ -57,6 +57,9 @@ uninstall-client:
 	# Uninstalling executables
 	rm -rf $(DESTDIR)/usr/live/live-medium-install-tools
 
+	# Uninstalling shared data
+	rm -rf $(DESTDIR)/usr/share/live-medium-install-tools
+
 	# Uninstalling documentation
 	rm -rf $(DESTDIR)/usr/share/doc/live-medium-install
 
