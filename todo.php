@@ -14,7 +14,7 @@ include "header.php";
 					<li><strike>Improve firmware session injection to use test for updates for single instance runs</strike></li>
 					<li><strike>Improve partial-squashfs-updates to include changelog or notes of patch</strike></li>
 					<li><strike>Setup README</strike></li>
-					<li>Consider Makefile install</li>
+					<li><strike>Consider Makefile install</strike></li>
 					<li></li>
 				</ul>
 			</p>
