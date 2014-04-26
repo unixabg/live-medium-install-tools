@@ -9,10 +9,19 @@ include "header.php";
 			<ul>
 
 <?php
+// core scripts
 $files = scandir( "./scripts/" );
 foreach( $files as $file ){
 	if ($file != '.' && $file != '..' ) {
 		echo "<li> <a href=\"./scripts/" . $file . "\">" . $file . "</a></li>";
+	}
+}
+
+// examples
+$files = scandir( "./examples/" );
+foreach( $files as $file ){
+	if ($file != '.' && $file != '..' ) {
+		echo "<li> <a href=\"./examples/" . $file . "\">" . $file . "</a></li>";
 	}
 }
 ?>
