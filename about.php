@@ -9,6 +9,7 @@ include "header.php";
 			<ul>
 				<li><a href="COPYING">COPYING</a></li>
 				<li><a href="README">README</a></li>
+				<li><a href="./todo.php">Todo</a></li>
 			</ul>
 			</h4>
 		</div>
