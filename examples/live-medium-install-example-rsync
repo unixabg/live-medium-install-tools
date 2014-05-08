@@ -19,8 +19,8 @@ _TARGET="/dev/sda"
 if [ ! -e /sbin/parted ]
 then
 	echo "E: /sbin/parted - no such file"
-	echo "E: On Debian based systems, parted can be installed with:"
-	echo "E:   apt-get install parted"
+	echo "I: On Debian based systems, parted can be installed with:"
+	echo "I:   apt-get install parted"
 
 	exit 1
 fi
@@ -28,8 +28,8 @@ fi
 if [ ! -e /usr/bin/extlinux ]
 then
 	echo "E: /usr/bin/extlinux - no such file"
-	echo "E: On Debian based systems, extlinux can be installed with:"
-	echo "E:   apt-get install extlinux"
+	echo "I: On Debian based systems, extlinux can be installed with:"
+	echo "I:   apt-get install extlinux"
 
 	exit 1
 fi
@@ -37,8 +37,8 @@ fi
 if [ ! -e /usr/bin/rsync ]
 then
 	echo "E: /usr/bin/rsync - no such file"
-	echo "E: On Debian based systems, rsync can be installed with:"
-	echo "E:   apt-get install rsync"
+	echo "I: On Debian based systems, rsync can be installed with:"
+	echo "I:   apt-get install rsync"
 
 	exit 1
 fi
