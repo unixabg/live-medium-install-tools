@@ -20,7 +20,7 @@ include "header.php";
 		$files = scandir($dir);
 		# count number of dirs
 		$count = count($files);
-		
+
 		for ($i = 2; $i < $count; $i++) {
 			$file = "./machines/".$files[$i];
 			$file_array = file("$file/info.txt");

@@ -17,8 +17,8 @@ include "header.php";
 		$file = $_POST['file'];
 		echo $custom;
 		if ($submit == "&#9998;") {
-			if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) { 
-				echo "<h2 color=\"red\">Invalid Mac address</h2>"; 
+			if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
+				echo "<h2 color=\"red\">Invalid Mac address</h2>";
 			} else {
 				echo "<form action=\"save_changes.php\" method=\"POST\">
 						Mac:<input type=\"text\" name=\"mac_edit\" maxlength=\"17\" value=\"$mac\">

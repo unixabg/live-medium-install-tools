@@ -5,7 +5,7 @@ include "header.php";
 	<div id="main_text">
 		<?php
 		$search = $_POST['search'];
-		
+
 		$file = file_get_contents("./machines/$search/info.txt");
 		$file_array = explode("|", $file);
 		if (is_dir("./machines/$search")) {
@@ -23,12 +23,12 @@ include "header.php";
 					<td>$file_array[2]</td>
 					<td>$file_array[3]</td>
 				</tr>
-				</table>";	
+				</table>";
 		} else {
 			echo "<p class=\"search_no\">No results found for <br />\"$search\"</p>";
 		}
 		?>
-			
+
 	</div>
 </body>
 <?php

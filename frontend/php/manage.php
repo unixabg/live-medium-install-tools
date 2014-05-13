@@ -18,7 +18,7 @@ $count_scripts = count($scripts);
 		}
 		?>
 		<input type="submit" name="add" value="Add Machine">
-	</form>	
+	</form>
 
 <?php
 $mac = htmlspecialchars($_POST['mac']);
