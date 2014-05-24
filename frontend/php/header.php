@@ -1,8 +1,11 @@
 <?php
 /*
-* Copyright (C) 2014 Project
-* silverburd.com
-* License: http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
+## Copyright (C) 2014 silverburd.com
+## Copyright (C) 2014 Richard Nelson <unixabg@gmail.com>
+##
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
 */
 ?>
 <html>
