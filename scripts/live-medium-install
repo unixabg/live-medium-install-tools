@@ -201,6 +201,21 @@ esac
 cat << EOF
 
 ######################################################
+Do you have a custom boot folder to rsync?
+Please enter: 'Yes, rsync boot menu.'
+(default: ${_BOOTMENU})
+
+EOF
+
+# Ask for _BOOTMENU
+echo -n ": "
+read _READ
+
+_BOOTMENU=${_READ:-${_BOOTMENU}}
+
+cat << EOF
+
+######################################################
 Do you want to use persistence option?
 Please enter: 'Yes, I want persistence.'
 (default: ${_PERSISTENCE})
@@ -232,22 +247,6 @@ case "${_PERSISTENCE}" in
 		exit 1
 		;;
 esac
-
-cat << EOF
-
-######################################################
-Do you have a custom boot folder to rsync?
-Please enter: 'Yes, rsync boot menu.'
-(default: ${_BOOTMENU})
-
-EOF
-
-# Ask for _BOOTMENU
-echo -n ": "
-read _READ
-
-_BOOTMENU=${_READ:-${_BOOTMENU}}
-
 
 # Display warning
 cat << EOF
