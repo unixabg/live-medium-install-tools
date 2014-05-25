@@ -28,12 +28,12 @@ _NONFREE="No, do not include non-free."
 
 _TARGET="/dev/sda"
 
+# Custom boot menu
+_BOOTMENU="No, include the default menu."
+
 # Persistence settings
 _PERSISTENCE="No, do not make persistence."
 _SIZE="250MB"
-
-# Custom boot menu
-_BOOTMENU="No, include the default menu."
 
 # Dependencies
 if [ ! -e /sbin/parted ]
