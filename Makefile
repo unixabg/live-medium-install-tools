@@ -64,8 +64,18 @@ uninstall-client:
 	# Uninstall crontab
 	rm -f $(DESTDIR)/etc/cron.d/firmware.injection
 
+install-frontend-php:
+	# Installing executables
+	mkdir -p $(DESTDIR)/var/www/firmware
+	cp -r frontend/php/* $(DESTDIR)/var/www/firmware
+
+uninstall-fronend-php:
+	# Uninstalling executables
+	rm -rf $(DESTDIR)/var/www/firmware
+
 clean:
 
 distclean:
 
 reinstall-client: uninstall-client install-client
+reinstall-frontend-php: uninstall-frontend-php install-frontend-php
