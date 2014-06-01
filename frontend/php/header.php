@@ -10,7 +10,7 @@
 ?>
 <html>
 <head>
-	<title>MG</title>
+	<title>LMIT</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="./jquery/jquery.js"></script>
 	<script src="./jquery/edit_pop.js"></script>
