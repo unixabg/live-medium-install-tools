@@ -1,0 +1,10 @@
+AuthUserFile /Library/WebServer/Documents/.htpasswd
+AuthName "Name of Page"
+
+AuthType Basic
+
+<Files "manage.php">
+
+  require valid-user
+
+</Files>
