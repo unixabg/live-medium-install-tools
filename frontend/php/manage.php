@@ -27,18 +27,20 @@ $description = htmlspecialchars($_POST['description']);
 $print = htmlspecialchars($_POST['print']);
 $data = "$mac|$id|$description|$print";
 
-if (is_dir("./machines/$mac") && !is_dir("./machines/ ")) {
-	echo "<h3> <font color=\"red\">Machine exist.</font></h3>";
-} else {
-	if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
-		echo "<h3><font color='red'>Invalid Mac Address</font></h3>";
+if (!empty($mac)) {
+	if (is_dir("./machines/$mac") && !is_dir("./machines/ ")) {
+		echo "<h3> <font color=\"red\">Machine exist.</font></h3>";
 	} else {
-		mkdir("./machines/$mac/", 0777);
-		$fh = fopen("./machines/$mac/info.txt", 'w');
-		fwrite($fh,$data);
-		fclose($fh);
-		if ($print == "1") {
-			symlink("/var/www/proto/TECH/script/print", "/var/www/proto/TECH/machines/$mac/print");
+		if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
+			echo "<h3><font color='red'>Invalid Mac Address</font></h3>";
+		} else {
+			mkdir("./machines/$mac/", 0777);
+			$fh = fopen("./machines/$mac/info.txt", 'w');
+			fwrite($fh,$data);
+			fclose($fh);
+			if ($print == "1") {
+				symlink("/var/www/proto/TECH/script/print", "/var/www/proto/TECH/machines/$mac/print");
+			}
 		}
 	}
 }
