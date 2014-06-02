@@ -109,3 +109,6 @@ function deleteConfirm(e) {
 	}
 }
 </script>
+<?php
+include "footer.php";
+?>

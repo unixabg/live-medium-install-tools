@@ -41,7 +41,6 @@ include "header.php";
 		echo "</table>";
 		?>
 	</div>
-</body>
 <?php
 include "footer.php";
 ?>

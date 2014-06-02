@@ -75,7 +75,6 @@ include "header.php";
 			</form>
 		</div>
 	</div>
-</body>
 <?php
 include "footer.php";
 ?>
