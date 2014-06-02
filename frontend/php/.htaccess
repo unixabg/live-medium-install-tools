@@ -1,4 +1,4 @@
-AuthUserFile /Library/WebServer/Documents/.htpasswd
+AuthUserFile /var/www/firmware/.htpasswd
 AuthName "Name of Page"
 
 AuthType Basic
