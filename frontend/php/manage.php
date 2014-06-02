@@ -83,16 +83,29 @@ for ($i = 2; $i < $count; $i++) {
 			}
 		}
 		echo "<td>
-			<form onsubmit=\"return confirm('Are you sure you want to make this change?');\" class='edit' action='edit.php' method='POST'>
+			<form class='edit' action='edit.php' method='POST'>
 				<input type='hidden' name='mac' value='".$dir_array[0]."'>
 				<input type='hidden' name='id' value='".$dir_array[1]."'>
 				<input type='hidden' name='description' value='".$dir_array[2]."'>
 				<input type='hidden' name='print' value='".$dir_array[3]."'>
 				<input type='hidden' name='file' value='".$file."'>
-				<input type='submit' name='submit' value='&#9998;'>
-				<input type='submit' name='submit' value='X'>
+				<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='&#9998;'>
+				<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='X'>
 			</form>
 		</td>
 	</tr>";
 }
 ?>
+<script>
+function deleteConfirm(e) {
+// I need to know which submit button was pressed.
+	if (e.value=='X'){
+		var answer = confirm("Cancel?")
+		if (answer){
+			return true;
+		} else{
+			return false;
+		}
+	}
+}
+</script>
