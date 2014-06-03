@@ -3,6 +3,8 @@ AuthName "Name of Page"
 
 AuthType Basic
 
+Options -Indexes
+
 <Files "manage.php">
 
   require valid-user
