@@ -43,14 +43,14 @@ $count_scripts = count($scripts);
 							<td>$array[1]</td>
 							<td>$array[2]</td>";
 							for ($i = 2; $i < $count_scripts; $i++) {
-								if (is_link("./machines/".$files[$x]."/".$scripts[$x]) || is_file("./machines/".$files[$i]."/".$scripts[$x])) { 
+								if (is_link("./machines/".$files[$x]."/".$scripts[$x]) || is_file("./machines/".$files[$i]."/".$scripts[$x])) {
 									echo "<td class=\"e\">&#10003;</td>";
 								} else {
 									echo "<td class=\"e\"></td>";
 								}
 							}
 						echo "</tr>";
-				} 
+				}
 			}
 			echo "</table>";
 		} else {
