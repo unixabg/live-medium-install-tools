@@ -39,7 +39,7 @@ if (!empty($mac)) {
 			fwrite($fh,$data);
 			fclose($fh);
 			if ($print == "1") {
-				symlink("/var/www/proto/TECH/script/print", "/var/www/proto/TECH/machines/$mac/print");
+				symlink(getcwd()."/script/print", getcwd()."/machines/$mac/print");
 			}
 		}
 	}
