@@ -38,8 +38,11 @@ if (!empty($mac)) {
 			$fh = fopen("./machines/$mac/info.txt", 'w');
 			fwrite($fh,$data);
 			fclose($fh);
-			if ($print == "1") {
-				symlink(getcwd()."/script/print", getcwd()."/machines/$mac/print");
+			for ($x = 2; $x < $count_scripts; $x++) {
+				$post = $_POST[$scripts[$x]];
+				if ($post == "1") {
+					symlink(getcwd()."/script/$scripts[$x]", getcwd()."/machines/$mac/$scripts[$x]");
+				}
 			}
 		}
 	}
@@ -100,7 +103,7 @@ for ($i = 2; $i < $count; $i++) {
 function deleteConfirm(e) {
 // I need to know which submit button was pressed.
 	if (e.value=='X'){
-		var answer = confirm("Cancel?")
+		var answer = confirm("Are you sure you want to delete this machine?")
 		if (answer){
 			return true;
 		} else{
