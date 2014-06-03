@@ -1,0 +1,16 @@
+---------------------------------------------------------
+|				     		     																	|
+|	SilverBurd.com (C) 2014	 <johnburd19@gmail.com>
+|				    		    																		|
+---------------------------------------------------------
+Set up username and password for manage.php
+
+1.) Go into the root directory and type:
+
+	htpasswd -c .htpasswd username
+
+2.) You will be prompted for a new password.
+
+3.) After typing in the password you will have a new file called ".htpasswd" with the new user information.
+
+NOTE: After creating the first user, you will no longer have to use the "-c".
