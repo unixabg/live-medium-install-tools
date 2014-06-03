@@ -1,8 +1,7 @@
----------------------------------------------------------
-|				     		     																	|
-|	SilverBurd.com (C) 2014	 <johnburd19@gmail.com>
-|				    		    																		|
----------------------------------------------------------
+## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
+## This is free software, and you are welcome to redistribute it
+## under certain conditions; see COPYING for details.
+############################################################
 Set up username and password for manage.php
 
 1.) Go into the root directory and type:
