@@ -5,8 +5,8 @@ AuthType Basic
 
 Options -Indexes
 
-<Files "manage.php">
+<FilesMatch "manage.php|edit.php|admin.php">
 
   require valid-user
 
-</Files>
+</FilesMatch>
