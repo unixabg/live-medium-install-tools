@@ -41,7 +41,7 @@ if (!empty($mac)) {
 			for ($x = 2; $x < $count_scripts; $x++) {
 				$post = $_POST[$scripts[$x]];
 				if ($post == "1") {
-					symlink(getcwd()."/script/$scripts[$x]", getcwd()."/machines/$mac/$scripts[$x]");
+					symlink(getcwd()."/scripts/$scripts[$x]", getcwd()."/machines/$mac/$scripts[$x]");
 				}
 			}
 		}
