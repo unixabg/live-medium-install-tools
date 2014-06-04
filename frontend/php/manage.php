@@ -7,8 +7,8 @@ $count_scripts = count($scripts);
 <div id="main_text">
 <h1>Manage Machines</h1>
 	<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
-		<input type="text" name="mac" maxlength="17" placeholder="Mac Address">
-		<input type="text" name="id" placeholder="Machine ID">
+		<input class="input_mac" type="text" name="mac" maxlength="17" placeholder="Mac Address">
+		<input class="input_id" type="text" name="id" placeholder="Machine ID">
 		<input type="text" name="description" placeholder="Machine Description">
 		<?php
 		for ($x = 2; $x < $count_scripts; $x++) {

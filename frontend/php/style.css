@@ -117,7 +117,6 @@ td.d {
 	width: 225px;
 }
 td.e {
-
 	text-align: center;
 }
 tr:nth-child(odd) {
@@ -157,6 +156,12 @@ p.search_no {
 	font-size: 43px;
 	text-align: center;
 	margin-top: 4em;
+}
+/***********************
+ * input type style
+************************/
+.input_mac, .input_id {
+	text-transform: uppercase;
 }
 /***********************
  * Edit Pop up text area
@@ -201,4 +206,28 @@ textarea:focus {
 	font-size: 18px;
 	line-height: 5px;
 	text-align: center;
+}
+/*************************
+ * admin.php
+*************************/
+#script_pannel {
+	float: left;
+	width: 125px;
+	background: #A4A4A4;
+	text-align: center;
+	border-radius: 5px;
+	padding: .5em;
+	min-height: 75%;
+}
+#script_pannel ul {
+	list-style-type: none;
+	padding: 0;
+	text-align: center;
+}
+#script_pannel li {
+	padding: .5em;
+	border-bottom: 1.5px solid #848484;
+}
+#script_pannel a {
+	text-decoration: none;
 }

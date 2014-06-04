@@ -21,8 +21,8 @@ include "header.php";
 				echo "<h2 color=\"red\">Invalid Mac address</h2>";
 			} else {
 				echo "<form action=\"save_changes.php\" method=\"POST\">
-						Mac:<input type=\"text\" name=\"mac_edit\" maxlength=\"17\" value=\"$mac\">
-						ID:<input type=\"text\" name=\"id_edit\" value=\"$id\">
+						Mac:<input class=\"input_mac\" type=\"text\" name=\"mac_edit\" maxlength=\"17\" value=\"$mac\">
+						ID:<input class=\"input_id\" type=\"text\" name=\"id_edit\" value=\"$id\">
 						Description:<input type=\"text\" name=\"description_edit\" value=\"$description\">";
 				for ($x = 2; $x < $count_scripts; $x++) {
 					if(is_link("./machines/$mac/".$scripts[$x])) {
