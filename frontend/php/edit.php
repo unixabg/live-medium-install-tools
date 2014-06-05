@@ -64,7 +64,7 @@ include "header.php";
 		?>
 	</div>
 	<div id="edit_wrap">
-		<div id="edit">
+		<div class="edit">
 			<h1 class="custom_h1">Custom Script</h1>
 			<form action="custom.php" method="POST">
 					<input type="hidden" name="mac" value="<?php echo $mac;?>">

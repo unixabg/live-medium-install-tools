@@ -1,10 +1,10 @@
 $(document).ready(function(){
 	$(".custom").click(function(){
-		$("#edit").show();
+		$(".edit").show();
 		return false;
 	});
 	$(".cancel").click(function(){
-		$("#edit").hide();
+		$(".edit").hide();
 		return false;
 	});
 });
