@@ -2,9 +2,9 @@
 include "header.php";
 ?>
 <script src="./jquery/checkall.js"></script>
+<script src="./jquery/code_pop.js"></script>
 <body>
 	<div id="main_text">
-	<!--<h1>Administrative</h1>-->
 		<div id="script_pannel">
 			<h3 class="pannel_head">Admin</h3>
 			<ul>
@@ -30,22 +30,33 @@ include "header.php";
 						<th>Action</th>
 					</tr>";
 				for ($x = 2; $x < $count; $x++) {
-					$content = substr(file_get_contents("./library/$library[$x]"), 0, 50);
+					$file = "./library/$library[$x]";
+					$content = file_get_contents($file);
+					echo "<tr>";
 					if(is_link("./scripts/$library[$x]")) {
-						echo "<tr>
-							<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$library[$x]\" value=\"1\" checked /></td>
-							<td>$library[$x]</td>
-							<td>$content....</td>
-							<td></td>
-						</tr>";
+							echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$library[$x]\" value=\"1\" checked /></td>";
 					} else {
-						echo "<tr>
-							<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$library[$x]\" value=\"1\" /></td>
-							<td>$library[$x]</td>
-							<td>$content....</td>
-							<td></td>
-						</tr>";
+							echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$library[$x]\" value=\"1\" /></td>";
 					}
+					echo "<td>$library[$x]</td>
+						<td><a class=\"a_code\" rowid=\"$x\" href=\"#$library[$x]\">".substr($content,0 ,50)."....</a></td>
+						<td><button rowid=\"$x\" class=\"edit_button\">&#9998;</button><button>X</button></td>
+					</tr>";
+					echo "<div rowid=\"$x\" class=\"backlight\"><div class=\"code_box\"><div id=\"header_pop\"><h2>Script</h2><p class=\"exit\">X</p></div><div id=\"content_pop\">$content</div></div></div>";
+					echo "</form>";
+				?>
+				<div id="edit_wrap">
+					<div class="edit"<?php echo "rowid=\"$x\""; ?>>
+						<h1 class="custom_h1">Script</h1>
+						<form action="edit_script.php" method="POST">
+							<textarea name="script" rows="24" cols="83"><?php echo $content;?></textarea>
+							<?php echo "<input type=\"hidden\" name=\"file\" value=\"$file\">";?>
+							<input class="submit" type="submit" name="submit" value="Submit">
+							<input class="delete" type="submit" name="submit" value="Delete Script">
+							<button class='cancel'>Cancel</button>
+						</form>
+				</div>
+				<?php
 				}
 				echo "</table>";
 				echo "<input type=\"submit\" value=\"Submit\">";

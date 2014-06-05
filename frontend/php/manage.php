@@ -79,14 +79,14 @@ for ($i = 2; $i < $count; $i++) {
 		<td class=\"b\">".$dir_array[1]."</td>
 		<td class=\"d\">".$dir_array[2]."</td>";
 		for ($x = 2; $x < $count_scripts; $x++) {
-			if (is_link("./machines/".$files[$i]."/".$scripts[$x]) || is_file("./machines/".$files[$i]."/".$scripts[$x])) { 
+			if (is_link("./machines/".$files[$i]."/".$scripts[$x]) || is_file("./machines/".$files[$i]."/".$scripts[$x])) {
 				echo "<td class=\"e\">&#10003;</td>";
 			} else {
 				echo "<td class=\"e\"></td>";
 			}
 		}
 		echo "<td>
-			<form class='edit' action='edit.php' method='POST'>
+			<form class='edit_form' action='edit.php' method='POST'>
 				<input type='hidden' name='mac' value='".$dir_array[0]."'>
 				<input type='hidden' name='id' value='".$dir_array[1]."'>
 				<input type='hidden' name='description' value='".$dir_array[2]."'>
