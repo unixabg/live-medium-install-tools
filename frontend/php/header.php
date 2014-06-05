@@ -19,6 +19,7 @@
 	<ul>
 		<li><a href="index.php">View</a></li>
 		<li><a href="manage.php">Manage</a></li>
+		<li><a href="admin.php">Administrative</a></li>
 	</ul>
 	<ul class="search">
 		<li>
