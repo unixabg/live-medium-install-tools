@@ -49,10 +49,10 @@ else
 fi
 
 # Pull in psu updates for live media from the rsync server.
-rsync -av --append-verify --delete ${_RSYNC_SERVER}/${_IMAGE_VERSION}/live/ ${_LIVE_PATH}/live/ >> ${_FIRMWARE_UPDATES_LOG} 2>&1
+rsync -av --delete ${_RSYNC_SERVER}/${_IMAGE_VERSION}/live/ ${_LIVE_PATH}/live/ >> ${_FIRMWARE_UPDATES_LOG} 2>&1
 
 # Pull in menu updates for boot menu to the live media from the rsync server.
-rsync -av --append-verify --delete ${_RSYNC_SERVER}/${_IMAGE_VERSION}/boot/ ${_LIVE_PATH}/boot/ >> ${_FIRMWARE_UPDATES_LOG} 2>&1
+rsync -av --delete ${_RSYNC_SERVER}/${_IMAGE_VERSION}/boot/ ${_LIVE_PATH}/boot/ >> ${_FIRMWARE_UPDATES_LOG} 2>&1
 
 # Let the log file know that we have finished.
 echo "$(date +%Y%m%d-%H%M%S) - End firmware.upgrade script - ${_VERSION}." >> ${_FIRMWARE_UPDATES_LOG}
