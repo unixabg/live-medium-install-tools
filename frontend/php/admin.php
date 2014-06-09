@@ -42,8 +42,8 @@ include "header.php";
 						<td><a class=\"a_code\" rowid=\"$x\" href=\"#$library[$x]\">".substr($content,0 ,50)."....</a></td>
 						<td><button rowid=\"$x\" class=\"edit_button\">&#9998;</button><button>X</button></td>
 					</tr>";
-					$content = str_replace("\n","<br />", $content);
-					echo "<div rowid=\"$x\" class=\"backlight\"><div class=\"code_box\"><div id=\"header_pop\"><h2>Script</h2><p class=\"exit\">X</p></div><div id=\"content_pop\">$content</div></div></div>";
+					$content_br = str_replace("\n","<br />", $content);
+					echo "<div rowid=\"$x\" class=\"backlight\"><div class=\"code_box\"><div id=\"header_pop\"><h2>Script</h2><p class=\"exit\">X</p></div><div id=\"content_pop\">$content_br</div></div></div>";
 					echo "</form>";
 				?>
 				<div id="edit_wrap">
