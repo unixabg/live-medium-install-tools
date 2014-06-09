@@ -19,8 +19,8 @@ echo "Begin firmware script - ${_VERSION}." >> ${_FIRMWARE_INJECTION_LOG}
 MAC=$(ifconfig | grep eth0 | awk '{print tolower($5)}')
 echo "MAC Address is ${MAC}" >> ${_FIRMWARE_INJECTION_LOG}
 
-# FIXME - This should get pulled in from http(s).
-_SCRIPT_LIST="default nogo print"
+# FIXME - Consider pulling with http(s).
+_SCRIPT_LIST=$(wget -qO- ${_HTTP_SERVER}/operator.php?mac=${MAC})
 
 # For each _SCRIPT_LIST entry attemmpt to download and inject in to system.
 for _SCRIPT in ${_SCRIPT_LIST}
@@ -34,7 +34,7 @@ do
 
 		# FIXME - Turn on https later
 		# Attempt to download script
-		wget ${_HTTP_SERVER}/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_INJECTION_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_INJECTION_LOG}
+		wget ${_HTTP_SERVER}/machines/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_INJECTION_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_INJECTION_LOG}
 
 		# Attempt to run script
 		chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_INJECTION_LOG}
