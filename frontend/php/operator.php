@@ -1,5 +1,4 @@
 <?php
-$dir = "./machines/";
 $mac = $_GET['mac'];
 $machine_dir = scandir("./machines/$mac");
 $count_machine = count($machine_dir);
