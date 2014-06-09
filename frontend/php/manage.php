@@ -25,8 +25,8 @@ $count_scripts = count($scripts);
 	</form>
 
 <?php
-$mac = htmlspecialchars($_POST['mac']);
-$id = htmlspecialchars($_POST['id']);
+$mac = strtoupper(htmlspecialchars($_POST['mac']));
+$id = strtoupper(htmlspecialchars($_POST['id']));
 $description = htmlspecialchars($_POST['description']);
 $print = htmlspecialchars($_POST['print']);
 $data = "$mac|$id|$description|$print";
