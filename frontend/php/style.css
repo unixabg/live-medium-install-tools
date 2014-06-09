@@ -97,6 +97,10 @@ h2 {
 /***************************
  * Table Style
 ***************************/
+table {
+	float: left;
+	display: block;
+}
 table th {
 	padding: 5px 15px;
 	background-color: rgb(175,175,175);
@@ -162,6 +166,14 @@ p.search_no {
 ************************/
 .input_mac, .input_id {
 	text-transform: uppercase;
+}
+#checkbox_script {
+	float: left;
+	clear: left;
+	padding: .5em 0; 
+}
+#text_input {
+	float: left;
 }
 /***********************
  * Edit Pop up text area
@@ -273,6 +285,7 @@ textarea:focus {
 }
 #library table {
 	border-collapse:collapse;
+	float: none;
 }
 #library table th {
 	border-bottom: 1px solid #D8D8D8;
@@ -303,7 +316,6 @@ textarea:focus {
 	margin: 30px auto;
 	width: 90%;
 	height: 85%;
-	overflow: scroll;
 }
 #header_pop {
 	width: 100%;
@@ -327,10 +339,10 @@ textarea:focus {
 	cursor: pointer;
 }
 #content_pop {
-	padding: 5px;
 	float: left;
 	width: 100%;
 	overflow: scroll;
+	height: calc(100% - 65px);
 }
 #add_script {
 	left: 0;

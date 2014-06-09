@@ -21,9 +21,11 @@ include "header.php";
 				echo "<h2 color=\"red\">Invalid Mac address</h2>";
 			} else {
 				echo "<form action=\"save_changes.php\" method=\"POST\">
+						<div id=\"text_input\">
 						Mac:<input class=\"input_mac\" type=\"text\" name=\"mac_edit\" maxlength=\"17\" value=\"$mac\">
 						ID:<input class=\"input_id\" type=\"text\" name=\"id_edit\" value=\"$id\">
-						Description:<input type=\"text\" name=\"description_edit\" value=\"$description\">";
+						Description:<input type=\"text\" name=\"description_edit\" value=\"$description\"></div>";
+				echo "<div id=\"checkbox_script\">";
 				for ($x = 2; $x < $count_scripts; $x++) {
 					if(is_link("./machines/$mac/".$scripts[$x])) {
 						echo $scripts[$x].":<input type='checkbox' name='".$scripts[$x]."' value='1' checked>";
@@ -33,6 +35,7 @@ include "header.php";
 						echo $scripts[$x].":<input type='checkbox' name='".$scripts[$x]."' value='1'>";
 					}
 				}
+				echo "</div>";
 				echo "<input type=\"hidden\" name=\"file\" value=\"$file/info.txt\">
 						<input class='save' type=\"submit\" name='submit' value=\"Save\">
 			</form>";
