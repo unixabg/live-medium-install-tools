@@ -8,8 +8,8 @@ include "header.php";
 		$scripts = scandir('./scripts/');
 		$count_scripts = count($scripts);
 
-		$mac = $_POST['mac'];
-		$id = $_POST['id'];
+		$mac = strtolower($_POST['mac']);
+		$id = strtoupper($_POST['id']);
 		$description = $_POST['description'];
 		$print = $_POST['print'];
 		$custom = $_POST['custom'];
