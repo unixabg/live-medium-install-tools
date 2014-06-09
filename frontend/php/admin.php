@@ -3,13 +3,13 @@ include "header.php";
 ?>
 <script src="./jquery/checkall.js"></script>
 <script src="./jquery/code_pop.js"></script>
+<script src="./jquery/new_script.js"></script>
 <body>
 	<div id="main_text">
 		<div id="script_pannel">
 			<h3 class="pannel_head">Admin</h3>
 			<ul>
 				<li><a href="#library">Library</a></li>
-				<!--<li><a href="#script">Scripts</a></li>-->
 			</ul>
 		</div>
 		<div id="admin_area">
@@ -49,7 +49,7 @@ include "header.php";
 					<div class="edit"<?php echo "rowid=\"$x\""; ?>>
 						<h1 class="custom_h1">Script</h1>
 						<form action="edit_script.php" method="POST">
-							<textarea name="script" rows="24" cols="83"><?php echo $content;?></textarea>
+							<textarea name="script"><?php echo $content;?></textarea>
 							<?php echo "<input type=\"hidden\" name=\"file\" value=\"$file\">";?>
 							<input class="submit" type="submit" name="submit" value="Submit">
 							<input class="delete" type="submit" name="submit" value="Delete Script">
@@ -59,8 +59,21 @@ include "header.php";
 				<?php
 				}
 				echo "</table>";
+				echo "<button class=\"new_script_button\">+</button>";
 				echo "<input type=\"submit\" value=\"Submit\">";
+				echo "</form>";
 				?>
+				<div id="add_script">
+					<div id="new_script">
+						<h1 class="custom_h1">New Script</h1>
+						<form action="new_script.php" method="POST">
+							<input class="script_name" type="text" name="file" placeholder="Script Name">
+							<textarea name="new_script" class="textarea_new_script"></textarea>
+							<input class="add_script_submit" type="submit" value="Add Script">
+							<button class="cancel">Cancel</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
