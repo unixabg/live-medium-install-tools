@@ -170,6 +170,7 @@ p.search_no {
 	float: left;
 	clear: left;
 	padding: .5em 0;
+	width: 90%;
 }
 #text_input {
 	float: left;
