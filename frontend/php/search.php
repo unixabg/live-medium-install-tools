@@ -43,7 +43,7 @@ $count_scripts = count($scripts);
 							<td>$array[1]</td>
 							<td>$array[2]</td>";
 							for ($i = 2; $i < $count_scripts; $i++) {
-								if (is_link(getcwd()."/machines/".$machine_array[$x]."/".$scripts[$i]) || is_file(getcwd()."/machines/".$machine_array[$x]."/".$scripts[$i])) {
+								if (is_link("./machines/".$machine_array[$x]."/".$scripts[$i]) || is_file("./machines/".$machine_array[$x]."/".$scripts[$i])) {
 									echo "<td class=\"e\">&#10003;</td>";
 								} else {
 									echo "<td class=\"e\"></td>";
