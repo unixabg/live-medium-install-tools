@@ -8,7 +8,7 @@ for ($x = 2; $x < $count; $x++) {
 		// Step up one dir from anticipated symlink target.
 		symlink("../library/$library[$x]", "./scripts/$library[$x]");
 	} elseif($post != "1") {
-	unlink("./scripts/$library[$x]");
+		unlink("./scripts/$library[$x]");
 	}
 }
 header('Location: admin.php');

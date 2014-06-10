@@ -40,7 +40,12 @@ include "header.php";
 					}
 					echo "<td>$library[$x]</td>
 						<td><a class=\"a_code\" rowid=\"$x\" href=\"#$library[$x]\">".substr($content,0 ,50)."....</a></td>
-						<td><button rowid=\"$x\" class=\"edit_button\">&#9998;</button><button>X</button></td>
+						<td><button rowid=\"$x\" class=\"edit_button\">&#9998;</button>
+							<form action=\"delete_library.php\" method=\"POST\">
+								<input type=\"hidden\" value=\"$library[$x]\">
+								<input type=\"submit\" value=\"X\">
+							</form>
+						</td>
 					</tr>";
 					$content_br = str_replace("\n","<br />", $content);
 					echo "<div rowid=\"$x\" class=\"backlight\"><div class=\"code_box\"><div id=\"header_pop\"><h2>Script</h2><p class=\"exit\">X</p></div><div id=\"content_pop\">$content_br</div></div></div>";
@@ -51,7 +56,7 @@ include "header.php";
 						<h1 class="custom_h1">Script</h1>
 						<form action="edit_script.php" method="POST">
 							<textarea name="script"><?php echo $content;?></textarea>
-							<?php echo "<input type=\"hidden\" name=\"file\" value=\"$file\">";?>
+							<?php echo "<input type=\"hidden\" name=\"file\" value=\"$library[$x]\">";?>
 							<input class="submit" type="submit" name="submit" value="Submit">
 							<input class="delete" type="submit" name="submit" value="Delete Script">
 							<button class='cancel'>Cancel</button>
