@@ -42,7 +42,7 @@ include "header.php";
 						<td><a class=\"a_code\" rowid=\"$x\" href=\"#$library[$x]\">".substr($content,0 ,50)."....</a></td>
 						<td><button rowid=\"$x\" class=\"edit_button\">&#9998;</button>
 							<form action=\"delete_library.php\" method=\"POST\">
-								<input type=\"hidden\" value=\"$library[$x]\">
+								<input type=\"hidden\" name=\"file\" value=\"$library[$x]\">
 								<input type=\"submit\" value=\"X\">
 							</form>
 						</td>
