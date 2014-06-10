@@ -13,7 +13,8 @@ if ($submit == "Submit") {
 	}
 	for ($x = 2; $x < $count_machines; $x++) {
 		if (is_link("./machines/$machine[$x]/$file")) {
-		unlink("./machines/$machine[$x]/$file");
+			unlink("./machines/$machine[$x]/$file");
+		}
 	}
 }
 header('Location: ./admin.php');
