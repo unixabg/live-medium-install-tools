@@ -12,7 +12,7 @@ if ($submit == "Submit") {
 		unlink("./scripts/$file");
 	}
 	for ($x = 2; $x < $count_machines; $x++) {
-		if (is_link("./machines/$machine[$x]/$file");
+		if (is_link("./machines/$machine[$x]/$file")) {
 		unlink("./machines/$machine[$x]/$file");
 	}
 }

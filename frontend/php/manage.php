@@ -25,13 +25,12 @@ $count_scripts = count($scripts);
 	</form>
 
 <?php
-$mac = strtolower(htmlspecialchars($_POST['mac']));
-$id = strtoupper(htmlspecialchars($_POST['id']));
-$description = htmlspecialchars($_POST['description']);
-$print = htmlspecialchars($_POST['print']);
-$data = "$mac|$id|$description|$print";
+if (!empty($_POST['mac'])) {
+	$mac = strtolower(htmlspecialchars($_POST['mac']));
+	$id = strtoupper(htmlspecialchars($_POST['id']));
+	$description = htmlspecialchars($_POST['description']);
+	$data = "$mac|$id|$description";
 
-if (!empty($mac)) {
 	if (is_dir("./machines/$mac") && !is_dir("./machines/ ")) {
 		echo "<h3> <font color=\"red\">Machine exist.</font></h3>";
 	} else {
@@ -95,7 +94,6 @@ for ($i = 2; $i < $count; $i++) {
 				<input type='hidden' name='mac' value='".$dir_array[0]."'>
 				<input type='hidden' name='id' value='".$dir_array[1]."'>
 				<input type='hidden' name='description' value='".$dir_array[2]."'>
-				<input type='hidden' name='print' value='".$dir_array[3]."'>
 				<input type='hidden' name='file' value='".$file."'>
 				<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='&#9998;'>
 				<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='X'>
