@@ -40,12 +40,7 @@ include "header.php";
 					}
 					echo "<td>$library[$x]</td>
 						<td><a class=\"a_code\" rowid=\"$x\" href=\"#$library[$x]\">".substr($content,0 ,50)."....</a></td>
-						<td><button rowid=\"$x\" class=\"edit_button\">&#9998;</button>
-							<form action=\"delete_library.php\" method=\"POST\">
-								<input type=\"hidden\" name=\"file\" value=\"$library[$x]\">
-								<input type=\"submit\" value=\"X\">
-							</form>
-						</td>
+						<td><button rowid=\"$x\" class=\"edit_button\">&#9998;</button></td>
 					</tr>";
 					$content_br = str_replace("\n","<br />", $content);
 					echo "<div rowid=\"$x\" class=\"backlight\"><div class=\"code_box\"><div id=\"header_pop\"><h2>Script</h2><p class=\"exit\">X</p></div><div id=\"content_pop\">$content_br</div></div></div>";
