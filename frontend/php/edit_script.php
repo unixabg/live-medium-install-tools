@@ -1,6 +1,8 @@
 <?php
 $file = $_POST['file'];
 $new_script = $_POST['script'];
+$new_script = preg_replace("/\r\n/", "\n", $new_script);
+$new_script = preg_replace("/\r/", "\n", $new_script);
 $submit = $_POST['submit'];
 $machine = scandir("./machines/");
 $count_machines = count($machine);
