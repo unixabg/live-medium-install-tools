@@ -1,5 +1,7 @@
 <?php
 include "header.php";
+$scripts = scandir('./scripts/');
+$count_scripts = count($scripts);
 ?>
 <body>
 	<div id="main_text">
@@ -9,9 +11,11 @@ include "header.php";
 				<th>Mac Adress</th>
 				<th>Machine ID</th>
 				<th>Description</th>
-				<th class="e">Print</th>
-				<th class="e">Update</th>
-				<th class="e">Default</th>
+				<?php
+				for ($x = 2; $x < $count_scripts; $x++) {
+					echo "<th class=\"e\">".$scripts[$x]."</th>";
+				}
+				?>
 			</tr>
 
 		<?php
