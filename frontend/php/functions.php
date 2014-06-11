@@ -1,5 +1,8 @@
 <?php
-# scans $dir and prints each item formated into table header, excludes . and .. file.
+/* scans_th
+Scans the $dir and prints each item formated into table header,
+and excludes . and .. file.
+*/
 function scan_th($dir) {
 	$dir = scandir($dir);
 	$count = count($dir);
@@ -10,7 +13,10 @@ function scan_th($dir) {
 	}
 }
 
-# scans $file for files it contains and scans $dir to print out each item with a check or no check, excludes . and .. file.
+/* check_box
+Scans $file for files it contains and scans $dir to print out each item with
+a check or no check, excludes . and .. file.
+*/
 function check_box($file, $dir) {
 	$dir = scandir($dir);
 	$count = count($dir);
