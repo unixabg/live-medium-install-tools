@@ -12,9 +12,7 @@ $count_scripts = count($scripts);
 				<th>Machine ID</th>
 				<th>Description</th>
 				<?php
-				for ($x = 2; $x < $count_scripts; $x++) {
-					echo "<th class=\"e\">".$scripts[$x]."</th>";
-				}
+				scan_th("./scripts/");
 				?>
 			</tr>
 
@@ -25,24 +23,20 @@ $count_scripts = count($scripts);
 		# count number of dirs
 		$count = count($files);
 
-		for ($i = 2; $i < $count; $i++) {
-			$file = "./machines/".$files[$i];
-			$file_array = file("$file/info.txt");
-			$dir_array = explode("|", $file_array[0]);
+		for ($i = 0; $i < $count; $i++) {
+			if ($files[$i] != "." && $files[$i] != "..") {
+				$file = "./machines/".$files[$i];
+				$file_array = file("$file/info.txt");
+				$dir_array = explode("|", $file_array[0]);
 
-			echo "<tr>";
-			echo "<td class=\"a\">".$dir_array[0]."</td>
-				<td class=\"b\">".$dir_array[1]."</td>
-				<td class=\"d\">".$dir_array[2]."</td>";
-			if(is_link("./machines/".$files[$i]."/print")) {
-				echo "<td class=\"e\">&#10003;</td>";
-			} else {
-				echo "<td class=\"e\"></td>";
+				echo "<tr>";
+				echo "<td class=\"a\">".$dir_array[0]."</td>
+					<td class=\"b\">".$dir_array[1]."</td>
+					<td class=\"d\">".$dir_array[2]."</td>";
+				check_box($files[$i], "./scripts/");
 			}
-				echo "<td class=\"e\"></td>";
-				echo "<td class=\"e\"></td>";
 		}
-		echo "</table>";
+			echo "</table>";
 		?>
 	</div>
 <?php

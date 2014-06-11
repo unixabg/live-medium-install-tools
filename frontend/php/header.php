@@ -28,3 +28,6 @@
 			</form>
 	</ul>
 </nav>
+<?php
+include "functions.php";
+?>

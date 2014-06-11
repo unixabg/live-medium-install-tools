@@ -14,9 +14,11 @@ $count_scripts = count($scripts);
 		</div>
 		<?php
 		echo "<div id=\"checkbox_script\">";
-		for ($x = 2; $x < $count_scripts; $x++) {
-			if (is_file("./scripts/$scripts[$x]") && $scripts[$x] != 'custom') {
-				echo "$scripts[$x]<input type=\"checkbox\" name=\"$scripts[$x]\" value=\"1\"> ";
+		for ($x = 0; $x < $count_scripts; $x++) {
+			if ($scripts[$x] != "." && $scripts[$x] != "..") {
+				if (is_file("./scripts/$scripts[$x]") && $scripts[$x] != 'custom') {
+					echo "$scripts[$x]<input type=\"checkbox\" name=\"$scripts[$x]\" value=\"1\"> ";
+				}
 			}
 		}
 		echo "</div>";
@@ -41,11 +43,13 @@ if (!empty($_POST['mac'])) {
 			$fh = fopen("./machines/$mac/info.txt", 'w');
 			fwrite($fh,$data);
 			fclose($fh);
-			for ($x = 2; $x < $count_scripts; $x++) {
-				$post = $_POST[$scripts[$x]];
-				if ($post == "1") {
-					// Step back up two dirs for the symlink.
-					symlink("../../scripts/$scripts[$x]", "./machines/$mac/$scripts[$x]");
+			for ($x = 0; $x < $count_scripts; $x++) {
+				if ($scripts[$x] != "." && $scripts[$x] != "..") {
+					$post = $_POST[$scripts[$x]];
+					if ($post == "1") {
+						// Step back up two dirs for the symlink.
+						symlink("../../scripts/$scripts[$x]", "./machines/$mac/$scripts[$x]");
+					}
 				}
 			}
 		}
@@ -59,9 +63,7 @@ if (!empty($_POST['mac'])) {
 		<th>Machine ID</th>
 		<th>Description</th>
 		<?php
-		for($x = 2; $x < $count_scripts; $x++) {
-			echo "<th class=\"e\">".$scripts[$x]."</th>";
-		}
+		scan_th("./scripts/");
 		?>
 		<th>Edit</th>
 	</tr>
@@ -73,33 +75,29 @@ $files = scandir($dir);
 # count number of dirs
 $count = count($files);
 
-for ($i = 2; $i < $count; $i++) {
-	$file = "./machines/".$files[$i];
-	$file_array = file("$file/info.txt");
-	$dir_array = explode("|", $file_array[0]);
-	$count_array = count($dir_array);
-	echo "<tr>";
-	echo "<td class=\"a\">".$dir_array[0]."</td>
-		<td class=\"b\">".$dir_array[1]."</td>
-		<td class=\"d\">".$dir_array[2]."</td>";
-		for ($x = 2; $x < $count_scripts; $x++) {
-			if (is_link("./machines/".$files[$i]."/".$scripts[$x]) || is_file("./machines/".$files[$i]."/".$scripts[$x])) {
-				echo "<td class=\"e\">&#10003;</td>";
-			} else {
-				echo "<td class=\"e\"></td>";
-			}
-		}
-		echo "<td>
-			<form class='edit_form' action='edit.php' method='POST'>
-				<input type='hidden' name='mac' value='".$dir_array[0]."'>
-				<input type='hidden' name='id' value='".$dir_array[1]."'>
-				<input type='hidden' name='description' value='".$dir_array[2]."'>
-				<input type='hidden' name='file' value='".$file."'>
-				<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='&#9998;'>
-				<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='X'>
-			</form>
-		</td>
-	</tr>";
+for ($i = 0; $i < $count; $i++) {
+	if ($files[$i] != "." && $files[$i] != "..") {
+		$file = "./machines/".$files[$i];
+		$file_array = file("$file/info.txt");
+		$dir_array = explode("|", $file_array[0]);
+		$count_array = count($dir_array);
+		echo "<tr>";
+		echo "<td class=\"a\">".$dir_array[0]."</td>
+			<td class=\"b\">".$dir_array[1]."</td>
+			<td class=\"d\">".$dir_array[2]."</td>";
+			check_box($files[$i],"./scripts/");
+			echo "<td>
+				<form class='edit_form' action='edit.php' method='POST'>
+					<input type='hidden' name='mac' value='".$dir_array[0]."'>
+					<input type='hidden' name='id' value='".$dir_array[1]."'>
+					<input type='hidden' name='description' value='".$dir_array[2]."'>
+					<input type='hidden' name='file' value='".$file."'>
+					<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='&#9998;'>
+					<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='X'>
+				</form>
+			</td>
+		</tr>";
+	}
 }
 ?>
 <script>
