@@ -23,7 +23,7 @@ $count_scripts = count($scripts);
 		}
 		echo "</div>";
 		?>
-		<input class = "submit" type="submit" name="add" value="Add Machine">
+		<input type="submit" name="add" value="Add Machine">
 	</form>
 
 <?php

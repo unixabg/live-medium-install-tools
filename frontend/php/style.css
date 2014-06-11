@@ -150,9 +150,6 @@ form.edit_form input {
 form.edit_form input {
 	border-bottom: none;
 }
-.save {
-	float: right;
-}
 /*************************
  * Search.php
 *************************/
@@ -206,13 +203,11 @@ textarea:focus {
 }
 .submit {
 	float: right;
-	padding: .25em;
 }
 .cancel {
 	float: left;
 }
 .custom {
-	float: right;
 }
 .custom_h1 {
 	font-size: 18px;
@@ -367,7 +362,7 @@ textarea:focus {
 	height: 85%;
 }
 .add_script_submit {
-	float: right;
+	//float: right;
 }
 .script_name {
 	float: left;
