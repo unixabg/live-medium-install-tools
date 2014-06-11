@@ -49,7 +49,7 @@ install-client:
 	cp -r COPYING README $(DESTDIR)/usr/share/doc/live-medium-install-tools
 
 	# Install crontab
-	install -D -m 0644 examples/firmware.injection.crontab $(DESTDIR)/etc/cron.d/firmware.injection
+	install -D -m 0644 examples/firmware-injection-crontab $(DESTDIR)/etc/cron.d/firmware-injection
 
 uninstall-client:
 	# Uninstalling executables
