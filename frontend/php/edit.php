@@ -5,7 +5,8 @@ include "header.php";
 	<div id="main_text">
 		<h1>Edit Machine</h1>
 		<?php
-		$scripts = scandir('./scripts/');
+		$mgroup = $_POST['mgroup'];
+		$scripts = scandir("./scripts/$mgroup/");
 		$count_scripts = count($scripts);
 
 		$mac = strtolower($_POST['mac']);
@@ -28,7 +29,7 @@ include "header.php";
 				echo "<div id=\"checkbox_script\">";
 				for ($x = 0; $x < $count_scripts; $x++) {
 					if ($scripts[$x] != "." && $scripts[$x] != "..") {
-						if(is_link("./machines/$mac/".$scripts[$x])) {
+						if(is_link("./machines/$mgroup/$mac/".$scripts[$x])) {
 							echo $scripts[$x].":<input type='checkbox' name='".$scripts[$x]."' value='1' checked>";
 						} elseif ($scripts[$x] == 'custom') {
 							echo "<button class='custom'>Custom</button>";
@@ -67,7 +68,7 @@ include "header.php";
 		}
 		?>
 		<?php
-		$custom = file_get_contents("machines/$mac/custom");
+		$custom = file_get_contents("./machines/$mgroup/$mac/custom");
 		?>
 	</div>
 	<div id="edit_wrap">

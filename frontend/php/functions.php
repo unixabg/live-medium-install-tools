@@ -22,7 +22,7 @@ function check_box($file, $dir) {
 	$count = count($dir);
 	for ($loop_count = 0; $loop_count < $count; $loop_count++) {
 		if ($dir[$loop_count] != "." && $dir[$loop_count] != "..") {
-			if (is_link("./machines/"."/".$file."/".$dir[$loop_count]) || is_file("./machines/".$file."/".$dir[$loop_count])) {
+			if (is_link("$file/".$dir[$loop_count]) || is_file("./machines/$file/".$dir[$loop_count])) {
 				echo "<td class=\"e\">&#10003;</td>";
 			} else {
 				echo "<td class=\"e\"></td>";
@@ -31,4 +31,89 @@ function check_box($file, $dir) {
 	}
 }
 
+/* view_table
+
+*/
+function view_table($mgroup) {
+	$dir = "./machines/$mgroup/";
+	# read dir and put dirs in array
+	$files = scandir($dir);
+	$count = count($files);
+	echo "<table style=\"float:none\">
+				<tr>
+					<th>Mac Adress</th>
+					<th>Machine ID</th>
+					<th>Description</th>";
+					scan_th("./scripts/$mgroup");
+			echo "</tr>";
+
+			$dir = "./machines/$mgroup/";
+			# read dir and put dirs in array
+			$files = scandir($dir);
+			# count number of dirs
+			$count = count($files);
+
+			for ($i = 0; $i < $count; $i++) {
+				if ($files[$i] != "." && $files[$i] != "..") {
+					$file = "./machines/$mgroup/".$files[$i];
+					$file_array = file("$file/info.txt");
+					$dir_array = explode("|", $file_array[0]);
+
+					echo "<tr>";
+					echo "<td class=\"a\">".$dir_array[0]."</td>
+						<td class=\"b\">".$dir_array[1]."</td>
+						<td class=\"d\">".$dir_array[2]."</td>";
+					check_box("./machines/$mgroup/$files[$i]", "./scripts/$mgroup/");
+					echo "</tr>";
+				}
+			}
+			echo "</table>";
+}
+
+/* manage_table
+
+*/
+function manage_table($mgroup) {
+	echo "<table>
+		<tr>
+			<th>Mac Adress</th>
+			<th>Machine ID</th>
+			<th>Description</th>";
+			scan_th("./scripts/$mgroup");
+			echo "<th>Edit</th>
+		</tr>";
+
+	$dir = "./machines/$mgroup/";
+	# read dir and put dirs in array
+	$files = scandir($dir);
+	# count number of dirs
+	$count = count($files);
+
+	for ($i = 0; $i < $count; $i++) {
+		if ($files[$i] != "." && $files[$i] != "..") {
+			$file = "./machines/$mgroup/".$files[$i];
+			$file_array = file("$file/info.txt");
+			$dir_array = explode("|", $file_array[0]);
+			$count_array = count($dir_array);
+			echo "<tr>";
+			echo "<td class=\"a\">".$dir_array[0]."</td>
+				<td class=\"b\">".$dir_array[1]."</td>
+				<td class=\"d\">".$dir_array[2]."</td>";
+				check_box("./machines/$mgroup/$files[$i]","./scripts/$mgroup/");
+				echo "<td>
+					<form class='edit_form' action='edit.php' method='POST'>
+						<input type='hidden' name='mac' value='".$dir_array[0]."'>
+						<input type='hidden' name='id' value='".$dir_array[1]."'>
+						<input type='hidden' name='description' value='".$dir_array[2]."'>
+						<input type='hidden' name='file' value='".$file."'>
+						<input type='hidden' name='mgroup' value='".$mgroup."'>
+						<input type='submit' name='submit' value='&#9998;'>
+						<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='X'>
+					</form>
+				</td>
+			</tr>";
+		}
+	}
+	echo "</table>";
+}
 ?>

@@ -1,5 +1,6 @@
 <?php
 include "header.php";
+$mgroup = $_GET['mgroup'];
 ?>
 <script src="./jquery/checkall.js"></script>
 <script src="./jquery/code_pop.js"></script>
@@ -9,14 +10,25 @@ include "header.php";
 		<div id="script_pannel">
 			<h3 class="pannel_head">Admin</h3>
 			<ul>
-				<li><a href="#library">Library</a></li>
+				<li><a href="#">Gobal Scripts</a></li>
+				<?php
+				$scripts = scandir("./scripts/");
+				$count = count($scripts);
+				for ($x = 0; $x < $count; $x++) {
+					if ($scripts[$x] != "." && $scripts[$x] != "..") {
+						if (is_dir("./scripts/".$scripts[$x])) {
+							echo "<li><a href=\"#$scripts[$x]\">$scripts[$x]</a></li>";
+						}
+					}
+				}
+				?>
 			</ul>
 		</div>
 		<div id="admin_area">
 			<div id="library">
 				<h1>Library</h1>
 				<?php
-				$dir = "./library/";
+				$dir = "./library/$mgroup/";
 				$library = scandir($dir);
 				$count = count($library);
 
@@ -31,10 +43,10 @@ include "header.php";
 					</tr>";
 				for ($x = 0; $x < $count; $x++) {
 					if ($library[$x] != "." && $library[$x] != "..") {
-						$file = "./library/$library[$x]";
+						$file = "./library/$mgroup/$library[$x]";
 						$content = file_get_contents($file);
 						echo "<tr>";
-						if(is_link("./scripts/$library[$x]")) {
+						if(is_link("./scripts/$mgroup/$library[$x]")) {
 								echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$library[$x]\" value=\"1\" checked /></td>";
 						} else {
 								echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$library[$x]\" value=\"1\" /></td>";

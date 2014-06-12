@@ -14,11 +14,36 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="./jquery/jquery.js"></script>
 	<script src="./jquery/edit_pop.js"></script>
+	<script src="./jquery/drop_menu.js"></script>
 </head>
 <nav>
-	<ul>
-		<li><a href="index.php">View</a></li>
-		<li><a href="manage.php">Manage</a></li>
+	<ul class="menu">
+		<li><a href="index.php">View</a>
+			<ul>
+			<?php
+			$mgroup = scandir('./machines/');
+			$count = count($mgroup);
+			for ($x = 0; $x < $count; $x++) {
+				if ($mgroup[$x] != "." && $mgroup[$x] != "..") {
+					echo "<li><a href=\"index.php?mgroup=$mgroup[$x]\">$mgroup[$x]</a></li>";
+				}
+			}
+			?>
+			</ul>
+		</li>
+		<li><a href="manage.php">Manage</a>
+			<ul>
+			<?php
+			$mgroup = scandir('./machines/');
+			$count = count($mgroup);
+			for ($x = 0; $x < $count; $x++) {
+				if ($mgroup[$x] != "." && $mgroup[$x] != "..") {
+					echo "<li><a href=\"manage.php?mgroup=$mgroup[$x]\">$mgroup[$x]</a></li>";
+				}
+			}
+			?>
+			</ul>
+		</li>
 		<li><a href="admin.php">Administrative</a></li>
 	</ul>
 	<ul class="search">
@@ -26,6 +51,7 @@
 			<form action="search.php" method="post">
 				<input type="text" name="search" tabindex="1" autocomplete="off" placeholder="Search..">
 			</form>
+		</li>
 	</ul>
 </nav>
 <?php

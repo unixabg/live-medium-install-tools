@@ -1,43 +1,31 @@
 <?php
 include "header.php";
-$scripts = scandir('./scripts/');
+if (!empty($_GET['mgroup'])) {
+	$mgroup = $_GET['mgroup'];
+} else {
+	$mgroup = "";
+}
+$scripts = scandir("./scripts/$mgroup");
 $count_scripts = count($scripts);
 ?>
 <body>
 	<div id="main_text">
 		<h1>View Machines</h1>
-		<table>
-			<tr>
-				<th>Mac Adress</th>
-				<th>Machine ID</th>
-				<th>Description</th>
-				<?php
-				scan_th("./scripts/");
-				?>
-			</tr>
-
 		<?php
-		$dir = "./machines/";
-		# read dir and put dirs in array
-		$files = scandir($dir);
-		# count number of dirs
-		$count = count($files);
-
-		for ($i = 0; $i < $count; $i++) {
-			if ($files[$i] != "." && $files[$i] != "..") {
-				$file = "./machines/".$files[$i];
-				$file_array = file("$file/info.txt");
-				$dir_array = explode("|", $file_array[0]);
-
-				echo "<tr>";
-				echo "<td class=\"a\">".$dir_array[0]."</td>
-					<td class=\"b\">".$dir_array[1]."</td>
-					<td class=\"d\">".$dir_array[2]."</td>";
-				check_box($files[$i], "./scripts/");
+		if (!empty($mgroup)) {
+			view_table($mgroup);
+		} else {
+			$group = scandir("./machines/");
+			$group_count = count($group);
+			for ($g = 0; $g < $group_count; $g++) {
+				if ($group[$g] != "." && $group[$g] != "..") {
+					echo "<h1><a class=\"a_h1\" href=\"index.php?mgroup=$group[$g]\">$group[$g]</a></h1>";
+					view_table($group[$g]);
+				}
 			}
 		}
-			echo "</table>";
 		?>
+
 	</div>
 <?php
 include "footer.php";

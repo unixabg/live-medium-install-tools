@@ -3,7 +3,7 @@ $mac = $_POST['mac_edit'];
 $id = $_POST['id_edit'];
 $description = $_POST['description_edit'];
 $file = $_POST['file'];
-$scripts = scandir('./scripts');
+$scripts = scandir('./scripts/$mgroup');
 $count_scripts = count($scripts);
 
 $data = "$mac|$id|$description";
@@ -14,10 +14,10 @@ for ($x = 0; $x < $count_scripts; $x++) {
 			$post = $_POST[$scripts[$x]];
 		}
 		if ($post == "1") {
-			// Step back up two dirs for the symlink.
-			symlink("../../scripts/$scripts[$x]", "./machines/$mac/$scripts[$x]");
+			// Step back up three dirs for the symlink.
+			symlink("../../../scripts/$mgroup/$scripts[$x]", "./machines/$mgroup/$mac/$scripts[$x]");
 		} elseif ($scripts[$x] != 'custom') {
-			unlink("./machines/$mac/$scripts[$x]");
+			unlink("./machines/$mgroup/$mac/$scripts[$x]");
 		}
 	}
 }

@@ -1,11 +1,19 @@
 <?php
 include "header.php";
-$scripts = scandir('./scripts/');
+if (!empty($_GET['mgroup'])) {
+	$mgroup = $_GET['mgroup'];
+} else {
+	$mgroup = "";
+}
+$scripts = scandir("./scripts/$mgroup/");
 $count_scripts = count($scripts);
 ?>
 <body>
 <div id="main_text">
 <h1>Manage Machines</h1>
+<?php
+if (!empty($mgroup)) {
+?>
 	<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
 		<div id="text_input">
 			<input class="input_mac" type="text" name="mac" maxlength="17" placeholder="Mac Address">
@@ -16,7 +24,7 @@ $count_scripts = count($scripts);
 		echo "<div id=\"checkbox_script\">";
 		for ($x = 0; $x < $count_scripts; $x++) {
 			if ($scripts[$x] != "." && $scripts[$x] != "..") {
-				if (is_file("./scripts/$scripts[$x]") && $scripts[$x] != 'custom') {
+				if (is_file("./scripts/$mgroup/$scripts[$x]") && $scripts[$x] != 'custom') {
 					echo "$scripts[$x]<input type=\"checkbox\" name=\"$scripts[$x]\" value=\"1\"> ";
 				}
 			}
@@ -26,77 +34,45 @@ $count_scripts = count($scripts);
 		<input type="submit" name="add" value="Add Machine">
 	</form>
 
-<?php
-if (!empty($_POST['mac'])) {
-	$mac = strtolower(htmlspecialchars($_POST['mac']));
-	$id = strtoupper(htmlspecialchars($_POST['id']));
-	$description = htmlspecialchars($_POST['description']);
-	$data = "$mac|$id|$description";
+	<?php
+	if (!empty($_POST['mac'])) {
+		$mac = strtolower(htmlspecialchars($_POST['mac']));
+		$id = strtoupper(htmlspecialchars($_POST['id']));
+		$description = htmlspecialchars($_POST['description']);
+		$data = "$mac|$id|$description";
 
-	if (is_dir("./machines/$mac") && !is_dir("./machines/ ")) {
-		echo "<h3> <font color=\"red\">Machine exist.</font></h3>";
-	} else {
-		if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
-			echo "<h3><font color='red'>Invalid Mac Address</font></h3>";
+		if (is_dir("./machines/$mgroup/$mac") && !is_dir("./machines/ ")) {
+			echo "<h3> <font color=\"red\">Machine exist.</font></h3>";
 		} else {
-			mkdir("./machines/$mac/", 0777);
-			$fh = fopen("./machines/$mac/info.txt", 'w');
-			fwrite($fh,$data);
-			fclose($fh);
-			for ($x = 0; $x < $count_scripts; $x++) {
-				if ($scripts[$x] != "." && $scripts[$x] != "..") {
-					$post = $_POST[$scripts[$x]];
-					if ($post == "1") {
-						// Step back up two dirs for the symlink.
-						symlink("../../scripts/$scripts[$x]", "./machines/$mac/$scripts[$x]");
+			if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
+				echo "<h3><font color='red'>Invalid Mac Address</font></h3>";
+			} else {
+				mkdir("./machines/$mgroup/$mac/", 0777);
+				$fh = fopen("./machines/$mgroup/$mac/info.txt", 'w');
+				fwrite($fh,$data);
+				fclose($fh);
+				for ($x = 0; $x < $count_scripts; $x++) {
+					if ($scripts[$x] != "." && $scripts[$x] != "..") {
+						$post = $_POST[$scripts[$x]];
+						if ($post == "1") {
+							// Step back up three dirs for the symlink.
+							symlink("../../../scripts/$mgroup/$scripts[$x]", "./machines/$mgroup/$mac/$scripts[$x]");
+						}
 					}
 				}
 			}
 		}
 	}
-}
-?>
+	manage_table($mgroup);
+} else {
+	$group= scandir("./machines/");
+	$group_count = count($group);
 
-<table>
-	<tr>
-		<th>Mac Adress</th>
-		<th>Machine ID</th>
-		<th>Description</th>
-		<?php
-		scan_th("./scripts/");
-		?>
-		<th>Edit</th>
-	</tr>
-
-<?php
-$dir = "./machines/";
-# read dir and put dirs in array
-$files = scandir($dir);
-# count number of dirs
-$count = count($files);
-
-for ($i = 0; $i < $count; $i++) {
-	if ($files[$i] != "." && $files[$i] != "..") {
-		$file = "./machines/".$files[$i];
-		$file_array = file("$file/info.txt");
-		$dir_array = explode("|", $file_array[0]);
-		$count_array = count($dir_array);
-		echo "<tr>";
-		echo "<td class=\"a\">".$dir_array[0]."</td>
-			<td class=\"b\">".$dir_array[1]."</td>
-			<td class=\"d\">".$dir_array[2]."</td>";
-			check_box($files[$i],"./scripts/");
-			echo "<td>
-				<form class='edit_form' action='edit.php' method='POST'>
-					<input type='hidden' name='mac' value='".$dir_array[0]."'>
-					<input type='hidden' name='id' value='".$dir_array[1]."'>
-					<input type='hidden' name='description' value='".$dir_array[2]."'>
-					<input type='hidden' name='file' value='".$file."'>
-					<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='&#9998;'>
-					<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='X'>
-				</form>
-			</td>
-		</tr>";
+	for ($g = 0; $g < $group_count; $g++) {
+		if ($group[$g]!= "." && $group[$g] != "..") {
+			echo "<h1><a class=\"a_h1\" href=\"manage.php?mgroup=$group[$g]\">$group[$g]</a></h1>";
+			manage_table($group[$g]);
+		}
 	}
 }
 ?>
