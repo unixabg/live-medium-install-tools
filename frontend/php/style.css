@@ -127,7 +127,6 @@ h2 {
  * Table Style
 ***************************/
 table {
-//	float: left;
 	display: block;
 }
 table th {
@@ -161,10 +160,10 @@ tr:nth-child(odd) {
 .save_change {
 	margin-left: 125px;
 }
-form.edit_form {
+.edit_form {
 	margin: 0;
 }
-form.edit_form input {
+.edit_form input {
 	display:inline;
 	font-size: 14px;
 	text-align: left;
@@ -176,7 +175,7 @@ form.edit_form input {
 	cursor: pointer;
 	border-bottom: 2px solid blue;
 }
-form.edit_form input {
+.edit_form input {
 	border-bottom: none;
 }
 /*************************
@@ -207,6 +206,7 @@ p.search_no {
 #edit_wrap {
 	margin: 0 auto;
 	width: 640px;
+	display: none;
 }
 .edit {
 	background-color: rgb(190,190,190);
@@ -224,7 +224,7 @@ textarea {
 	resize: none;
 	font-family: monospace;
 	font-size: 14px;
-	width: 600px;
+	width: 100%;
 	height: 330px;
 }
 textarea:focus {
@@ -274,7 +274,7 @@ textarea:focus {
 #script_pannel a:hover {
 	color: white;
 }
-#admin_area {
+.tabs {
 	border: 1px solid #BDBDBD;
 	float: left;
 	width: calc(100% - 140px);
@@ -365,7 +365,7 @@ textarea:focus {
 	overflow: scroll;
 	height: calc(100% - 65px);
 }
-#add_script {
+#glob_add_script, #add_script {
 	left: 0;
 	top: 0;
 	width: 100%;
