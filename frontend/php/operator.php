@@ -1,12 +1,18 @@
 <?php
 if(!empty($_GET['mac'])) {
 	$mac = $_GET['mac'];
-	$machine_dir = scandir("./machines/$mac");
-	$count_machine = count($machine_dir);
-	for ($i = 0; $i < $count_machine; $i++) {
-		if ($machine_dir[$i] != "." && $machine_dir != "..") {
-			if ($machine_dir[$i] != "info.txt") {
-				echo "$machine_dir[$i] ";
+	$group = scandir("./machines/");
+	$count_group = count($group);
+	for ($x = 0; $x < $count_group; $x++) {
+		if ($group[$x] != "." && $group[$x] != "..") {
+			$machine = scandir("./machines/$group[$x]/$mac");
+			$count_machine = count($machine);
+		}
+		for ($i = 0; $i < $count_machine; $i++) {
+			if ($machine[$i] != "." && $machine[$i] != "..") {
+				if ($machine[$i] != "info.txt") {
+					echo "$machine[$i] ";
+				}
 			}
 		}
 	}
