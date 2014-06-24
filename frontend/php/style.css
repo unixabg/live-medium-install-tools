@@ -126,6 +126,9 @@ h2 {
 /***************************
  * Table Style
 ***************************/
+#left {
+	clear: left;
+}
 table {
 	display: block;
 }
@@ -277,7 +280,6 @@ textarea:focus {
 	border: 1px solid #BDBDBD;
 	float: left;
 	width: calc(100% - 140px);
-	margin-top: -10px;
 	min-height: 500px;
 	border-radius: 0 5px 5px 0;
 }
@@ -364,7 +366,7 @@ textarea:focus {
 	overflow: scroll;
 	height: calc(100% - 65px);
 }
-#glob_add_script, #add_script {
+#add_script {
 	left: 0;
 	top: 0;
 	width: 100%;

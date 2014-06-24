@@ -24,7 +24,7 @@ if (!empty($mgroup)) {
 		echo "<div id=\"checkbox_script\">";
 		for ($x = 0; $x < $count_scripts; $x++) {
 			if ($scripts[$x] != "." && $scripts[$x] != "..") {
-				if (is_file("./scripts/$mgroup/$scripts[$x]") && $scripts[$x] != 'custom') {
+				if (is_link("./scripts/$mgroup/$scripts[$x]") && $scripts[$x] != 'custom') {
 					echo "$scripts[$x]<input type=\"checkbox\" name=\"$scripts[$x]\" value=\"1\"> ";
 				}
 			}

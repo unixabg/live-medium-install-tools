@@ -23,6 +23,7 @@ include "header.php";
 			} else {
 				echo "<form action=\"save_changes.php\" method=\"POST\">
 						<div id=\"text_input\">
+						<input type=\"hidden\" name=\"mgroup\" value=\"$mgroup\">
 						Mac:<input class=\"input_mac\" type=\"text\" name=\"mac_edit\" maxlength=\"17\" value=\"$mac\">
 						ID:<input class=\"input_id\" type=\"text\" name=\"id_edit\" value=\"$id\">
 						Description:<input type=\"text\" name=\"description_edit\" value=\"$description\"></div>";

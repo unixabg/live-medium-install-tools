@@ -8,7 +8,7 @@
 ## under certain conditions; see COPYING for details.
 */
 ?>
-<html>
+<!DOCTYPE html>
 <head>
 	<title>LMIT</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
