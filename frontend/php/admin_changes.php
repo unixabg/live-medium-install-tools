@@ -1,5 +1,6 @@
 <?php
-$dir = "./library/";
+$mgroup = $_POST['mgroup'];
+$dir = "./library/$mgroup";
 $library = scandir($dir);
 $count = count($library);
 $submit = $_POST['submit'];
@@ -7,11 +8,11 @@ if ($submit == 'Submit') {
 	for ($x = 0; $x < $count; $x++) {
 		if ($library[$x] != "." && $library[$x] != "..") {
 			$post = $_POST[$library[$x]];
-			if ($post == "1") {
+			if (isset($post)) {
 				// Step up one dir from anticipated symlink target.
-				symlink("../library/$library[$x]", "./scripts/$library[$x]");
+				symlink("../library/$mgroup/$library[$x]", "./scripts/$mgroup/$library[$x]");
 			} elseif($post != "1") {
-				unlink("./scripts/$library[$x]");
+				unlink("./scripts/$mgroup/$library[$x]");
 			}
 		}
 	}

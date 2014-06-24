@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
 		</div>
 		<?php
 		// scan library folder for groups
-		$script_group = scandir("./library/");
+		$script_group = scandir("./scripts/");
 		$count_group = count($script_group);
 		// $x represents the array number for each group in library
 		for ($x = 0; $x < $count_group; $x++) {
@@ -35,7 +35,7 @@ if (isset($_GET['action'])) {
 						<div id=\"library\">
 							<h1>$script_group[$x]</h1>
 							<form action=\"admin_changes.php\" method=\"POST\">
-								<input type=\"hidden\" name=\"group\" value=\"$script_group[$x]\">
+								<input type=\"hidden\" name=\"mgroup\" value=\"$script_group[$x]\">
 								<table>
 									<tr>
 										<th><input type=\"checkbox\" id=\"select_all\"></th>
@@ -54,7 +54,7 @@ if (isset($_GET['action'])) {
 						if (is_link("./scripts/$script_group[$x]/$scripts[$s]")) {
 							echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"1\" checked></td>";
 						} else {
-							echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"1\"></td>";
+							echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"0\"></td>";
 						}
 						echo "<td>$scripts[$s]</td>";
 						if (strlen($script_content) > 40) {
@@ -93,8 +93,8 @@ if (isset($_GET['action'])) {
 					}
 				}
 				echo "</table>
-						<button rowid=\"form$x\" class=\"new_script_button\">+</button>
 						<input type=\"submit\" name=\"submit\" value=\"Submit\">
+						<button rowid=\"form$x\" class=\"new_script_button\">+</button>
 					</form>
 				</div>
 			</div>";
