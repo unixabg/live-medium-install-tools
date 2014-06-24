@@ -6,6 +6,7 @@ $(document).ready(function() {
 	$(".backlight").click(function() {
 		$(this).hide();
 	});
+	// edit form pop up
 	$(".edit_button").click(function() {
 		var row = $(this).attr("rowid");
 		$(".edit[rowid='" + row + "']").show();
