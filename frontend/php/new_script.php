@@ -1,7 +1,8 @@
 <?php
-$file = $_POST['file'];
 $new_script = $_POST['new_script'];
 $file = $_POST['file'];
-file_put_contents("./library/$file", $new_script);
+$dir = $_POST['dir'];
+file_put_contents("$dir/$file", $new_script);
+echo "$dir/$file";
 header('Location: ./admin.php');
 ?>

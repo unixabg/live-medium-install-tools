@@ -44,7 +44,12 @@
 			?>
 			</ul>
 		</li>
-		<li><a href="admin.php">Administrative</a></li>
+		<li><a href="admin.php">Administrative</a>
+			<ul>
+				<li><a href="admin.php?action=group">Group</a></li>
+				<li><a href="admin.php">Library</a></li>
+			</ul>
+		</li>
 	</ul>
 	<ul class="search">
 		<li>
