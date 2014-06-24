@@ -26,5 +26,5 @@ for ($x = 0; $x < $count_scripts; $x++) {
 $fh = fopen($file, 'w');
 fwrite($fh,$data);
 fclose($fh);
-header('Location: manage.php');
+header("Location: manage.php?mgroup=$mgroup");
 ?>
