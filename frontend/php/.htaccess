@@ -1,12 +1,15 @@
-AuthUserFile /var/www/firmware/.htpasswd
 AuthName "Name of Page"
 
 AuthType Basic
 
 Options -Indexes
 
-<FilesMatch "manage.php|edit.php|admin.php">
+<FilesMatch "admin*">
+	AuthUserFile /var/www/firmware/.htpasswdadmin
+	require valid-user
+</FilesMatch>
 
-  require valid-user
-
+<FilesMatch "manage.php|edit.php">
+	AuthUserFile /var/www/firmware/.htpasswd
+	require valid-user
 </FilesMatch>
