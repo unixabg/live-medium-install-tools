@@ -429,3 +429,14 @@ textarea:focus {
 #status_green {
 	background-color: #01DF74;
 }
+/*************************
+ * footer.php
+*************************/
+#footer {
+	left: 0;
+	right: 0;
+	text-align: center;
+	margin: 0 auto;
+	bottom: 0;
+	line-height: 38px;
+}

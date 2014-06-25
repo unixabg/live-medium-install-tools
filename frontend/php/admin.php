@@ -116,7 +116,6 @@ status();
 		// end of library group scan
 		}
 		?>
-	</div>
 <?php
 include "footer.php";
 ?>
