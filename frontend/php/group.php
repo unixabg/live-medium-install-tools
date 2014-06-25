@@ -1,17 +1,16 @@
 <?php
 include "header.php";
-if (isset($_GET['action'])) {
-	header('Location: group.php');
-}
+$status = $_POST['status'];
+echo "<script src=\"./jquery/checkall.js\"></script>
+<script src=\"./jquery/code_pop.js\"></script>
+<script src=\"./jquery/new_script.js\"></script>
+<script src=\"./jquery/tabs.js\"></script>
+<div id=\"status\">$status</div>";
 ?>
-<script src="./jquery/checkall.js"></script>
-<script src="./jquery/code_pop.js"></script>
-<script src="./jquery/new_script.js"></script>
-<script src="./jquery/tabs.js"></script>
 <body>
 	<div id="main_text">
 		<div id="script_pannel">
-			<h3 class="pannel_head">Admin</h3>
+			<h3 class="pannel_head">Admin<br />Groups</h3>
 			<ul>
 				<li class="admin_li"><a class="admin_a" href="#new_group" tabIndex="0">New Group</a></li>
 				<?php

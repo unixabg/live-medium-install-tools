@@ -11,7 +11,7 @@ if (isset($_GET['action'])) {
 <body>
 	<div id="main_text">
 		<div id="script_pannel">
-			<h3 class="pannel_head">Admin</h3>
+			<h3 class="pannel_head">Admin<br/>Library</h3>
 			<ul>
 				<?php
 				$group_script = scandir("./library/");
@@ -38,7 +38,7 @@ if (isset($_GET['action'])) {
 								<input type=\"hidden\" name=\"mgroup\" value=\"$script_group[$x]\">
 								<table>
 									<tr>
-										<th><input type=\"checkbox\" id=\"select_all\"></th>
+										<th><input type=\"checkbox\" id=\"select_all\" rowid=\"$x\"></th>
 										<th>Script</th>
 										<th>Code</th>
 										<th>Action</th>
@@ -52,9 +52,9 @@ if (isset($_GET['action'])) {
 						$script_content = file_get_contents("./library/$script_group[$x]/$scripts[$s]");
 						echo "<tr>";
 						if (is_link("./scripts/$script_group[$x]/$scripts[$s]")) {
-							echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"1\" checked></td>";
+							echo "<td class=\"td_center\"><input class=\"checkbox1\"rowid=\"$x\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"1\" checked></td>";
 						} else {
-							echo "<td class=\"td_center\"><input class=\"checkbox1\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"0\"></td>";
+							echo "<td class=\"td_center\"><input class=\"checkbox1\" rowid=\"$x\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"0\"></td>";
 						}
 						echo "<td>$scripts[$s]</td>";
 						if (strlen($script_content) > 40) {
