@@ -7,21 +7,17 @@ if (!empty($_GET['mgroup'])) {
 }
 $scripts = scandir("./scripts/$mgroup/");
 $count_scripts = count($scripts);
-?>
-<body>
-<div id="main_text">
-<h1>Manage Machines</h1>
-<?php
-if (!empty($mgroup)) {
-?>
-	<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
-		<div id="text_input">
-			<input class="input_mac" type="text" name="mac" maxlength="17" placeholder="Mac Address">
-			<input class="input_id" type="text" name="id" placeholder="Machine ID">
-			<input type="text" name="description" placeholder="Machine Description">
+echo "<body>
+	<div id=\"main_text\">
+	<h1>Manage Machines for Group <i>$mgroup</i></h1>";
+	if (!empty($mgroup)) {
+	echo "<form action=\"". $_SERVER['PHP_SELF']."?mgroup=$mgroup\" method=\"post\">
+		<div id=\"text_input\">
+			<input class=\"input_mac\" type=\"text\" name=\"mac\" maxlength=\"17\" placeholder=\"Mac Address\">
+			<input class=\"input_id\" type=\"text\" name=\"id\" placeholder=\"Machine ID\">
+			<input type=\"text\" name=\"description\" placeholder=\"Machine Description\">
 		</div>
-		<?php
-		echo "<div id=\"checkbox_script\">";
+		<div id=\"checkbox_script\">";
 		for ($x = 0; $x < $count_scripts; $x++) {
 			if ($scripts[$x] != "." && $scripts[$x] != "..") {
 				if (is_link("./scripts/$mgroup/$scripts[$x]") && $scripts[$x] != 'custom') {
@@ -29,12 +25,10 @@ if (!empty($mgroup)) {
 				}
 			}
 		}
-		echo "</div>";
-		?>
-		<input type="submit" name="add" value="Add Machine">
-	</form>
+		echo "</div>
+		<input type=\"submit\" name=\"add\" value=\"Add Machine\">
+	</form>";
 
-	<?php
 	if (!empty($_POST['mac'])) {
 		$mac = strtolower(htmlspecialchars($_POST['mac']));
 		$id = strtoupper(htmlspecialchars($_POST['id']));
