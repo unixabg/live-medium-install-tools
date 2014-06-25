@@ -1,5 +1,6 @@
 <?php
 $mac = $_POST['mac_edit'];
+$old_mac = $_POST['old_mac'];
 $mgroup = $_POST['mgroup'];
 $id = $_POST['id_edit'];
 $description = $_POST['description_edit'];
@@ -26,5 +27,8 @@ for ($x = 0; $x < $count_scripts; $x++) {
 $fh = fopen($file, 'w');
 fwrite($fh,$data);
 fclose($fh);
+if ($old_mac != $mac) {
+	rename("./machines/$mgroup/$old_mac/", "./machines/$mgroup/$mac/");
+}
 header("Location: manage.php?mgroup=$mgroup");
 ?>
