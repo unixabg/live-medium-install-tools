@@ -17,7 +17,7 @@ if ($submit == 'Submit') {
 		$status = "Modified scripts in $mgroup.|green";
 		}
 	}
-} else {
+} elseif ($submit == 'Submit Changes') {
 	$edit_file = $_POST['edit_file'];
 	$edit_script = $_POST['edit_script'];
 	echo $edit_script."<br />";
@@ -41,6 +41,8 @@ if ($submit == 'Submit') {
 			}
 		}
 	}
+} else {
+	$status = "Action was not recognized \"$submit\".|red";
 }
 echo "<form id=\"form\" action=\"admin.php\" method=\"POST\">
 		<input type=\"hidden\" name=\"status\" value=\"$status\">
