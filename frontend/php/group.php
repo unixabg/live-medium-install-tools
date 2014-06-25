@@ -65,10 +65,10 @@ if (isset($_GET['action'])) {
 								<td>$info[0]</td>
 								<td>$info[1]</td>
 								<td>$info[2]</td>
+								<input type=\"hidden\" name=\"$machine[$m]mac\" value=\"$info[0]\">
+								<input type=\"hidden\" name=\"$machine[$m]id\" value=\"$info[1]\">
+								<input type=\"hidden\" name=\"$machine[$m]description\" value=\"$info[2]\">
 							</tr>
-							<input type=\"hidden\" name=\"$machine[$m]mac\" value=\"$info[0]\">
-							<input type=\"hidden\" name=\"$machine[$m]id\" value=\"$info[1]\">
-							<input type=\"hidden\" name=\"$machine[$m]description\" value=\"$info[2]\">
 							";
 					}
 				}
