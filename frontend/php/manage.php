@@ -8,8 +8,12 @@ if (!empty($_GET['mgroup'])) {
 $scripts = scandir("./scripts/$mgroup/");
 $count_scripts = count($scripts);
 echo "<body>
-	<div id=\"main_text\">
-	<h1>Manage Machines for Group <i>$mgroup</i></h1>";
+	<div id=\"main_text\">";
+	if (isset($_GET['mgroup'])) {
+		echo "<h1>Manage Machines for Group <i>$mgroup</i></h1>";
+	} else {
+		echo "<h1>Manage Machines</h1>";
+	}
 	if (!empty($mgroup)) {
 	echo "<form action=\"". $_SERVER['PHP_SELF']."?mgroup=$mgroup\" method=\"post\">
 		<div id=\"text_input\">

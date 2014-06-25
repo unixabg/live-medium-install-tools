@@ -7,11 +7,13 @@ if (!empty($_GET['mgroup'])) {
 }
 $scripts = scandir("./scripts/$mgroup");
 $count_scripts = count($scripts);
-?>
-<body>
-	<div id="main_text">
-		<h1>View Machines</h1>
-		<?php
+echo "<body>
+	<div id=\"main_text\">";
+if (isset($_GET['mgroup'])) {
+	echo "<h1>View Machines for group <i>$mgroup</i></h1>";
+} else {
+	echo "<h1>View Machines</h1>";
+}
 		if (!empty($mgroup)) {
 			view_table($mgroup);
 		} else {
