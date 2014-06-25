@@ -7,28 +7,31 @@ $description = $_POST['description_edit'];
 $file = $_POST['file'];
 $scripts = scandir("./scripts/$mgroup/");
 $count_scripts = count($scripts);
-
-$data = "$mac|$id|$description";
-for ($x = 0; $x < $count_scripts; $x++) {
-	if ($scripts[$x] != "." && $scripts[$x] != "..") {
-		if ($scripts[$x] != 'custom') {
-			$post = $_POST[$scripts[$x]];
-			echo $post;
-		}
-		if ($post == "1") {
-			// Step back up three dirs for the symlink.
-			symlink("../../../scripts/$mgroup/$scripts[$x]", "./machines/$mgroup/$mac/$scripts[$x]");
-		} elseif ($scripts[$x] != 'custom') {
-			unlink("./machines/$mgroup/$mac/$scripts[$x]");
+if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
+	$status = "$mac is not a valid mac address";
+} else {
+	$data = "$mac|$id|$description";
+	for ($x = 0; $x < $count_scripts; $x++) {
+		if ($scripts[$x] != "." && $scripts[$x] != "..") {
+			if ($scripts[$x] != 'custom') {
+				$post = $_POST[$scripts[$x]];
+				echo $post;
+			}
+			if ($post == "1") {
+				// Step back up three dirs for the symlink.
+				symlink("../../../scripts/$mgroup/$scripts[$x]", "./machines/$mgroup/$mac/$scripts[$x]");
+			} elseif ($scripts[$x] != 'custom') {
+				unlink("./machines/$mgroup/$mac/$scripts[$x]");
+			}
 		}
 	}
-}
 
-$fh = fopen($file, 'w');
-fwrite($fh,$data);
-fclose($fh);
-if ($old_mac != $mac) {
-	rename("./machines/$mgroup/$old_mac/", "./machines/$mgroup/$mac/");
+	$fh = fopen($file, 'w');
+	fwrite($fh,$data);
+	fclose($fh);
+	if ($old_mac != $mac) {
+		rename("./machines/$mgroup/$old_mac/", "./machines/$mgroup/$mac/");
+	}
 }
 header("Location: manage.php?mgroup=$mgroup");
 ?>
