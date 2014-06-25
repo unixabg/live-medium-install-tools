@@ -24,6 +24,7 @@ if ($submit == "Move Machines") {
 	}
 } elseif ($submit == "New Group") {
 	$new_group = $_POST['group_name'];
+	$new_group = str_replace(" ", "_", $new_group);
 	if (!preg_match("/[^-A-Za-z0-9._ ]/", $new_group)) {
 		mkdir("./machines/$new_group/");
 		mkdir("./library/$new_group/");
@@ -45,5 +46,5 @@ if ($submit == "Move Machines") {
 echo "<form action=\"admin.php?action=group\" method=\"POST\">
 		<input type=\"hidden\" name=\"status\" value=\"$status\">
 	</form>";
-//header('Location: ./admin.php?action=group');
+header('Location: ./admin.php?action=group');
 ?>
