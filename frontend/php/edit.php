@@ -84,7 +84,6 @@ include "header.php";
 					<button class='cancel'>Cancel</button>
 			</form>
 		</div>
-	</div>
 <?php
 include "footer.php";
 ?>
