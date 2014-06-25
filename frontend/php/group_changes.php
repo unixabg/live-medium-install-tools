@@ -2,25 +2,29 @@
 $submit = $_POST["submit"];
 $old_group = $_POST["old_group"];
 if ($submit == "Move Machines") {
-	$new_group = $_POST["new_group"];
 	$machine = scandir("./machines/$old_group/");
 	$machine_count = count($machine);
-	for ($m = 0; $m < $machine_count; $m++) {
-		if ($machine[$m] != "." && $machine[$m] != "..") {
-			$mac = $_POST["$machine[$m]mac"];
-			$id = $_POST["$machine[$m]id"];
-			$description = $_POST["$machine[$m]description"];
-			if (isset($_POST["$machine[$m]select"])) {
-				mkdir("./machines/$new_group/$mac/");
-				copy("./machines/$old_group/$mac/info.txt", "./machines/$new_group/$mac/info.txt");
-				$file = scandir("./machines/$old_group/$mac");
-				foreach ($file as $info) {
-					unlink("./machines/$old_group/$mac/$info");
+	if (!empty($_POST['new_group'])) {
+		$new_group = $_POST["new_group"];
+		for ($m = 0; $m < $machine_count; $m++) {
+			if ($machine[$m] != "." && $machine[$m] != "..") {
+				$mac = $_POST["$machine[$m]mac"];
+				$id = $_POST["$machine[$m]id"];
+				$description = $_POST["$machine[$m]description"];
+				if (isset($_POST["$machine[$m]select"])) {
+					mkdir("./machines/$new_group/$mac/");
+					copy("./machines/$old_group/$mac/info.txt", "./machines/$new_group/$mac/info.txt");
+					$file = scandir("./machines/$old_group/$mac");
+					foreach ($file as $info) {
+						unlink("./machines/$old_group/$mac/$info");
+					}
+					rmdir("./machines/$old_group/$mac");
+					$status = "Machines(s) successfully moved to $new_group.|green";
 				}
-				rmdir("./machines/$old_group/$mac");
-				$status = "Machines(s) successfully moved to $new_group.|green";
 			}
 		}
+	} else {
+		$status = "New group was not selected.|red";
 	}
 } elseif ($submit == "New Group") {
 	$new_group = $_POST['group_name'];

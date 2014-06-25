@@ -72,7 +72,7 @@ status();
 				}
 				echo "</table>
 						<select name=\"new_group\" class=\"left\">
-							<option>New Group</option>";
+							<option value=\"\">New Group</option>";
 							$option = scandir("./machines/");
 							for ($o = 0; $o < $group_count; $o++) {
 								if ($option[$o] != "." && $option[$o] != "..") {
