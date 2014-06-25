@@ -411,11 +411,21 @@ textarea:focus {
 	cursor: pointer;
 	box-shadow: 0 0 2px #000;
 }
-#status {
+#status_red, #status_green {
 	position: fixed;
-	left: 50%;
-	background-color: red;
+	max-width: 400px;
+	box-shadow: 0 0 5px #000;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	text-align: center;
 	padding: 5px;
 	color: white;
 	border-radius: 3px;
+}
+#status_red {
+	background-color: #FA5858;
+}
+#status_green {
+	background-color: #01DF74;
 }

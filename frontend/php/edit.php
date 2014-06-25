@@ -19,7 +19,7 @@ include "header.php";
 		echo $custom;
 		if ($submit == "&#9998;") {
 			if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
-				echo "<h2 color=\"red\">Invalid Mac address</h2>";
+				echo "<h2><font color=\"red\">Invalid Mac address</font></h2>";
 			} else {
 				echo "<form action=\"save_changes.php\" method=\"POST\">
 						<div id=\"text_input\">

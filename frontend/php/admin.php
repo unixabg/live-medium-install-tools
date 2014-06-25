@@ -3,11 +3,12 @@ include "header.php";
 if (isset($_GET['action'])) {
 	header('Location: group.php');
 }
+echo "<script src=\"./jquery/checkall.js\"></script>
+<script src=\"./jquery/code_pop.js\"></script>
+<script src=\"./jquery/new_script.js\"></script>
+<script src=\"./jquery/tabs.js\"></script>";
+status();
 ?>
-<script src="./jquery/checkall.js"></script>
-<script src="./jquery/code_pop.js"></script>
-<script src="./jquery/new_script.js"></script>
-<script src="./jquery/tabs.js"></script>
 <body>
 	<div id="main_text">
 		<div id="script_pannel">

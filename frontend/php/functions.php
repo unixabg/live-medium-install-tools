@@ -116,4 +116,15 @@ function manage_table($mgroup) {
 	}
 	echo "</table>";
 }
+function status() {
+	if (isset($_POST['status'])) {
+		$status = $_POST['status'];
+		$status = explode("|", $status);
+		if ($status[1] == "red") {
+			echo "<div id=\"status_red\">$status[0]</div>";
+		} else {
+			echo "<div id=\"status_green\">$status[0]</div>";
+		}
+	}
+}
 ?>

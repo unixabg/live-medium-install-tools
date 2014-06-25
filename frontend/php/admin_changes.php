@@ -11,12 +11,12 @@ if ($submit == 'Submit') {
 			if (isset($post)) {
 				// Step up one dir from anticipated symlink target.
 				symlink("../library/$mgroup/$library[$x]", "./scripts/$mgroup/$library[$x]");
-			} elseif($post != "1") {
+			} elseif ($post != "1") {
 				unlink("./scripts/$mgroup/$library[$x]");
 			}
+		$status = "Modified scripts in $mgroup.|green";
 		}
 	}
-echo "admin_change";
 } else {
 	$edit_file = $_POST['edit_file'];
 	$edit_script = $_POST['edit_script'];
@@ -31,6 +31,7 @@ echo "admin_change";
 		unlink("./library/$edit_file");
 		if (is_link("./scripts/$edit_file")) {
 			unlink("./scripts/$edit_file");
+			$status = "Script successfully deleted";
 		}
 		for ($x = 0; $x < $count_machines; $x++) {
 			if ($machine[$x] != "." && $machine[$x] != "..") {
@@ -40,7 +41,9 @@ echo "admin_change";
 			}
 		}
 	}
-echo "edit";
 }
-header('Location: admin.php');
+echo "<form id=\"form\" action=\"admin.php\" method=\"POST\">
+		<input type=\"hidden\" name=\"status\" value=\"$status\">
+	</form>
+	<script>document.getElementById(\"form\").submit();</script>";
 ?>

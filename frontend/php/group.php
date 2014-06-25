@@ -1,11 +1,10 @@
 <?php
 include "header.php";
-$status = $_POST['status'];
 echo "<script src=\"./jquery/checkall.js\"></script>
 <script src=\"./jquery/code_pop.js\"></script>
 <script src=\"./jquery/new_script.js\"></script>
-<script src=\"./jquery/tabs.js\"></script>
-<div id=\"status\">$status</div>";
+<script src=\"./jquery/tabs.js\"></script>";
+status();
 ?>
 <body>
 	<div id="main_text">

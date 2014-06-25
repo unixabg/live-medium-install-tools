@@ -18,7 +18,7 @@ if ($submit == "Move Machines") {
 					unlink("./machines/$old_group/$mac/$info");
 				}
 				rmdir("./machines/$old_group/$mac");
-				$status = "$mac successfully moved to $new_group.";
+				$status = "Machines(s) successfully moved to $new_group.|green";
 			}
 		}
 	}
@@ -29,22 +29,22 @@ if ($submit == "Move Machines") {
 		mkdir("./machines/$new_group/");
 		mkdir("./library/$new_group/");
 		mkdir("./scripts/$new_group/");
-		$status = "$new_group successfully created.";
+		$status = "$new_group successfully created.|green";
 	} else {
-		$status = "Invalid Character on Group Name";
+		$status = "Invalid Character on Group Name.|red";
 	}
 } else {
 	if (!rmdir("./machines/$old_group/") || !rmdir("./library/$old_group/") || !rmdir("./scripts/$old_group/")) {
-		$status = "Group still contains file(s). Please go back and move or delete files.<a href=\"admin.php?action=group\">Clikc here to go back</a>";
+		$status = "Group still contains file(s). Please go back and move or delete file(s).|red";
 	} else {
-		$status = "$old_group successfully deleted.";
+		$status = "$old_group successfully deleted.|green";
 		rmdir("./machines/$old_group/");
 		rmdir("./library/$old_group/");
 		rmdir("./scripts/$old_group/");
 	}
 }
-echo "<form action=\"admin.php?action=group\" method=\"POST\">
+echo "<form id=\"form\" action=\"group.php\" method=\"POST\">
 		<input type=\"hidden\" name=\"status\" value=\"$status\">
-	</form>";
-header('Location: ./admin.php?action=group');
+	</form>
+	<script>document.getElementById(\"form\").submit();</script>";
 ?>

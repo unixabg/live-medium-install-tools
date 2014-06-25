@@ -8,14 +8,13 @@ $file = $_POST['file'];
 $scripts = scandir("./scripts/$mgroup/");
 $count_scripts = count($scripts);
 if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
-	$status = "$mac is not a valid mac address";
+	$status = "$mac is not a valid mac address.|red";
 } else {
 	$data = "$mac|$id|$description";
 	for ($x = 0; $x < $count_scripts; $x++) {
 		if ($scripts[$x] != "." && $scripts[$x] != "..") {
 			if ($scripts[$x] != 'custom') {
 				$post = $_POST[$scripts[$x]];
-				echo $post;
 			}
 			if ($post == "1") {
 				// Step back up three dirs for the symlink.
@@ -25,7 +24,7 @@ if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
 			}
 		}
 	}
-
+	$status = "Machine successfully updated.|green";
 	$fh = fopen($file, 'w');
 	fwrite($fh,$data);
 	fclose($fh);
@@ -33,5 +32,8 @@ if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
 		rename("./machines/$mgroup/$old_mac/", "./machines/$mgroup/$mac/");
 	}
 }
-header("Location: manage.php?mgroup=$mgroup");
+echo "<form id=\"form\" action=\"manage.php?mgroup=$mgroup\" method=\"POST\">
+		<input type=\"hidden\" name=\"status\" value=\"$status\">
+	</form>
+	<script>document.getElementById(\"form\").submit();</script>";
 ?>
