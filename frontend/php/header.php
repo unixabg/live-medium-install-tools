@@ -9,6 +9,10 @@
 */
 ?>
 <!DOCTYPE html>
+<script>
+//if (window.location.protocol != "https:")
+//    window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+</script>
 <head>
 	<title>LMIT</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
