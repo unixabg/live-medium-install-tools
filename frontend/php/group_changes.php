@@ -37,7 +37,7 @@ if ($submit == "Move Machines") {
 	} else {
 		$status = "Invalid Character on Group Name.|red";
 	}
-} else {
+} elseif ($submit == "Delete Group") {
 	if (!rmdir("./machines/$old_group/") || !rmdir("./library/$old_group/") || !rmdir("./scripts/$old_group/")) {
 		$status = "Group still contains file(s). Please go back and move or delete file(s).|red";
 	} else {
@@ -46,6 +46,8 @@ if ($submit == "Move Machines") {
 		rmdir("./library/$old_group/");
 		rmdir("./scripts/$old_group/");
 	}
+} else {
+	$status = "Action was not recognized \"$submit\".|red";
 }
 echo "<form id=\"form\" action=\"group.php\" method=\"POST\">
 		<input type=\"hidden\" name=\"status\" value=\"$status\">
