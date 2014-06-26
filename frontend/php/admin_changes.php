@@ -9,8 +9,8 @@ if ($submit == 'Submit') {
 		if ($library[$x] != "." && $library[$x] != "..") {
 			$post = $_POST[$library[$x]];
 			if (isset($post)) {
-				// Step up one dir from anticipated symlink target.
-				symlink("../library/$mgroup/$library[$x]", "./scripts/$mgroup/$library[$x]");
+				// Step up two dirs from anticipated symlink target since we added groups.
+				symlink("../../library/$mgroup/$library[$x]", "./scripts/$mgroup/$library[$x]");
 			} elseif ($post != "1") {
 				unlink("./scripts/$mgroup/$library[$x]");
 			}
