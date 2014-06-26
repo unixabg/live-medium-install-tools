@@ -291,9 +291,9 @@ textarea:focus {
 	margin-right: -10px;
 }
 #library {
-	border: 1px solid #BDBDBD;
 	float: left;
 	margin: 10px;
+	width: calc(100% - 20px);
 }
 #library h1 {
 	padding: .25em 0;
@@ -305,8 +305,10 @@ textarea:focus {
 #library table {
 	border-collapse:collapse;
 	float: none;
-	max-height: 400px;
+	height: 405px;
 	overflow-y: scroll;
+	width: 100%;
+	border-bottom: 1px solid;
 }
 #library table th {
 	border-bottom: 1px solid #D8D8D8;
@@ -315,6 +317,13 @@ textarea:focus {
 	background: #BDBDBD;
 	font-weight: 100;
 	padding: .75em 1.25em;
+	width: 400px;
+}
+.check_th {
+	width: 20px !important;
+}
+.script_th {
+	width: 175px !important;
 }
 #library table td {
 	padding: .5em .5em 1em .25em;
@@ -428,7 +437,7 @@ textarea:focus {
 	background-color: #FA5858;
 }
 #status_green {
-	background-color: #01DF74;
+	background-color: #04B431;
 }
 /*************************
  * footer.php

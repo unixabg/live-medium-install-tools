@@ -39,10 +39,10 @@ status();
 								<input type=\"hidden\" name=\"mgroup\" value=\"$script_group[$x]\">
 								<table>
 									<tr>
-										<th><input type=\"checkbox\" class=\"checkall\"></th>
-										<th>Script</th>
+										<th class=\"check_th\"><input type=\"checkbox\" class=\"checkall\"></th>
+										<th class=\"script_th\">Script</th>
 										<th>Code</th>
-										<th>Action</th>
+										<th class=\"check_th\">Action</th>
 									</tr>";
 				// scan group folder in library to populate all possible scripts
 				$scripts = scandir("./library/$script_group[$x]");
@@ -94,8 +94,8 @@ status();
 					}
 				}
 				echo "</table>
-						<input type=\"submit\" name=\"submit\" value=\"Submit\">
 						<button rowid=\"form$x\" class=\"new_script_button\">+</button>
+						<input type=\"submit\" name=\"submit\" value=\"Submit\">
 					</form>
 				</div>
 			</div>";

@@ -46,7 +46,7 @@ status();
 								<input type=\"hidden\" name=\"old_group\" value=\"$group[$g]\">
 								<table>
 									<tr>
-										<th><input type=\"checkbox\" class=\"checkall\"></th>
+										<th class=\"check_th\"><input type=\"checkbox\" class=\"checkall\"></th>
 										<th>Mac Address</th>
 										<th>Machine Id</th>
 										<th>Description</th>
