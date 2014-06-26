@@ -33,7 +33,7 @@ if ($submit == "Move Machines") {
 		$status = "Invalid Character on Group Name.|red";
 	}
 } elseif ($submit == "Delete Group") {
-	if (!rmdir("./machines/$old_group/") || !rmdir("./library/$old_group/") || !rmdir("./scripts/$old_group/")) {
+	if (count(scandir("./machines/$old_group/")) > 2 || count(scandir("./library/$old_group/")) > 2 || count(scandir("./scripts/$old_group/")) > 2) {
 		$status = "Group still contains file(s). Please go back and move or delete file(s).|red";
 	} else {
 		$status = "$old_group successfully deleted.|green";
