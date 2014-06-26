@@ -7,10 +7,10 @@ if(!empty($_GET['mac'])) {
 		if ($groups[$x] != "." && $groups[$x] != "..") {
 			if (is_dir("./machines/$groups[$x]/$mac")) {
 				$group_match = $groups[$x];
-				echo $group_match;
+				//echo $group_match;
 				$mac_scripts = scandir("./machines/$group_match/$mac");
 				$count_scripts = count($mac_scripts);
-				echo $count_scripts;
+				//echo $count_scripts;
 				for ($i = 0; $i < $count_scripts; $i++) {
 					if ($mac_scripts[$i] != "." && $mac_scripts[$i] != "..") {
 						if ($mac_scripts[$i] != "info.txt") {
