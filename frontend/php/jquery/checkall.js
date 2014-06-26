@@ -1,13 +1,5 @@
 $(document).ready(function() {
-	$('#select_all').click(function() {
-		if (this.checked) {
-			$('.checkbox1').each(function() {
-				this.checked = true;
-			});
-		} else {
-			$('.checkbox1').each(function() {
-				this.checked = false;
-			});
-		}
+	$(".checkall").click(function(){
+	    $(this).parents('table').find(':checkbox').prop('checked', this.checked);
 	});
 });

@@ -46,7 +46,7 @@ status();
 								<input type=\"hidden\" name=\"old_group\" value=\"$group[$g]\">
 								<table>
 									<tr>
-										<th><input type=\"checkbox\" id=\"select_all\"></th>
+										<th><input type=\"checkbox\" class=\"checkall\"></th>
 										<th>Mac Address</th>
 										<th>Machine Id</th>
 										<th>Description</th>
@@ -59,7 +59,7 @@ status();
 						$info_txt = file("./machines/$group[$g]/$machine[$m]/info.txt");
 						$info = explode("|", $info_txt[0]);
 						echo "<tr>";
-						echo "<td class=\"td_center\"><input type=\"checkbox\" name=\"$machine[$m]\" value=\"$machine[$m]\" class=\"checkbox1\"></td>
+						echo "<td class=\"td_center\"><input type=\"checkbox\" name=\"$machine[$m]\" value=\"$machine[$m]\" class=\"checkbox1\" rowid=\"check[$g]\"></td>
 								<td>$info[0]</td>
 								<td>$info[1]</td>
 								<td>$info[2]</td>

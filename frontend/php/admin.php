@@ -39,7 +39,7 @@ status();
 								<input type=\"hidden\" name=\"mgroup\" value=\"$script_group[$x]\">
 								<table>
 									<tr>
-										<th><input type=\"checkbox\" id=\"select_all\" rowid=\"$x\"></th>
+										<th><input type=\"checkbox\" class=\"checkall\"></th>
 										<th>Script</th>
 										<th>Code</th>
 										<th>Action</th>
