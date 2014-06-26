@@ -20,25 +20,28 @@ MAC=$(ifconfig | grep eth0 | awk '{print tolower($5)}')
 echo "MAC Address is ${MAC}" >> ${_FIRMWARE_INJECTION_LOG}
 
 # FIXME - Consider pulling with http(s).
+# Operator.php now supplies pathTo/MAC/Script
 _SCRIPT_LIST=$(wget -qO- ${_HTTP_SERVER}/operator.php?mac=${MAC})
 
 # For each _SCRIPT_LIST entry attemmpt to download and inject in to system.
 for _SCRIPT in ${_SCRIPT_LIST}
 do
-	if [ -f "${_BASE_PATH}/${_SCRIPT}" ]  && [ $(stat -c%s ${_BASE_PATH}/${_SCRIPT}) -ne 0 ]
+	# The last part of the string from operator is the actual script name.
+	_SCRIPT_NAME=$(echo ${_SCRIPT} | awk -F/ '{print $NF}')
+	if [ -f "${_BASE_PATH}/${_SCRIPT_NAME}" ]  && [ $(stat -c%s ${_BASE_PATH}/${_SCRIPT_NAME}) -ne 0 ]
 	then
-		echo "It appears that we have already attempted to inject the ${_SCRIPT} script." >> ${_FIRMWARE_INJECTION_LOG}
-		echo "Skipping attempt to inject the ${_SCRIPT} script." >> ${_FIRMWARE_INJECTION_LOG}
+		echo "It appears that we have already attempted to inject the ${_SCRIPT_NAME} script." >> ${_FIRMWARE_INJECTION_LOG}
+		echo "Skipping attempt to inject the ${_SCRIPT_NAME} script." >> ${_FIRMWARE_INJECTION_LOG}
 	else
-		echo "Attempting injection of ${_SCRIPT} script." >> ${_FIRMWARE_INJECTION_LOG}
+		echo "Attempting injection of ${_SCRIPT_NAME} script." >> ${_FIRMWARE_INJECTION_LOG}
 
 		# FIXME - Turn on https later
 		# Attempt to download script
-		wget ${_HTTP_SERVER}/machines/${MAC}/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT}" && echo "${_SCRIPT} Downloaded.">> ${_FIRMWARE_INJECTION_LOG} || echo "No ${_SCRIPT} Downloaded." >> ${_FIRMWARE_INJECTION_LOG}
+		wget ${_HTTP_SERVER}/machines/${_SCRIPT} -O "${_BASE_PATH}/${_SCRIPT_NAME}" && echo "${_SCRIPT_NAME} Downloaded.">> ${_FIRMWARE_INJECTION_LOG} || echo "No ${_SCRIPT_NAME} Downloaded." >> ${_FIRMWARE_INJECTION_LOG}
 
 		# Attempt to run script
-		chmod 700 "${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_INJECTION_LOG}
-		"${_BASE_PATH}/${_SCRIPT}" >> ${_FIRMWARE_INJECTION_LOG}
+		chmod 700 "${_BASE_PATH}/${_SCRIPT_NAME}" >> ${_FIRMWARE_INJECTION_LOG}
+		"${_BASE_PATH}/${_SCRIPT_NAME}" >> ${_FIRMWARE_INJECTION_LOG}
 	fi
 done
 
