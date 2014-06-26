@@ -59,15 +59,11 @@ status();
 						$info_txt = file("./machines/$group[$g]/$machine[$m]/info.txt");
 						$info = explode("|", $info_txt[0]);
 						echo "<tr>";
-						echo "<td class=\"td_center\"><input type=\"checkbox\" name=\"$machine[$m]select\" class=\"checkbox1\"></td>
+						echo "<td class=\"td_center\"><input type=\"checkbox\" name=\"$machine[$m]\" value=\"$machine[$m]\" class=\"checkbox1\"></td>
 								<td>$info[0]</td>
 								<td>$info[1]</td>
 								<td>$info[2]</td>
-								<input type=\"hidden\" name=\"$machine[$m]mac\" value=\"$info[0]\">
-								<input type=\"hidden\" name=\"$machine[$m]id\" value=\"$info[1]\">
-								<input type=\"hidden\" name=\"$machine[$m]description\" value=\"$info[2]\">
-							</tr>
-							";
+							</tr>";
 					}
 				}
 				echo "</table>

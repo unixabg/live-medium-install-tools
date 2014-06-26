@@ -2,25 +2,20 @@
 $submit = $_POST["submit"];
 $old_group = $_POST["old_group"];
 if ($submit == "Move Machines") {
-	$machine = scandir("./machines/$old_group/");
-	$machine_count = count($machine);
 	if (!empty($_POST['new_group'])) {
 		$new_group = $_POST["new_group"];
-		for ($m = 0; $m < $machine_count; $m++) {
-			if ($machine[$m] != "." && $machine[$m] != "..") {
-				$mac = $_POST["$machine[$m]mac"];
-				$id = $_POST["$machine[$m]id"];
-				$description = $_POST["$machine[$m]description"];
-				if (isset($_POST["$machine[$m]select"])) {
-					mkdir("./machines/$new_group/$mac/");
-					copy("./machines/$old_group/$mac/info.txt", "./machines/$new_group/$mac/info.txt");
-					$file = scandir("./machines/$old_group/$mac");
-					foreach ($file as $info) {
-						unlink("./machines/$old_group/$mac/$info");
-					}
-					rmdir("./machines/$old_group/$mac");
-					$status = "Machines(s) successfully moved to $new_group.|green";
+		$file = scandir("./machines/$old_group/");
+		foreach ($file as $mac) {
+			if (isset($_POST[$mac])) {
+				$mac = $_POST["$mac"];
+				mkdir("./machines/$new_group/$mac/");
+				copy("./machines/$old_group/$mac/info.txt", "./machines/$new_group/$mac/info.txt");
+				$files = scandir("./machines/$old_group/$mac/");
+				foreach ($files as $file) {
+					unlink("./machines/$old_group/$mac/$file");
 				}
+				rmdir("./machines/$old_group/$mac/");
+				$status = "Machines(s) successfully moved to $new_group.|green";
 			}
 		}
 	} else {
@@ -49,8 +44,7 @@ if ($submit == "Move Machines") {
 } else {
 	$status = "Action was not recognized \"$submit\".|red";
 }
-echo "<form id=\"form\" action=\"group.php\" method=\"POST\">
-		<input type=\"hidden\" name=\"status\" value=\"$status\">
+echo "<form id=\"form\" action=\"group.php\" method=\"POST\"> <input type=\"hidden\" name=\"status\" value=\"$status\">
 	</form>
 	<script>document.getElementById(\"form\").submit();</script>";
 ?>
