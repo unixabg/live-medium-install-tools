@@ -8,9 +8,8 @@ if ($submit == "Submit") {
 	$fp = fopen("./machines/$mgroup/$mac/custom", 'w');
 	fwrite($fp, $custom);
 	fclose($fp);
-	header('Location: ./manage.php');
 } else {
 	unlink("./machines/$mgroup/$mac/custom");
-	header('Location: ./manage.php');
 }
+	header("Location: ./manage.php?mgroup=$mgroup");
 ?>
