@@ -8,8 +8,10 @@ if ($submit == "Submit") {
 	$fp = fopen("./machines/$mgroup/$mac/custom", 'w');
 	fwrite($fp, $custom);
 	fclose($fp);
-} else {
+} elseif ($submit == "Delete Script") {
 	unlink("./machines/$mgroup/$mac/custom");
+} else {
+	echo "The value of \"$submit\" was unrecognized";
 }
 	header("Location: ./manage.php?mgroup=$mgroup");
 ?>
