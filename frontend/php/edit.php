@@ -68,19 +68,18 @@ include "header.php";
 			}
 		}
 		$custom = file_get_contents("./machines/$mgroup/$mac/custom");
-		?>
-	</div>
-	<div id="edit_wrap">
-		<div class="edit">
-			<h1 class="custom_h1">Custom Script</h1>
-			<form action="custom.php" method="POST">
-					<input type="hidden" name="mac" value="<?php echo $mac;?>">
-					<textarea name="custom" rows="24" cols="83"><?php echo $custom;?></textarea>
-					<input class="submit" type="submit" name="submit" value="Submit">
-					<input class="delete" type="submit" name="submit" value="Delete Script">
+	echo "</div>
+	<div id=\"edit_wrap\">
+		<div class=\"edit\">
+			<h1 class=\"custom_h1\">Custom Script</h1>
+			<form action=\"custom.php\" method=\"POST\">
+					<input type=\"hidden\" name=\"mac\" value=\"$mac\">
+					<input type=\"hidden\" name=\"mgroup\" value=\"$mgroup\">
+					<textarea name=\"custom\" rows=\"24\" cols=\"83\">$custom</textarea>
+					<input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Submit\">
+					<input class=\"delete\" type=\"submit\" name=\"submit\" value=\"Delete Script\">
 					<button class='cancel'>Cancel</button>
 			</form>
-		</div>
-<?php
+		</div>";
 include "footer.php";
 ?>

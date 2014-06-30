@@ -22,7 +22,7 @@ function check_box($file, $dir) {
 	$count = count($dir);
 	for ($loop_count = 0; $loop_count < $count; $loop_count++) {
 		if ($dir[$loop_count] != "." && $dir[$loop_count] != "..") {
-			if (is_link("$file/".$dir[$loop_count]) || is_file("./machines/$file/".$dir[$loop_count])) {
+			if (is_link("$file/".$dir[$loop_count]) || is_file("$file/".$dir[$loop_count])) {
 				echo "<td class=\"e\">&#10003;</td>";
 			} else {
 				echo "<td class=\"e\"></td>";
