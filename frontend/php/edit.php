@@ -63,13 +63,10 @@ include "header.php";
 				if(!rmdir($file)) {
 					echo "Couldn't delete dir";
 				} else {
-					rmdir($file);
 					header('Location: ./manage.php');
 				}
 			}
 		}
-		?>
-		<?php
 		$custom = file_get_contents("./machines/$mgroup/$mac/custom");
 		?>
 	</div>
