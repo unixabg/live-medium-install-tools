@@ -20,27 +20,26 @@ if ($submit == 'Submit') {
 } elseif ($submit == 'Submit Changes') {
 	$edit_file = $_POST['edit_file'];
 	$edit_script = $_POST['edit_script'];
-	echo $edit_script."<br />";
 	$edit_script = preg_replace("/\r\n/", "\n", $edit_script); // DOS style newlines
 	$edit_script = preg_replace("/\r/", "\n", $edit_script); // Mac newlines for nostalgia
 	$machine = scandir("./machines/$mgroup/");
 	$count_machines = count($machine);
-	if ($submit == "Submit Changes") {
-		file_put_contents("./library/$edit_file", $edit_script);
-	} else {
-		unlink("./library/$edit_file");
-		if (is_link("./scripts/$edit_file")) {
-			unlink("./scripts/$edit_file");
-			$status = "Script successfully deleted";
-		}
-		for ($x = 0; $x < $count_machines; $x++) {
-			if ($machine[$x] != "." && $machine[$x] != "..") {
-				if (is_link("./machines/$machine[$x]/$edit_file")) {
-					unlink("./machines/$machine[$x]/$edit_file");
-				}
+	file_put_contents("./library/$mgroup/$edit_file", $edit_script);
+	$status = "Script successfully updated.|green";
+} elseif ($submit == 'Delete Script') {
+	$machine = scandir("./machines/$mgroup/");
+	$count_machines = count($machine);
+	$edit_file = $_POST['edit_file'];
+	unlink("./scripts/$mgroup/$edit_file");
+	unlink("./library/$mgroup/$edit_file");
+	for ($x = 0; $x < $count_machines; $x++) {
+		if ($machine[$x] != "." && $machine[$x] != "..") {
+			if (is_link("./machines/$mgroup/$machine[$x]/$edit_file")) {
+				unlink("./machines/$mgroup/$machine[$x]/$edit_file");
 			}
 		}
 	}
+	$status = "Script successfully deleted.|red";
 } else {
 	$status = "Action was not recognized \"$submit\".|red";
 }
@@ -48,4 +47,5 @@ echo "<form id=\"form\" action=\"admin.php\" method=\"POST\">
 		<input type=\"hidden\" name=\"status\" value=\"$status\">
 	</form>
 	<script>document.getElementById(\"form\").submit();</script>";
+	// echo "<a href=\"admin.php\">Back</a>";
 ?>

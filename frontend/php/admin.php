@@ -84,7 +84,8 @@ status();
 									<h1 class=\"custom_h1\">Edit Script</h1>
 										<form action=\"admin_changes.php\" method=\"POST\">
 											<textarea name=\"edit_script\">$script_content</textarea>
-											<input type=\"hidden\" name=\"edit_file\" value=\"$script_group[$x]/$scripts[$s]\">
+											<input type=\"hidden\" name=\"edit_file\" value=\"$scripts[$s]\">
+											<input type=\"hidden\" name=\"mgroup\" value=\"$script_group[$x]\">
 											<input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Submit Changes\">
 											<input class=\"delete\" type=\"submit\" name=\"submit\" value=\"Delete Script\">
 											<button class='cancel'>Cancel</button>
