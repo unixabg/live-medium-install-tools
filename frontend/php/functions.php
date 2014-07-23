@@ -106,7 +106,7 @@ function manage_table($mgroup) {
 				if (is_file("$file/log.txt")) {
 					echo "<td>$log[0]</td>";
 				} else {
-						echo "<td><center>???????<center></td>";
+					echo "<td><center>???????<center></td>";
 				}
 				check_box("./machines/$mgroup/$files[$i]","./scripts/$mgroup/");
 				echo "<td>
