@@ -78,7 +78,8 @@ function manage_table($mgroup) {
 		<tr>
 			<th>Mac Adress</th>
 			<th>Machine ID</th>
-			<th>Description</th>";
+			<th>Description</th>
+			<th>Phone Home</th>";
 			scan_th("./scripts/$mgroup");
 			echo "<th>Edit</th>
 		</tr>";
@@ -95,10 +96,18 @@ function manage_table($mgroup) {
 			$file_array = file("$file/info.txt");
 			$dir_array = explode("|", $file_array[0]);
 			$count_array = count($dir_array);
+			$log_array = file("$file/log.txt");
+			$log_last = $log_array[count($log_array)-1];
+			$log = explode("\t", "$log_last");
 			echo "<tr>";
 			echo "<td class=\"a\">".$dir_array[0]."</td>
 				<td class=\"b\">".$dir_array[1]."</td>
 				<td class=\"d\">".$dir_array[2]."</td>";
+				if (is_file("$file/log.txt")) {
+					echo "<td>$log[0]</td>";
+				} else {
+						echo "<td><center>???????<center></td>";
+				}
 				check_box("./machines/$mgroup/$files[$i]","./scripts/$mgroup/");
 				echo "<td>
 					<form class='edit_form' action='edit.php' method='POST'>
