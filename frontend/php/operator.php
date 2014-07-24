@@ -14,7 +14,8 @@ if(!empty($_GET['mac'])) {
 				for ($i = 0; $i < $count_scripts; $i++) {
 					if ($mac_scripts[$i] != "." && $mac_scripts[$i] != "..") {
 						if ($mac_scripts[$i] != "info.txt" && $mac_scripts[$i] != "log.txt") {
-							//echo "$group_match/$mac/$mac_scripts[$i] ";
+							// Send the script name back to requester machine
+							echo "$group_match/$mac/$mac_scripts[$i] ";
 							$scripts .= " $mac_scripts[$i]";
 						}
 					}
