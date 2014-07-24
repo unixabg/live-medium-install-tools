@@ -39,7 +39,7 @@ if ($submit == 'Submit') {
 			}
 		}
 	}
-	$status = "Script successfully deleted.|red";
+	$status = "Script successfully deleted.|green";
 } else {
 	$status = "Action was not recognized \"$submit\".|red";
 }
