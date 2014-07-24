@@ -74,6 +74,7 @@ function view_table($mgroup) {
 
 */
 function manage_table($mgroup) {
+	echo "<script src=\"./jquery/log.js\"></script>";
 	echo "<table>
 		<tr>
 			<th>Mac Adress</th>
@@ -104,7 +105,7 @@ function manage_table($mgroup) {
 				<td class=\"b\">".$dir_array[1]."</td>
 				<td class=\"d\">".$dir_array[2]."</td>";
 				if (is_file("$file/log.txt")) {
-					echo "<td>$log[0]</td>";
+					echo "<td><a class=\"log_link\" href=\"$file/log.txt\">$log[0]</a></td>";
 				} else {
 					echo "<td><center>???????<center></td>";
 				}
@@ -124,6 +125,16 @@ function manage_table($mgroup) {
 		}
 	}
 	echo "</table>";
+	echo "<div class=\"backlight\">
+				<div class=\"code_box\">
+					<div id=\"header_pop\">
+						<h2>Log</h2>
+						<p class=\"exit\">X</p>
+					</div>
+					<div id=\"content_pop\" style=\"word-wrap: break-word; white-space: pre-wrap\">
+					</div>
+				</div>
+			</div>";
 }
 function status() {
 	if (isset($_POST['status'])) {
