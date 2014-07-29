@@ -4,10 +4,17 @@ if (isset($_GET['action'])) {
 	header('Location: group.php');
 }
 echo "<script src=\"./jquery/checkall.js\"></script>
+<script src=\"./jquery/jquery.cookie.js\"></script>
 <script src=\"./jquery/code_pop.js\"></script>
 <script src=\"./jquery/new_script.js\"></script>
 <script src=\"./jquery/tabs.js\"></script>";
 status();
+if (!empty($_POST['tab'])) {
+	$tab = $_POST['tab'];
+	echo "<div class=\"test\" tabIndex=\"$tab\"></div>";
+} else {
+	echo "<div class=\"test\" tabIndex=\"1\"></div>";
+}
 ?>
 <body>
 	<div id="main_text">
@@ -31,6 +38,7 @@ status();
 		$count_group = count($script_group);
 		// $x represents the array number for each group in library
 		for ($x = 0; $x < $count_group; $x++) {
+			$tab = $x-1;
 			if ($script_group[$x] != "." && $script_group[$x] != "..") {
 				echo "<div id=\"$script_group[$x]\" class=\"tabs\">
 						<div id=\"library\">
@@ -86,6 +94,7 @@ status();
 											<textarea name=\"edit_script\">$script_content</textarea>
 											<input type=\"hidden\" name=\"edit_file\" value=\"$scripts[$s]\">
 											<input type=\"hidden\" name=\"mgroup\" value=\"$script_group[$x]\">
+											<input type=\"hidden\" name=\"tab\" value=\"$tab\">
 											<input class=\"submit\" type=\"submit\" name=\"submit\" value=\"Submit Changes\">
 											<input class=\"delete\" type=\"submit\" name=\"submit\" value=\"Delete Script\">
 											<button class='cancel'>Cancel</button>

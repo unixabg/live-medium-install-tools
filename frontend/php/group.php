@@ -5,6 +5,12 @@ echo "<script src=\"./jquery/checkall.js\"></script>
 <script src=\"./jquery/new_script.js\"></script>
 <script src=\"./jquery/tabs.js\"></script>";
 status();
+if (!empty($_POST['tab'])) {
+	$tab = $_POST['tab'];
+	echo "<div class=\"test\" tabIndex=\"$tab\"></div>";
+} else {
+	echo "<div class=\"test\" tabIndex=\"1\"></div>";
+}
 ?>
 <body>
 	<div id="main_text">
@@ -38,12 +44,14 @@ status();
 		$group_count = count($group);
 		// $x represents the array number for each group in library
 		for ($g = 0; $g < $group_count; $g++) {
+			$tab = $g;
 			if ($group[$g] != "." && $group[$g] != "..") {
 				echo "<div id=\"$group[$g]\" class=\"tabs\">
 						<div id=\"library\">
 							<h1>$group[$g]</h1>
 							<form action=\"group_changes.php\" method=\"POST\">
 								<input type=\"hidden\" name=\"old_group\" value=\"$group[$g]\">
+								<input type=\"hidden\" name=\"tab\" value=\"$tab\">
 								<table>
 									<tr>
 										<th class=\"check_th\"><input type=\"checkbox\" class=\"checkall\"></th>

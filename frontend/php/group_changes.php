@@ -1,6 +1,7 @@
 <?php
 $submit = $_POST["submit"];
 $old_group = $_POST["old_group"];
+$tab = $_POST['tab'];
 if ($submit == "Move Machines") {
 	if (!empty($_POST['new_group'])) {
 		$new_group = $_POST["new_group"];
@@ -45,6 +46,7 @@ if ($submit == "Move Machines") {
 	$status = "Action was not recognized \"$submit\".|red";
 }
 echo "<form id=\"form\" action=\"group.php\" method=\"POST\"> <input type=\"hidden\" name=\"status\" value=\"$status\">
+	<input type=\"hidden\" name=\"tab\" value=\"$tab\">
 	</form>
 	<script>document.getElementById(\"form\").submit();</script>";
 ?>

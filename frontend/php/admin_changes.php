@@ -4,6 +4,7 @@ $dir = "./library/$mgroup";
 $library = scandir($dir);
 $count = count($library);
 $submit = $_POST['submit'];
+$tab = $_POST['tab'];
 if ($submit == 'Submit') {
 	for ($x = 0; $x < $count; $x++) {
 		if ($library[$x] != "." && $library[$x] != "..") {
@@ -44,8 +45,9 @@ if ($submit == 'Submit') {
 	$status = "Action was not recognized \"$submit\".|red";
 }
 echo "<form id=\"form\" action=\"admin.php\" method=\"POST\">
-		<input type=\"hidden\" name=\"status\" value=\"$status\">
+	<input type=\"hidden\" name=\"status\" value=\"$status\">
+	<input type=\"hidden\" name=\"tab\" value=\"$tab\">
 	</form>
 	<script>document.getElementById(\"form\").submit();</script>";
-	// echo "<a href=\"admin.php\">Back</a>";
+	//echo "<a href=\"admin.php\">Back</a>";
 ?>
