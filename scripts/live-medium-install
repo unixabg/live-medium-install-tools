@@ -12,7 +12,8 @@
 set -e
 
 # Defaults
-_VERSION="7.5"
+_VERSION="7.6"
+_RELEASE=".0"
 
 _URL="live.debian.net::${_VERSION}/ARCH/webboot"
 
@@ -225,7 +226,7 @@ EOF
 
 	case "${_CONFIGTYPE}" in
 		gnome-desktop|kde-desktop|lxde-desktop|xfce-desktop|standard|rescue|gnome-desktop+nonfree|kde-desktop+nonfree|lxde-desktop+nonfree|xfce-desktop+nonfree|standard+nonfree|rescue+nonfree)
-			_FILES="debian-live-${_VERSION}-${_ARCH}-${_CONFIGTYPE}"
+			_FILES="debian-live-${_VERSION}${_RELEASE}-${_ARCH}-${_CONFIGTYPE}"
 			;;
 
 		*)
