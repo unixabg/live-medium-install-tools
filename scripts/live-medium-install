@@ -15,7 +15,7 @@ set -e
 _VERSION="7.6"
 _RELEASE=".0"
 
-_URL="live.debian.net::${_VERSION}/ARCH/webboot"
+_URL="live.debian.net::${_VERSION}/ARCH/web"
 
 # Select to media to install from rsync or booted Debian Live image.
 _RSYNCINSTALL="Network rsync server."
