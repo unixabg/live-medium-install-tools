@@ -97,14 +97,14 @@ function manage_table($mgroup) {
 			$file_array = file("$file/info.txt");
 			$dir_array = explode("|", $file_array[0]);
 			$count_array = count($dir_array);
-			$log_array = file("$file/log.txt");
-			$log_last = $log_array[count($log_array)-1];
-			$log = explode("\t", "$log_last");
 			echo "<tr>";
 			echo "<td class=\"a\">".$dir_array[0]."</td>
 				<td class=\"b\">".$dir_array[1]."</td>
 				<td class=\"d\">".$dir_array[2]."</td>";
 				if (is_file("$file/log.txt")) {
+					$log_array = file("$file/log.txt");
+					$log_last = $log_array[count($log_array)-1];
+					$log = explode("\t", "$log_last");
 					echo "<td><a class=\"log_link\" href=\"$file/log.txt\">$log[0]</a></td>";
 				} else {
 					echo "<td><center>???????<center></td>";

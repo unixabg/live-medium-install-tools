@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include "header.php";
 if (isset($_GET['action'])) {
 	header('Location: group.php');
@@ -48,6 +49,7 @@ if (!empty($_POST['tab'])) {
 								<table>
 									<tr>
 										<th class=\"check_th\"><input type=\"checkbox\" class=\"checkall\"></th>
+										<th class=\"enable_all\">Enable All</th>
 										<th class=\"script_th\">Script</th>
 										<th>Code</th>
 										<th class=\"check_th\">Action</th>
@@ -65,6 +67,7 @@ if (!empty($_POST['tab'])) {
 						} else {
 							echo "<td class=\"td_center\"><input class=\"checkbox1\" rowid=\"$x\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"0\"></td>";
 						}
+						echo "<td class=\"td_center\"><input class=\"enable_all_check\" rowid=\"$x\" type=\"checkbox\" name=\"$scripts[$s]enable_all\"></td>";
 						echo "<td>$scripts[$s]</td>";
 						if (strlen($script_content) > 40) {
 							echo "<td><a class=\"a_code\" rowid=\"$s\" href=\"#$scripts[$s]\">".substr($script_content,0,40)."....</a></td>";

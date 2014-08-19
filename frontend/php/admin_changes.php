@@ -11,13 +11,27 @@ if ($submit == 'Submit') {
 			$post = $_POST[$library[$x]];
 			if (isset($post)) {
 				// Step up two dirs from anticipated symlink target since we added groups.
-				symlink("../../library/$mgroup/$library[$x]", "./scripts/$mgroup/$library[$x]");
+				if (!is_link("./scripts/$mgroup/$library[$x]")) {
+					symlink("../../library/$mgroup/$library[$x]", "./scripts/$mgroup/$library[$x]");
+				}
+				$enable_all = $_POST["$library[$x]enable_all"];
+				if (isset($enable_all)) {
+					$machine = scandir("./machines/$mgroup/");
+					$machine_count = count($machine);
+					for ($m = 0; $m < $machine_count; $m++) {
+						if ($machine[$m] != "." && $machine[$m] != "..") {
+							if (!is_link("./machines/$mgroup/$machine[$m]/$library[$x]")) {
+								symlink("./scripts/$mgroup/$library[$x]", "./machines/$mgroup/$machine[$m]/$library[$x]");
+							}
+						}
+					}
+				}
 			} elseif ($post != "1") {
 				unlink("./scripts/$mgroup/$library[$x]");
 			}
-		$status = "Modified scripts in $mgroup.|green";
 		}
 	}
+	$status = "Modified scripts in $mgroup.|green";
 } elseif ($submit == 'Submit Changes') {
 	$edit_file = $_POST['edit_file'];
 	$edit_script = $_POST['edit_script'];
@@ -49,5 +63,5 @@ echo "<form id=\"form\" action=\"admin.php\" method=\"POST\">
 	<input type=\"hidden\" name=\"tab\" value=\"$tab\">
 	</form>
 	<script>document.getElementById(\"form\").submit();</script>";
-	//echo "<a href=\"admin.php\">Back</a>";
+	// echo "<a href=\"admin.php\">Back</a>";
 ?>
