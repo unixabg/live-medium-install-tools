@@ -1,6 +1,6 @@
 <?php
 $mgroup = $_POST['mgroup'];
-$dir = "./library/$mgroup";
+$dir = "./library/";
 $library = scandir($dir);
 $count = count($library);
 $submit = $_POST['submit'];
@@ -12,7 +12,7 @@ if ($submit == 'Submit') {
 			if (isset($post)) {
 				// Step up two dirs from anticipated symlink target since we added groups.
 				if (!is_link("./scripts/$mgroup/$library[$x]")) {
-					symlink("../../library/$mgroup/$library[$x]", "./scripts/$mgroup/$library[$x]");
+					symlink("../library/$library[$x]", "./scripts/$mgroup/$library[$x]");
 				}
 				$enable_all = $_POST["$library[$x]enable_all"];
 				if (isset($enable_all)) {
@@ -39,7 +39,7 @@ if ($submit == 'Submit') {
 	$edit_script = preg_replace("/\r/", "\n", $edit_script); // Mac newlines for nostalgia
 	$machine = scandir("./machines/$mgroup/");
 	$count_machines = count($machine);
-	file_put_contents("./library/$mgroup/$edit_file", $edit_script);
+	file_put_contents("./library/$edit_file", $edit_script);
 	$status = "Script successfully updated.|green";
 } elseif ($submit == 'Delete Script') {
 	$machine = scandir("./machines/$mgroup/");

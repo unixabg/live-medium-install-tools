@@ -23,7 +23,7 @@ if (!empty($_POST['tab'])) {
 			<h3 class="pannel_head">Admin<br/>Library</h3>
 			<ul>
 				<?php
-				$group_script = scandir("./library/");
+				$group_script = scandir("./scripts/");
 				$count = count($group_script);
 				for ($x = 0; $x < $count; $x++) {
 					if ($group_script[$x] != "." && $group_script[$x] != "..") {
@@ -55,12 +55,12 @@ if (!empty($_POST['tab'])) {
 										<th class=\"check_th\">Action</th>
 									</tr>";
 				// scan group folder in library to populate all possible scripts
-				$scripts = scandir("./library/$script_group[$x]");
+				$scripts = scandir("./library/");
 				$count_scripts = count($scripts);
 				for ($s = 0; $s < $count_scripts; $s++) {
 					if ($scripts[$s] != "." && $scripts[$s] != "..") {
 						// $script_content gets the content of each script
-						$script_content = file_get_contents("./library/$script_group[$x]/$scripts[$s]");
+						$script_content = file_get_contents("./library/$scripts[$s]");
 						echo "<tr>";
 						if (is_link("./scripts/$script_group[$x]/$scripts[$s]")) {
 							echo "<td class=\"td_center\"><input class=\"checkbox1\"rowid=\"$x\" type=\"checkbox\" name=\"$scripts[$s]\" value=\"1\" checked></td>";
@@ -118,7 +118,7 @@ if (!empty($_POST['tab'])) {
 						<form action=\"new_script.php\" method=\"POST\">
 							<input class=\"script_name\" type=\"text\" name=\"file\" placeholder=\"Script Name\">
 							<textarea name=\"new_script\" class=\"textarea_new_script\"></textarea>
-							<input type=\"hidden\" name=\"dir\" value=\"./library/$script_group[$x]/\">
+							<input type=\"hidden\" name=\"dir\" value=\"./library/\">
 							<input class=\"add_script_submit\" type=\"submit\" value=\"Add Script\">
 							<button class=\"cancel\" rowid=\"form$x\">Cancel</button>
 						</form>

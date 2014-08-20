@@ -27,7 +27,6 @@ if ($submit == "Move Machines") {
 	$new_group = str_replace(" ", "_", $new_group);
 	if (!preg_match("/[^-A-Za-z0-9._ ]/", $new_group)) {
 		mkdir("./machines/$new_group/");
-		mkdir("./library/$new_group/");
 		mkdir("./scripts/$new_group/");
 		$status = "$new_group successfully created.|green";
 	} else {
@@ -39,7 +38,6 @@ if ($submit == "Move Machines") {
 	} else {
 		$status = "$old_group successfully deleted.|green";
 		rmdir("./machines/$old_group/");
-		rmdir("./library/$old_group/");
 		rmdir("./scripts/$old_group/");
 	}
 } else {

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $new_script = $_POST['new_script'];
 $new_script = preg_replace("/\r\n/", "\n", $new_script); // DOS style newlines
 $new_script = preg_replace("/\r/", "\n", $new_script); // Mac newlines for nostalgia
