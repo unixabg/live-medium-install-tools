@@ -1,6 +1,6 @@
 <?php
 include "header.php";
-echo "<script src=\"./jquery/tabs.js\"></script>";
+echo "<script src=\"./jquery/status.js\"></script>";
 status();
 if (!empty($_GET['mgroup'])) {
 	$mgroup = $_GET['mgroup'];

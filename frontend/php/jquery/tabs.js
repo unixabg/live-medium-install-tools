@@ -13,5 +13,4 @@ $(document).ready(function() {
 	$("#status_green, #status_red").show().delay(3000).queue(function(n) {
 		$(this).fadeOut(); n();
 	});
-	$.cookie("var",2);
 });

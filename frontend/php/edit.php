@@ -16,7 +16,6 @@ include "header.php";
 		$custom = $_POST['custom'];
 		$submit = $_POST['submit'];
 		$file = $_POST['file'];
-		echo $custom;
 		if ($submit == "&#9998;") {
 			if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
 				echo "<h2><font color=\"red\">Invalid Mac address</font></h2>";
@@ -67,7 +66,9 @@ include "header.php";
 				}
 			}
 		}
-		$custom = file_get_contents("./machines/$mgroup/$mac/custom");
+		if (is_file("./machines/$mgroup/$mac/custom")) {
+			$custom = file_get_contents("./machines/$mgroup/$mac/custom");
+		}
 	echo "</div>
 	<div id=\"edit_wrap\">
 		<div class=\"edit\">
