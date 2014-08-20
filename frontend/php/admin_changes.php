@@ -46,7 +46,7 @@ if ($submit == 'Submit') {
 	$count_machines = count($machine);
 	$edit_file = $_POST['edit_file'];
 	unlink("./scripts/$mgroup/$edit_file");
-	unlink("./library/$mgroup/$edit_file");
+	unlink("./library/$edit_file");
 	for ($x = 0; $x < $count_machines; $x++) {
 		if ($machine[$x] != "." && $machine[$x] != "..") {
 			if (is_link("./machines/$mgroup/$machine[$x]/$edit_file")) {

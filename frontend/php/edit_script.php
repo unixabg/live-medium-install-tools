@@ -7,9 +7,9 @@ $submit = $_POST['submit'];
 $machine = scandir("./machines/$mgroup/");
 $count_machines = count($machine);
 if ($submit == "Submit") {
-	file_put_contents("./library/$mgroup/$file", $new_script);
+	file_put_contents("./library/$file", $new_script);
 } else {
-	unlink("./library/$mgroup/$file");
+	unlink("./library/$file");
 	if (is_link("./scripts/$mgroup/$file")) {
 		unlink("./scripts/$mgroup/$file");
 	}

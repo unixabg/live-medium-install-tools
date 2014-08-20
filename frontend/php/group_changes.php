@@ -33,17 +33,18 @@ if ($submit == "Move Machines") {
 		$status = "Invalid Character on Group Name.|red";
 	}
 } elseif ($submit == "Delete Group") {
-	if (count(scandir("./machines/$old_group/")) > 2 || count(scandir("./library/$old_group/")) > 2 || count(scandir("./scripts/$old_group/")) > 2) {
+	if (count(scandir("./machines/$old_group/")) > 2 || count(scandir("./scripts/$old_group/")) > 2) {
 		$status = "Group still contains file(s). Please go back and move or delete file(s).|red";
 	} else {
-		$status = "$old_group successfully deleted.|green";
 		rmdir("./machines/$old_group/");
 		rmdir("./scripts/$old_group/");
+		$status = "$old_group successfully deleted.|green";
 	}
 } else {
 	$status = "Action was not recognized \"$submit\".|red";
 }
-echo "<form id=\"form\" action=\"group.php\" method=\"POST\"> <input type=\"hidden\" name=\"status\" value=\"$status\">
+echo "<form id=\"form\" action=\"group.php\" method=\"POST\">
+	<input type=\"hidden\" name=\"status\" value=\"$status\">
 	<input type=\"hidden\" name=\"tab\" value=\"$tab\">
 	</form>
 	<script>document.getElementById(\"form\").submit();</script>";
