@@ -28,6 +28,13 @@ if ($submit == 'Submit') {
 				}
 			} elseif ($post != "1") {
 				unlink("./scripts/$mgroup/$library[$x]");
+				$machine = scandir("./machines/$mgroup/");
+				$machine_count = count($machine);
+				for ($m = 0; $m < $machine_count; $m++) {
+					if ($machine[$m] != "." && $machine[$m] != "..") {
+						unlink("./machines/$mgroup/$machine[$m]/$library[$x]");
+					}
+				}
 			}
 		}
 	}
