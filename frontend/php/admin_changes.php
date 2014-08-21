@@ -12,7 +12,7 @@ if ($submit == 'Submit') {
 			if (isset($post)) {
 				// Step up two dirs from anticipated symlink target since we added groups.
 				if (!is_link("./scripts/$mgroup/$library[$x]")) {
-					symlink("../library/$library[$x]", "./scripts/$mgroup/$library[$x]");
+					symlink("../../library/$library[$x]", "./scripts/$mgroup/$library[$x]");
 				}
 				$enable_all = $_POST["$library[$x]enable_all"];
 				if (isset($enable_all)) {
@@ -21,7 +21,7 @@ if ($submit == 'Submit') {
 					for ($m = 0; $m < $machine_count; $m++) {
 						if ($machine[$m] != "." && $machine[$m] != "..") {
 							if (!is_link("./machines/$mgroup/$machine[$m]/$library[$x]")) {
-								symlink("./scripts/$mgroup/$library[$x]", "./machines/$mgroup/$machine[$m]/$library[$x]");
+								symlink("../../../scripts/$mgroup/$library[$x]", "./machines/$mgroup/$machine[$m]/$library[$x]");
 							}
 						}
 					}
