@@ -39,7 +39,7 @@ if(!empty($_GET['mac'])) {
 	}
 	// If machine_sentry has a value of 1, then machine was not found.
 	if ($machine_sentry == "1") {
-	// Test for enrollment structure for unknown workstations.
+		// Test for enrollment structure for unknown workstations.
 		if (!is_dir("./machines/Enroll")) {
 			mkdir("./machines/Enroll");
 		}
