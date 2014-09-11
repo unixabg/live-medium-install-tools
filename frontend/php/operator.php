@@ -3,9 +3,12 @@ if(!empty($_GET['mac'])) {
 	$mac = $_GET['mac'];
 	$groups = scandir("./machines/");
 	$count_groups = count($groups);
+	$machine_sentry = 1;
 	for ($x = 0; $x < $count_groups; $x++) {
 		if ($groups[$x] != "." && $groups[$x] != "..") {
 			if (is_dir("./machines/$groups[$x]/$mac")) {
+				// Machine found toggle sentry.
+				$machine_sentry = 0;
 				$group_match = $groups[$x];
 				//echo $group_match;
 				$mac_scripts = scandir("./machines/$group_match/$mac");
@@ -33,6 +36,18 @@ if(!empty($_GET['mac'])) {
 				}
 			}
 		}
+	}
+	// If machine_sentry has a value of 1, then machine was not found.
+	if ($machine_sentry == "1") {
+	// Test for enrollment structure for unknown workstations.
+		if (!is_dir("./machines/Enroll")) {
+			mkdir("./machines/Enroll");
+		}
+		if (!is_dir("./scripts/Enroll")) {
+			mkdir("./scripts/Enroll");
+		}
+		mkdir("./machines/Enroll/$mac");
+		file_put_contents("./machines/Enroll/$mac/info.txt", "$mac|FIXME|Auto Enroll");
 	}
 }
 ?>

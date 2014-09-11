@@ -53,17 +53,18 @@ include "header.php";
 			echo "<br />";
 			for ($i = 0; $i < $count; $i++) {
 				if ($dir[$i] != "." && $dir[$i] != "..") {
+					echo $dir[$i];
 					if(!unlink("$file/".$dir[$i])) {
 						echo "Couldn't delete file.";
 					} else {
-						unlink($file/$dir[$i]);
+						unlink("$file/$dir[$i]");
 					}
 				}
-				if(!rmdir($file)) {
-					echo "Couldn't delete dir";
-				} else {
-					header('Location: ./manage.php');
-				}
+			}
+			if(!rmdir($file)) {
+				echo "Couldn't delete dir";
+			} else {
+				header('Location: ./manage.php');
 			}
 		}
 		if (is_file("./machines/$mgroup/$mac/custom")) {
