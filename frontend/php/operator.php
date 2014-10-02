@@ -14,6 +14,8 @@ if(!empty($_GET['mac'])) {
 				$mac_scripts = scandir("./machines/$group_match/$mac");
 				$count_scripts = count($mac_scripts);
 				//echo $count_scripts;
+				// Define scripts before we start appending values.
+				$scripts = "";
 				for ($i = 0; $i < $count_scripts; $i++) {
 					if ($mac_scripts[$i] != "." && $mac_scripts[$i] != "..") {
 						if ($mac_scripts[$i] != "info.txt" && $mac_scripts[$i] != "log.txt") {
