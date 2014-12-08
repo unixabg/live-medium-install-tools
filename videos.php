@@ -18,12 +18,12 @@ include "header.php";
 
 			<p><b>Example of live-medium-install install from usb.</b></p>
 			<iframe width="420" height="345"
-			src="http://www.youtube.com/watch?v=ZR9Hz2nlYf8">
+			src="http://www.youtube.com/embed/ZR9Hz2nlYf8">
 			</iframe>
 
 			<p><b>Example of live-partial-squashfs-updates.</b></p>
 			<iframe width="420" height="345"
-			src="http://www.youtube.com/watch?v=g34tJaJXKmQ">
+			src="http://www.youtube.com/embed/g34tJaJXKmQ">
 			</iframe>
 
 			</h4>
