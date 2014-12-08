@@ -16,6 +16,16 @@ include "header.php";
 			src="http://www.youtube.com/embed/ti0rdf3RChI">
 			</iframe>
 
+			<p><b>Example of live-medium-install install from usb.</b></p>
+			<iframe width="420" height="345"
+			src="http://www.youtube.com/watch?v=ZR9Hz2nlYf8">
+			</iframe>
+
+			<p><b>Example of live-partial-squashfs-updates.</b></p>
+			<iframe width="420" height="345"
+			src="http://www.youtube.com/watch?v=g34tJaJXKmQ">
+			</iframe>
+
 			</h4>
 		</div>
 	</div>
