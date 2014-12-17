@@ -12,10 +12,12 @@
 set -e
 
 # Defaults
-_VERSION="7.6"
-_RELEASE=".0"
+_VERSION="7.7.0"
 
-_URL="live.debian.net::${_VERSION}/ARCH/web"
+_URL="cdimage.debian.org::AAREA/ARCH/webboot"
+_AAMAIN="debian-cd/${_VERSION}-live"
+_AANONFREE="cdimage/unofficial/non-free/cd-including-firmware/${_VERSION}-live+nonfree"
+
 
 # Select to media to install from rsync or booted Debian Live image.
 _RSYNCINSTALL="Network rsync server."
@@ -23,10 +25,8 @@ _RSYNCINSTALL="Network rsync server."
 # Select the default live image config type.
 _CONFIGTYPE="gnome-desktop"
 
-#_ARCH - amd64 i386-486 i386-686
-#_FLAVOUR - set from _ARCH selection and configured as 1 for 486 and 2 for 686
+#_ARCH - amd64 i386
 _ARCH="amd64"
-_FLAVOUR=""
 
 _NONFREE="No, do not include non-free."
 
@@ -158,8 +158,7 @@ Please enter the architecture you would like to install?
 (default: ${_ARCH})
 
  amd64
- i386-486
- i386-686
+ i386
 
 EOF
 
@@ -169,22 +168,15 @@ EOF
 
 	_ARCH=${_READ:-${_ARCH}}
 
-	# Configure the _URL architecture and set _FLAVOUR on i386
+	# Configure the _URL architecture
 	case "${_ARCH}" in
 		'amd64')
 			_URL=$(echo ${_URL} | sed s@ARCH@amd64@)
 			;;
 
-		'i386-486')
+		'i386')
 			_URL=$(echo ${_URL} | sed s@ARCH@i386@)
 			_ARCH="i386"
-			_FLAVOUR="1"
-			;;
-
-		'i386-686')
-			_URL=$(echo ${_URL} | sed s@ARCH@i386@)
-			_ARCH="i386"
-			_FLAVOUR="2"
 			;;
 
 		*)
@@ -211,10 +203,11 @@ EOF
 	# Configure _URL and _CONFIGTYPE to include non-free
 	case "${_NONFREE}" in
 		'No, do not include non-free.')
+			_URL=$(echo ${_URL} | sed s@AAREA@${_AAMAIN}@)
 			;;
 
 		'Yes, include non-free.')
-			_URL=$(echo ${_URL} | sed s@${_VERSION}@${_VERSION}+nonfree@)
+			_URL=$(echo ${_URL} | sed s@AAREA@${_AANONFREE}@)
 			_CONFIGTYPE="${_CONFIGTYPE}+nonfree"
 			;;
 
@@ -226,7 +219,7 @@ EOF
 
 	case "${_CONFIGTYPE}" in
 		gnome-desktop|kde-desktop|lxde-desktop|xfce-desktop|standard|rescue|gnome-desktop+nonfree|kde-desktop+nonfree|lxde-desktop+nonfree|xfce-desktop+nonfree|standard+nonfree|rescue+nonfree)
-			_FILES="debian-live-${_VERSION}${_RELEASE}-${_ARCH}-${_CONFIGTYPE}"
+			_FILES="debian-live-${_VERSION}-${_ARCH}-${_CONFIGTYPE}"
 			;;
 
 		*)
@@ -264,7 +257,17 @@ EOF
 
 	_URL="${_READ:-${_URL}}"
 
-# This is the fi for the if statement sentry to guard prompts needed for rsync install.
+# This is the esle for the if statement sentry to guard prompts needed for rsync install.
+else
+	# Guess to see if it is i386 booted image
+	if [ -e /lib/live/mount/medium/live/initrd1.img ]
+	then
+		echo "I: Detected i386 image."
+		echo "I: Setting _ARCH to i386."
+		_ARCH="i386"
+	fi
+
+# This is the esle for # This is the fi for the if statement sentry to guard prompts needed for rsync install.
 fi
 
 cat << EOF
@@ -408,33 +411,19 @@ then
 	echo "Downloading webboot files..."
 
 	# Rsync the files to the target machine.
-	rsync -av --progress ${_URL}/${_FILES}.vmlinuz${_FLAVOUR} /mnt/live/
-	rsync -av --progress ${_URL}/${_FILES}.initrd${_FLAVOUR}.img /mnt/live/
+	rsync -av --progress ${_URL}/${_FILES}.vmlinuz /mnt/live/
+	rsync -av --progress ${_URL}/${_FILES}.initrd.img /mnt/live/
 	rsync -av --progress ${_URL}/${_FILES}.squashfs /mnt/live/
 
 	# Renaming files
-	mv /mnt/live/debian-live-*.vmlinuz${_FLAVOUR} /mnt/live/vmlinuz
-	mv /mnt/live/debian-live-*.initrd${_FLAVOUR}.img /mnt/live/initrd.img
+	mv /mnt/live/debian-live-*.vmlinuz /mnt/live/vmlinuz
+	mv /mnt/live/debian-live-*.initrd.img /mnt/live/initrd.img
 	mv /mnt/live/debian-live-*.squashfs /mnt/live/filesystem.squashfs
 else
 	# Copy files from live media
 	echo "Copying files..."
 
-	# Determine which flavor from uname and rsync appropriate files.
-	# Rsync the files to the target machine.
-	if $(echo $(uname -r) | grep -qs "486")
-	then
-		_FLAVOUR="1"
-	elif $(echo $(uname -r) | grep -qs "686")
-	then
-		_FLAVOUR="2"
-	else
-		# amd64 live media.
-		_FLAVOUR=""
-	fi
-	rsync -av --progress /lib/live/mount/medium/live/vmlinuz${_FLAVOUR} /mnt/live/vmlinuz
-	rsync -av --progress /lib/live/mount/medium/live/initrd${_FLAVOUR}.img /mnt/live/initrd.img
-	rsync -av --progress /lib/live/mount/medium/live/filesystem.squashfs /mnt/live/filesystem.squashfs
+	rsync -av --progress /lib/live/mount/medium/live/ /mnt/live/
 fi
 
 # Writing mbr
@@ -484,48 +473,115 @@ menu separator
 menu separator
 menu separator
 menu separator
-menu separator
 menu color title	* #FFFFFFFF *
 menu color border	* #00000000 #00000000 none
 menu color sel		* #ffffffff #76a1d0ff *
 menu color hotsel	1;7;37;40 #ffffffff #76a1d0ff *
 menu color tabmsg	* #ffffffff #00000000 *
 menu color help		37;40 #ffdddd00 #00000000 none
-menu vshift 9
-menu rows 10
-menu helpmsgrow 15
+menu vshift 7
+menu rows 12
+menu helpmsgrow 16
 # The command line must be at least one line from the bottom.
-menu cmdlinerow 16
-menu timeoutrow 16
+menu cmdlinerow 17
+menu timeoutrow 17
 menu tabmsgrow 18
 menu tabmsg Press ENTER to boot or TAB to edit a menu entry
 
+EOF
 
+# With new image host i386 is combined so we make menu entries for each.
+	if [ "${_ARCH}" = "i386" ]
+	then
+		# Label 486 entry.
+		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+label live1
+	menu label ^Live 486
+	menu default
+	linux /live/vmlinuz1
+	initrd /live/initrd1.img
+EOF
+		if [ "${_PERSISTENCE}" = "Yes, I want persistence." ]
+		then
+			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+	append boot=live config vga=normal video=vesa quiet splash persistence
+EOF
+		else
+			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+	append boot=live config vga=normal video=vesa quiet splash
+EOF
+		fi
+
+		# Add failsafe for 486 entry.
+		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+
+label live-failsafe
+	menu label Live 486 (failsafe)
+	linux /live/vmlinuz1
+	initrd /live/initrd1.img
+	append boot=live config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+EOF
+
+		# Label 686-pae entry.
+		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+label live2
+	menu label ^Live 686-pae
+	linux /live/vmlinuz2
+	initrd /live/initrd2.img
+EOF
+		if [ "${_PERSISTENCE}" = "Yes, I want persistence." ]
+		then
+			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+	append boot=live config vga=normal video=vesa quiet splash persistence
+EOF
+		else
+			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+	append boot=live config vga=normal video=vesa quiet splash
+EOF
+		fi
+
+		# Add failsafe for 686-pae entry.
+		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+
+label live-failsafe
+	menu label Live 686-pae (failsafe)
+	linux /live/vmlinuz2
+	initrd /live/initrd2.img
+	append boot=live config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+EOF
+
+	else
+		# Label for amd64.
+		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
 label live
-	menu label ^Live
+	menu label ^Live amd64
 	menu default
 	linux /live/vmlinuz
 	initrd /live/initrd.img
 EOF
 
-	if [ "${_PERSISTENCE}" = "Yes, I want persistence." ]
-	then
-		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+		if [ "${_PERSISTENCE}" = "Yes, I want persistence." ]
+		then
+			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
 	append boot=live config vga=normal video=vesa quiet splash persistence
 EOF
-	else
-		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+		else
+			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
 	append boot=live config vga=normal video=vesa quiet splash
 EOF
-	fi
+		fi
 
-	cat >> /mnt/boot/extlinux/extlinux.conf << EOF
+		cat >> /mnt/boot/extlinux/extlinux.conf << EOF
 
 label live-failsafe
 	menu label Live (failsafe)
 	linux /live/vmlinuz
 	initrd /live/initrd.img
 	append boot=live config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+EOF
+	fi
+
+	cat >> /mnt/boot/extlinux/extlinux.conf << EOF
 
 label memtest
 	menu label Memory Diagnostic Tool (memtest86+)
