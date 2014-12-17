@@ -411,14 +411,22 @@ then
 	echo "Downloading webboot files..."
 
 	# Rsync the files to the target machine.
-	rsync -av --progress ${_URL}/${_FILES}.vmlinuz /mnt/live/
-	rsync -av --progress ${_URL}/${_FILES}.initrd.img /mnt/live/
-	rsync -av --progress ${_URL}/${_FILES}.squashfs /mnt/live/
+	rsync -av --progress ${_URL}/${_FILES}* /mnt/live/
 
-	# Renaming files
-	mv /mnt/live/debian-live-*.vmlinuz /mnt/live/vmlinuz
-	mv /mnt/live/debian-live-*.initrd.img /mnt/live/initrd.img
-	mv /mnt/live/debian-live-*.squashfs /mnt/live/filesystem.squashfs
+	if [ "${_ARCH}" = "amd64" ]
+	then
+		# Renaming files on amd64
+		mv /mnt/live/debian-live-*.vmlinuz /mnt/live/vmlinuz
+		mv /mnt/live/debian-live-*.initrd.img /mnt/live/initrd.img
+		mv /mnt/live/debian-live-*.squashfs /mnt/live/filesystem.squashfs
+	else
+		# Renaming files on i386
+		mv /mnt/live/debian-live-*.vmlinuz1 /mnt/live/vmlinuz1
+		mv /mnt/live/debian-live-*.initrd1.img /mnt/live/initrd1.img
+		mv /mnt/live/debian-live-*.vmlinuz2 /mnt/live/vmlinuz2
+		mv /mnt/live/debian-live-*.initrd2.img /mnt/live/initrd2.img
+		mv /mnt/live/debian-live-*.squashfs /mnt/live/filesystem.squashfs
+	fi
 else
 	# Copy files from live media
 	echo "Copying files..."
