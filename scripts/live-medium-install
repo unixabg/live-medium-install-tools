@@ -12,7 +12,7 @@
 set -e
 
 # Defaults
-_VERSION="7.7.0"
+_VERSION="8.0"
 
 _URL="cdimage.debian.org::AAREA/ARCH/webboot"
 _AAMAIN="debian-cd/${_VERSION}-live"
