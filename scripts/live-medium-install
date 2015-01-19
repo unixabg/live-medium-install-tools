@@ -74,11 +74,11 @@ then
 	exit 1
 fi
 
-if [ ! -e /usr/share/syslinux/themes/debian/extlinux/splash.png ]
+if [ ! -e /usr/share/images/desktop-base/lines-grub.png ]
 then
-	echo "E: /usr/share/syslinux/themes/debian/extlinux/splash.png - no such file"
-	echo "I: On Debian based systems, splash.png image can be installed with:"
-	echo "I:   apt-get install syslinux-themes-debian"
+	echo "E: /usr/share/images/desktop-base/lines-grub.png - no such file"
+	echo "I: On Debian based systems, lines-grub.png image can be installed with:"
+	echo "I:   apt-get install desktop-base"
 
 	exit 1
 fi
@@ -452,7 +452,7 @@ else
 	cp /usr/lib/syslinux/modules/bios/libcom32.c32 /mnt/boot/extlinux/
 	cp /usr/lib/syslinux/modules/bios/libutil.c32 /mnt/boot/extlinux/
 	cp /usr/lib/syslinux/modules/bios/vesamenu.c32 /mnt/boot/extlinux/
-	cp /usr/share/syslinux/themes/debian/extlinux/splash.png /mnt/boot/extlinux/
+	cp /usr/share/images/desktop-base/lines-grub.png /mnt/boot/extlinux/splash.png
 	cp /boot/memtest86+.bin /mnt/boot/
 
 	cat > /mnt/boot/extlinux/extlinux.conf << EOF
