@@ -435,8 +435,7 @@ else
 fi
 
 # Writing mbr
-# FIXME: needs update for syslinux 6.0
-dd if=/usr/lib/extlinux/mbr.bin of="${_TARGET}" bs=440 count=1 conv=notrunc
+dd if=/usr/lib/syslinux/mbr/mbr.bin of="${_TARGET}" bs=440 count=1 conv=notrunc
 
 if [ "${_BOOTMENU}" = "Yes, rsync boot menu." ]
 then
@@ -449,7 +448,10 @@ else
 	# Configuring bootloader
 	mkdir -p /mnt/boot/extlinux
 
-	cp /usr/lib/syslinux/vesamenu.c32 /mnt/boot/extlinux/
+	cp /usr/lib/syslinux/modules/bios/ldlinux.c32 /mnt/boot/extlinux/
+	cp /usr/lib/syslinux/modules/bios/libcom32.c32 /mnt/boot/extlinux/
+	cp /usr/lib/syslinux/modules/bios/libutil.c32 /mnt/boot/extlinux/
+	cp /usr/lib/syslinux/modules/bios/vesamenu.c32 /mnt/boot/extlinux/
 	cp /usr/share/syslinux/themes/debian/extlinux/splash.png /mnt/boot/extlinux/
 	cp /boot/memtest86+.bin /mnt/boot/
 
