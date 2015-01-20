@@ -515,11 +515,11 @@ EOF
 		if [ "${_PERSISTENCE}" = "Yes, I want persistence." ]
 		then
 			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
-	append boot=live config vga=normal video=vesa quiet splash persistence
+	append boot=live components vga=normal video=vesa quiet splash persistence
 EOF
 		else
 			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
-	append boot=live config vga=normal video=vesa quiet splash
+	append boot=live components vga=normal video=vesa quiet splash
 EOF
 		fi
 
@@ -530,7 +530,7 @@ label live-failsafe
 	menu label Live 486 (failsafe)
 	linux /live/vmlinuz1
 	initrd /live/initrd1.img
-	append boot=live config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+	append boot=live components memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
 EOF
 
 		# Label 686-pae entry.
@@ -543,11 +543,11 @@ EOF
 		if [ "${_PERSISTENCE}" = "Yes, I want persistence." ]
 		then
 			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
-	append boot=live config vga=normal video=vesa quiet splash persistence
+	append boot=live components vga=normal video=vesa quiet splash persistence
 EOF
 		else
 			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
-	append boot=live config vga=normal video=vesa quiet splash
+	append boot=live components vga=normal video=vesa quiet splash
 EOF
 		fi
 
@@ -558,7 +558,7 @@ label live-failsafe
 	menu label Live 686-pae (failsafe)
 	linux /live/vmlinuz2
 	initrd /live/initrd2.img
-	append boot=live config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+	append boot=live components memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
 EOF
 
 	else
@@ -574,11 +574,11 @@ EOF
 		if [ "${_PERSISTENCE}" = "Yes, I want persistence." ]
 		then
 			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
-	append boot=live config vga=normal video=vesa quiet splash persistence
+	append boot=live components vga=normal video=vesa quiet splash persistence
 EOF
 		else
 			cat >> /mnt/boot/extlinux/extlinux.conf << EOF
-	append boot=live config vga=normal video=vesa quiet splash
+	append boot=live components vga=normal video=vesa quiet splash
 EOF
 		fi
 
@@ -588,7 +588,7 @@ label live-failsafe
 	menu label Live (failsafe)
 	linux /live/vmlinuz
 	initrd /live/initrd.img
-	append boot=live config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+	append boot=live components memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
 EOF
 	fi
 
