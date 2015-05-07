@@ -12,12 +12,11 @@
 set -e
 
 # Defaults
-_VERSION="8.0"
-_VERSION="current"
+_VERSION="8.0.0"
 
 _URL="cdimage.debian.org::AAREA/ARCH/webboot"
-_AAMAIN="debian-cd/${_VERSION}-live"
-_AANONFREE="cdimage/unofficial/non-free/cd-including-firmware/${_VERSION}-live+nonfree"
+_AAMAIN="debian-cd/current-live"
+_AANONFREE="cdimage/unofficial/non-free/cd-including-firmware/current-live"
 
 
 # Select to media to install from rsync or booted Debian Live image.
