@@ -12,7 +12,6 @@ include "header.php";
 		$mac = strtolower($_POST['mac']);
 		$id = strtoupper($_POST['id']);
 		$description = $_POST['description'];
-		$print = $_POST['print'];
 		$custom = $_POST['custom'];
 		$submit = $_POST['submit'];
 		$file = $_POST['file'];
