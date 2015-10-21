@@ -117,7 +117,7 @@ function manage_table($mgroup) {
 						<input type='hidden' name='description' value='".$dir_array[2]."'>
 						<input type='hidden' name='file' value='".$file."'>
 						<input type='hidden' name='mgroup' value='".$mgroup."'>
-						<input type='submit' name='submit' value='&#9998;'>
+						<input type='submit' name='submit' value='Edit'>
 						<input type='submit' name='submit' onclick='return deleteConfirm(this)' value='X'>
 					</form>
 				</td>

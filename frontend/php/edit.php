@@ -15,7 +15,7 @@ include "header.php";
 		$custom = isset($_POST['custom']) ? $_POST['custom'] : '';
 		$submit = $_POST['submit'];
 		$file = $_POST['file'];
-		if ($submit == "&#9998;") {
+		if ($submit == "Edit") {
 			if (!preg_match('/^(?:[0-9a-fA-F]{2}[:;.]?){6}$/', $mac)) {
 				echo "<h2><font color=\"red\">Invalid Mac address</font></h2>";
 			} else {
