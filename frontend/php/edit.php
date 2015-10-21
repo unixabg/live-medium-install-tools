@@ -12,7 +12,7 @@ include "header.php";
 		$mac = strtolower($_POST['mac']);
 		$id = strtoupper($_POST['id']);
 		$description = $_POST['description'];
-		$custom = $_POST['custom'];
+		$custom = isset($_POST['custom']) ? $_POST['custom'] : '';
 		$submit = $_POST['submit'];
 		$file = $_POST['file'];
 		if ($submit == "&#9998;") {
