@@ -74,10 +74,10 @@ then
 	exit 1
 fi
 
-if [ ! -e /usr/share/images/desktop-base/lines-grub.png ]
+if [ ! -e /usr/share/desktop-base/softwaves-theme/grub/grub-16x9.png ]
 then
-	echo "E: /usr/share/images/desktop-base/lines-grub.png - no such file"
-	echo "I: On Debian based systems, lines-grub.png image can be installed with:"
+	echo "E: /usr/share/desktop-base/softwaves-theme/grub/grub-16x9.png - no such file"
+	echo "I: On Debian based systems, softwaves them for grub.png image can be installed with:"
 	echo "I:   apt-get install desktop-base"
 
 	exit 1
@@ -452,7 +452,7 @@ else
 	cp /usr/lib/syslinux/modules/bios/libcom32.c32 /mnt/boot/extlinux/
 	cp /usr/lib/syslinux/modules/bios/libutil.c32 /mnt/boot/extlinux/
 	cp /usr/lib/syslinux/modules/bios/vesamenu.c32 /mnt/boot/extlinux/
-	cp /usr/share/images/desktop-base/lines-grub.png /mnt/boot/extlinux/splash.png
+	cp /usr/share/desktop-base/softwaves-theme/grub/grub-16x9.png /mnt/boot/extlinux/splash.png
 	cp /boot/memtest86+.bin /mnt/boot/
 
 	cat > /mnt/boot/extlinux/extlinux.conf << EOF
