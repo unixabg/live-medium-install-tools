@@ -377,7 +377,7 @@ then
 
 	echo "Now adding partition for persistence."
 	parted -s -a optimal ${_TARGET} -- mkpart primary ext4 1 ${_SIZE}
-	mkfs.ext4 -L persistence ${_TARGET}2
+	mkfs.ext4 -O ^64bit -L persistence ${_TARGET}2
 	mkdir /mnt2
 	mount ${_TARGET}2 /mnt2
 	echo "/ union" >> /mnt2/persistence.conf
@@ -394,7 +394,7 @@ parted -s ${_TARGET} --  set 1 boot on
 
 # Make new filesystem on the new partitions.
 echo "Making filesystem..."
-mkfs.ext4 -L Firmware ${_TARGET}1
+mkfs.ext4 -O ^64bit -L Firmware ${_TARGET}1
 #mkfs.ext4 -L persistence ${_TARGET}2
 
 # Mount the target filesystem
