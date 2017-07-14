@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ## live-tools(7) - System Support Scripts
-## Copyright (C) 2013 Richard Nelson <unixabg@gmail.com>
+## Copyright (C) 2013-2017 Richard Nelson <unixabg@gmail.com>
 ## Copyright (C) 2013 Daniel Baumann <mail@daniel-baumann.ch>
 ##
 ## This program comes with ABSOLUTELY NO WARRANTY; for details see COPYING.
@@ -12,9 +12,9 @@
 set -e
 
 # Defaults
-_VERSION="20140125-1-vBox"
+_VERSION="20170714-1-vBox"
 
-_SUB_VERSION="0"
+_IMGVERSION="20160729"
 
 _URL="FIXME::files/progress-linux/${_VERSION}/live/"
 
@@ -39,29 +39,19 @@ then
 	exit 1
 fi
 
-if [ ! -e /usr/bin/rsync ]
+if [ ! -e /lib/live/mount/medium/isolinux/splash.png ]
 then
-	echo "E: /usr/bin/rsync - no such file"
-	echo "E: On Debian based systems, rsync can be installed with:"
-	echo "E:   apt-get install rsync"
+	echo "E: /lib/live/mount/medium/isolinux/splash.png - no such file"
+	echo "I: On Progress-Linux live systems /lib/live/mount/medium/isolinux/splash.png image should be present"
 
 	exit 1
 fi
 
-if [ ! -e /usr/share/syslinux/themes/debian/extlinux/splash.png ]
+if [ ! -e /usr/lib/syslinux/modules/bios/vesamenu.c32 ]
 then
-	echo "E: /usr/share/syslinux/themes/debian/extlinux/splash.png - no such file"
-	echo "E: On Debian based systems, splash.png image can be installed with:"
-	echo "E:   apt-get install syslinux-themes-debian"
-
-	exit 1
-fi
-
-if [ ! -e /usr/lib/syslinux/vesamenu.c32 ]
-then
-	echo "E: /usr/lib/syslinux/vesamenu.c32 - no such file"
-	echo "E: On Debian based systems, vesamenu.c32 can be installed with:"
-	echo "E:   apt-get install syslinux-common"
+	echo "E: /usr/lib/syslinux/modules/bios/vesamenu.c32 - no such file"
+	echo "I: On Debian based systems, vesamenu.c32 can be installed with:"
+	echo "I:   apt-get install syslinux-common"
 
 	exit 1
 fi
@@ -95,7 +85,7 @@ _URL="${_READ:-${_URL}}"
 cat << EOF
 
 -------------------------------------------------------------------------------
-$(blkid | sort)
+$(lsblk)
 -------------------------------------------------------------------------------
 
 EOF
@@ -147,9 +137,9 @@ echo "Starting parted command to make lablel and partition..."
 # Primary Firmware partition
 parted -s -a optimal ${_TARGET} mklabel msdos -- mkpart primary ext4 1 10000
 # Swap partition
-parted -s -a optimal ${_TARGET} -- mkpart primary linux-swap 10000 12000
+parted -s -a optimal ${_TARGET} -- mkpart primary ext4 10000 15000
 # Virtualbox partition
-parted -s -a optimal ${_TARGET} -- mkpart primary ext4 12000 -1
+parted -s -a optimal ${_TARGET} -- mkpart primary ext4 15000 -1
 
 # Set the block device to boot.
 echo "Starting parted command to enable boot..."
@@ -160,9 +150,24 @@ parted -s ${_TARGET} -- print
 
 # Make new filesystem on the new partitions.
 echo "Making filesystem..."
-mkfs.ext4 -L Firmware ${_TARGET}1
-mkswap -L FirmwareSwap ${_TARGET}2
-mkfs.ext4 -L virtualbox ${_TARGET}3
+mkfs.ext4 -O ^64bit -L Firmware ${_TARGET}1
+mkfs.ext4 -O ^64bit -L persistence ${_TARGET}2
+mkfs.ext4 -O ^64bit -L virtualbox ${_TARGET}3
+
+# Mount the persistence drive to configure
+echo "Mounting the persistence drive to configure saving user settings and files..."
+mkdir /persistence
+mount ${_TARGET}2 /persistence
+
+echo "Creating the persistence.conf file..."
+echo "/home union" > /persistence/persistence.conf
+echo "Making gnome config settings on persistence drive..."
+mkdir -p /persistence/home/rw/user/.config
+rsync -av --progress FIXME::files/gnome-settings/ /persistence/home/rw/user/
+chown -R user: /persistence/home/rw/user
+
+echo "Unmount the persistence device..."
+umount -l /persistence
 
 # Mount the target filesystem
 echo "Mounting file system to allow saving of webboot files..."
@@ -178,15 +183,24 @@ echo "Downloading webboot files..."
 # Rsync the files to the target machine.
 rsync -av --progress ${_URL} /mnt/live/
 
+
+
+# Renaming files
+#mv /mnt/live/debian-live-*.vmlinuz /mnt/live/vmlinuz
+#mv /mnt/live/debian-live-*.initrd.img /mnt/live/initrd.img
+#mv /mnt/live/debian-live-*.squashfs /mnt/live/filesystem.squashfs
+
 # Writing mbr
-# FIXME: needs update for syslinux 6.0
-dd if=/usr/lib/extlinux/mbr.bin of="${_TARGET}" bs=440 count=1 conv=notrunc
+dd if=/usr/lib/syslinux/mbr/mbr.bin of="${_TARGET}" bs=440 count=1 conv=notrunc
 
 # Configuring bootloader
 mkdir -p /mnt/boot/extlinux
 
-cp /usr/lib/syslinux/vesamenu.c32 /mnt/boot/extlinux/
-cp /usr/share/syslinux/themes/debian/extlinux/splash.png /mnt/boot/extlinux/
+cp /usr/lib/syslinux/modules/bios/ldlinux.c32 /mnt/boot/extlinux/
+cp /usr/lib/syslinux/modules/bios/libcom32.c32 /mnt/boot/extlinux/
+cp /usr/lib/syslinux/modules/bios/libutil.c32 /mnt/boot/extlinux/
+cp /usr/lib/syslinux/modules/bios/vesamenu.c32 /mnt/boot/extlinux/
+cp /lib/live/mount/medium/isolinux/splash.png /mnt/boot/extlinux/splash.png
 cp /boot/memtest86+.bin /mnt/boot/
 
 cat > /mnt/boot/extlinux/extlinux.conf << EOF
@@ -213,23 +227,23 @@ menu tabmsg Press ENTER to boot or TAB to edit a menu entry
 
 
 label hybrid
-	menu label Win7HP Hybrid Firmware ${_SUB_VERSION}
+	menu label Win7HP Hybrid Firmware ${_IMGVERSION}
 	menu default
 	linux /live/vmlinuz
 	initrd /live/initrd.img
-	append boot=live config vga=normal video=vesa quiet noprompt splash live-config.virtualbox=none:/virtualbox:Win7HP
+	append boot=live components vga=normal video=vesa persistence user-default-groups=vboxusers quiet noprompt splash ipv6.disable=1 loop.max_loop=32 virtualbox=none:/virtualbox:Win7HP
 
 label live
 	menu label Live
 	linux /live/vmlinuz
 	initrd /live/initrd.img
-	append boot=live config vga=normal video=vesa quiet splash
+	append boot=live components vga=normal video=vesa loop.max_loop=32 quiet splash
 
 label live-failsafe
 	menu label Live (failsafe)
 	linux /live/vmlinuz
 	initrd /live/initrd.img
-	append boot=live config memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash vga=normal
+	append boot=live components memtest noapic noapm nodma nomce nolapic nomodeset nosmp nosplash loop.max_loop=32 vga=normal ipv6.disable=1
 
 label memtest
 	menu label Memory Diagnostic Tool (memtest86+)
@@ -254,13 +268,13 @@ mount ${_TARGET}3 /mnt
 
 # FIXME Add choices of images.
 # Rsync the files to the target machine.
-rsync -av --progress FIXME::vbox/staff/Win7HP /mnt/
+rsync -av --progress FIXME::vbox/${_IMGVERSION}/Win7HP /mnt/
 # Thi is the settings for user home
-rsync -av --progress FIXME::vbox/staff/.VirtualBox /mnt/
+rsync -av --progress FIXME::vbox/${_IMGVERSION}/.VirtualBox /mnt/
 
 # Sync and umount
 echo "Cleanup of persistence work with umount and sync..."
-umount /mnt
 sync
+umount /mnt
 
 echo "Please halt your machine and boot up to your live firmware."
