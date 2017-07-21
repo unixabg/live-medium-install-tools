@@ -12,9 +12,9 @@
 set -e
 
 # Defaults
-_VERSION="20170714-1-vBox"
+_VERSION="20170718-0-vBox"
 
-_IMGVERSION="20160729"
+_IMGVERSION="20170719"
 
 _URL="FIXME::files/progress-linux/${_VERSION}/live/"
 
@@ -161,6 +161,7 @@ mount ${_TARGET}2 /persistence
 
 echo "Creating the persistence.conf file..."
 echo "/home union" > /persistence/persistence.conf
+echo "/etc/NetworkManager union" >> /persistence/persistence.conf
 echo "Making gnome config settings on persistence drive..."
 mkdir -p /persistence/home/rw/user/.config
 rsync -av --progress FIXME::files/gnome-settings/ /persistence/home/rw/user/
@@ -231,7 +232,7 @@ label hybrid
 	menu default
 	linux /live/vmlinuz
 	initrd /live/initrd.img
-	append boot=live components vga=normal video=vesa persistence user-default-groups=vboxusers quiet noprompt splash ipv6.disable=1 loop.max_loop=32 virtualbox=none:/virtualbox:Win7HP
+	append boot=live components vga=normal video=vesa persistence user-default-groups=vboxusers quiet noprompt splash timezone=America/Chicago ipv6.disable=1 loop.max_loop=32 virtualbox=none:/virtualbox:Win7HP
 
 label live
 	menu label Live
